@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIT Verifier — Calmly R6 Gate · 19 May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --border-strong: #b0b8c4;
+      --accent: #1f4fa8; --accent-light: #e8eef8; --panel-bg: #0f2744; --panel-text: #ffffff;
+      --warning-bg: #fff8e6; --warning-border: #d4820a; --inset-border: #1f4fa8;
+      --green-bg: #e6f4ec; --green-text: #166534; --green-border: #a7d4b8;
+      --tag-radius: 3px; --font-ui: 'DM Sans', system-ui, sans-serif; --font-body: 'Lora', Georgia, serif; --width: 960px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 17px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+    .header-panel { background: var(--panel-bg); color: var(--panel-text); padding: 32px 36px 28px; margin-bottom: 40px; }
+    .header-panel .gate-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .header-panel h1 { font-family: var(--font-ui); font-size: 26px; font-weight: 600; color: #ffffff; margin-bottom: 20px; }
+    .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 20px; }
+    .header-meta-item .key { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
+    .header-meta-item .val { font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; }
+    .section { margin-bottom: 44px; }
+    .section-title { font-family: var(--font-ui); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 20px; }
+    h3 { font-family: var(--font-ui); font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 10px; margin-top: 24px; }
+    h4 { font-family: var(--font-ui); font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; margin-top: 20px; }
+    p { font-family: var(--font-body); font-size: 17px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .inset-block { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 16px 20px; margin-bottom: 24px; }
+    .inset-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .inset-block p:last-child { margin-bottom: 0; }
+    .inset-block strong { font-weight: 600; }
+    .warning-block { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 16px 20px; margin-bottom: 24px; }
+    .warning-block p { font-family: var(--font-ui); font-size: 15px; color: #4a3000; margin-bottom: 10px; }
+    .warning-block p:last-child { margin-bottom: 0; }
+    .warning-block strong { font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; margin-bottom: 24px; }
+    thead th { font-weight: 600; font-size: 13px; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border-strong); color: var(--text); background: #f9f9f8; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr.total-row td { font-weight: 600; color: var(--text); background: var(--accent-light); border-top: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
+    tbody tr.highlight-row td { font-weight: 600; color: var(--green-text); background: var(--green-bg); }
+    td.amount { text-align: right; }
+    th.amount { text-align: right; }
+    td.note-col { color: var(--text-muted); font-size: 13px; }
+    .fmos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+    .fmos-card { border: 1px solid var(--border); padding: 16px 18px; background: #fafaf9; }
+    .fmos-card .card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .fmos-card .card-value { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1.1; }
+    .fmos-card .card-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .fmos-card.pass { border-color: var(--green-border); background: var(--green-bg); }
+    .fmos-card.pass .card-value { color: var(--green-text); }
+    .verdict-panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; border-left: 6px solid #22c55e; margin-bottom: 40px; }
+    .verdict-panel .verdict-label { font-size: 12px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #86efac; margin-bottom: 10px; }
+    .verdict-panel .verdict-headline { font-size: 24px; font-weight: 600; color: #ffffff; margin-bottom: 18px; }
+    .verdict-panel p { font-family: var(--font-ui); font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 10px; }
+    .verdict-panel p:last-child { margin-bottom: 0; }
+    .verdict-panel strong { color: #ffffff; }
+    .fit-checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+    .fit-check { border: 1px solid var(--border); padding: 14px 16px; background: #fafaf9; }
+    .fit-check .check-letter { font-size: 28px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+    .fit-check .check-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .fit-check .check-result { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .fit-check.pass { border-color: var(--green-border); background: var(--green-bg); }
+    .fit-check.pass .check-letter { color: var(--green-text); }
+    .fit-check.pass .check-result { color: var(--green-text); }
+    .tag { display: inline-block; font-family: var(--font-ui); font-size: 12px; font-weight: 500; border-radius: var(--tag-radius); padding: 2px 8px; border: 1px solid; }
+    .tag-green { background: #e6f4ec; color: #166534; border-color: #a7d4b8; }
+    .conditions-list { list-style: none; padding: 0; }
+    .conditions-list li { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 14px 18px; margin-bottom: 12px; font-family: var(--font-ui); font-size: 15px; color: #3a2800; line-height: 1.6; }
+    .conditions-list li strong { font-weight: 600; }
+    .conditions-list li .cond-number { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--warning-border); display: block; margin-bottom: 5px; }
+    .routing-block { background: var(--accent-light); border: 1px solid #b8c8e8; padding: 24px 28px; margin-top: 40px; }
+    .routing-block .routing-title { font-family: var(--font-ui); font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .routing-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .routing-block p:last-child { margin-bottom: 0; }
+    .routing-block strong { font-weight: 600; color: var(--accent); }
+    .doc-footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .doc-footer .footer-left { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .doc-footer .footer-right { font-size: 12px; color: var(--text-muted); text-align: right; font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-panel">
+    <div class="gate-label">FIT Verifier · R6 gate — Cash Flow Constraint (Amortisation)</div>
+    <h1>FIT Verifier — Calmly — R6 gate</h1>
+    <div class="header-meta">
+      <div class="header-meta-item"><div class="key">Date</div><div class="val">19 May 2026</div></div>
+      <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — consumer small claims exchange (E&amp;W)</div></div>
+      <div class="header-meta-item"><div class="key">Unit</div><div class="val">One claim resolved</div></div>
+      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R6 adds £0 new cost · cost floor held at £237/claim</div></div>
+    </div>
+  </div>
+
+  <div class="fit-checks">
+    <div class="fit-check pass">
+      <div class="check-letter">F</div>
+      <div class="check-label">Financial margin of safety</div>
+      <div class="check-result">Pass — 63.5% FMOS (unchanged)</div>
+    </div>
+    <div class="fit-check pass">
+      <div class="check-letter">I</div>
+      <div class="check-label">Intrinsic performance capability</div>
+      <div class="check-result">Pass — EV frame built into architecture</div>
+    </div>
+    <div class="fit-check pass">
+      <div class="check-letter">T</div>
+      <div class="check-label">Theorem-driven design</div>
+      <div class="check-result">Pass — Kahneman &amp; Tversky (1979)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 1 — Strategic design: R6 Cash Flow Constraint</div>
+
+    <h3>Cash flow constraint diagnosis</h3>
+    <div class="inset-block">
+      <p><strong>Clarification — the consumer is not paying cash.</strong> In Calmly's exchange model, the "payment" is the discount the consumer must accept relative to the face value of their claim. Calmly offers a settlement amount lower than full face value in exchange for immediate, certain recovery.</p>
+      <p><strong>The constraint:</strong> The consumer anchors on face value (what they are owed) and perceives Calmly's offer as "less than I deserve" — even when the expected value of the alternative (court, 12+ months, uncertain) is lower than Calmly's offer. This is loss aversion combined with a reference point problem.</p>
+      <p><strong>The alternative the consumer faces:</strong> pursue the claim independently (expensive, time-consuming, uncertain) or give up entirely. Both alternatives have lower expected value than Calmly's offer. But the consumer's mental account anchors on face value, not expected value.</p>
+    </div>
+
+    <h3>Theory of Change — Amortisation (CMO format)</h3>
+    <div class="inset-block">
+      <p><strong>Class of problem:</strong> Temporal discounting + loss aversion. The consumer weights a certain small loss (accepting discount vs face value) more heavily than an uncertain larger gain (court outcome).</p>
+      <p><strong>Theory:</strong> Kahneman &amp; Tversky (1979) Prospect Theory — value is assessed relative to a reference point, and losses loom larger than equivalent gains. Reframing shifts the reference point from face value to expected value, changing the perceived loss. Thaler (1980) mental accounting — the correct comparison is not face value vs Calmly offer, but expected value of alternatives vs Calmly offer.</p>
+      <p><strong>Context:</strong> Consumer who has received Calmly's specific offer and is mentally comparing it to what they are owed (face value).</p>
+      <p><strong>Mechanism:</strong> Presenting the offer relative to the claim's independently-assessed EV (not its face value) shifts the reference point. The independent EV assessment (already produced at R4) arrives before Calmly's offer, establishing EV as the frame. Calmly's offer is then presented as "Y% of your claim's expected value" — a gain framing — rather than "Y% less than what you're owed" — a loss framing.</p>
+      <p><strong>Outcome:</strong> Consumer accepts the offer because the comparison is EV (independent assessment) vs Calmly offer, not face value vs Calmly offer.</p>
+    </div>
+
+    <h3>Amortisation Strategy</h3>
+    <p>The EV assessment frame is the amortisation mechanism. The independent assessment org's report establishes expected value — not face value — as the reference point before Calmly makes its offer. Calmly's offer is presented as a percentage of independently-assessed EV. The framing is architecturally sequenced: EV report arrives first, then offer. This is not a communication trick — the EV assessment is a genuine independent calculation, making the reference point credible and resistant to motivated reasoning.</p>
+
+    <h3>Architectural elegance: one mechanism, three requirements</h3>
+    <div class="inset-block">
+      <p>The C3 independent assessment org produces a single EV report per claim. That report serves:</p>
+      <p><strong>C3:</strong> Third-party credibility signal for defendants and investors (shortens recovery time).</p>
+      <p><strong>R4:</strong> Free conviction mechanism for potential claimants (dissolves credibility doubt about the model).</p>
+      <p><strong>R6:</strong> Reference point anchor for the offer (shifts consumer comparison from face value to EV).</p>
+      <p>One mechanism, three problems solved. No additional cost or institutional actor required for R6. The amortisation strategy is built into the submission-to-offer sequence as a design property.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 2 — F: Financial margin of safety (FMOS)</div>
+
+    <div class="warning-block">
+      <p>⚠ <strong>R6 adds no new per-unit cost.</strong> The offer framing (EV vs face value) is delivered through the platform's communications product — an already-built capability within the existing platform development budget. No new cost line is introduced.</p>
+    </div>
+
+    <div class="fmos-grid">
+      <div class="fmos-card"><div class="card-label">Price ceiling</div><div class="card-value">£650</div><div class="card-sub">Bilateral KMC × 50% surplus (C2)</div></div>
+      <div class="fmos-card"><div class="card-label">Cost floor (R6)</div><div class="card-value">£237</div><div class="card-sub">Unchanged from R5</div></div>
+      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.5%</div><div class="card-sub">Unchanged from R5</div></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Gate</th><th class="amount">Cost floor</th><th class="amount">FMOS</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>C3 base</td><td class="amount">£199</td><td class="amount">69.4%</td><td class="note-col">Assessment org + LMU + HQ + platform</td></tr>
+        <tr><td>R4 (+ CAC £38)</td><td class="amount">£237</td><td class="amount">63.5%</td><td class="note-col">−5.9pp from C3</td></tr>
+        <tr><td>R5 (+ £0)</td><td class="amount">£237</td><td class="amount">63.5%</td><td class="note-col">No change</td></tr>
+        <tr class="total-row"><td>R6 (+ £0)</td><td class="amount">£237</td><td class="amount">63.5%</td><td class="note-col">No change · FMOS stable</td></tr>
+        <tr class="highlight-row"><td>Headroom to ceiling</td><td class="amount">£413</td><td class="amount">63.5%</td><td class="note-col">£650 − £237</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 3 — I: Intrinsic performance capability</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
+    <div class="inset-block">
+      <p>The EV frame is produced by the same assessment org process that runs for every claim regardless of R6. There is no additional cost to produce the framing. As claim volume grows and EV assessment accuracy improves (R10 data flywheel), the offer-to-acceptance rate should improve — the EV frame becomes more credible as the reference data set behind it grows. This is an intrinsic improving mechanism: the more claims Calmly processes, the more accurate the EV reports, and the stronger the amortisation frame. <strong>Pass.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 4 — T: Theorem-driven design</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
+
+    <h4>Amortisation — Kahneman &amp; Tversky (1979) Prospect Theory</h4>
+    <div class="inset-block">
+      <p>Prospect Theory is one of the most replicated and robust findings in behavioural economics — Nobel Prize (Kahneman, 2002). The specific prediction — that losses loom larger than gains and reference points determine perceived value — is well-established. The mechanism used here (reframing by shifting reference point from face value to expected value) is a direct application. Extensive precedent in financial services and insurance offer design. <strong>Pass.</strong></p>
+    </div>
+
+    <h4>Mental accounting — Thaler (1980)</h4>
+    <div class="inset-block">
+      <p>Thaler's mental accounting framework establishes that the consumer is making the wrong comparison (face value vs offer) rather than the right one (expected value of alternatives vs offer). The EV assessment corrects the comparison object before the offer arrives. <strong>Pass.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 5 — Verdict</div>
+    <div class="verdict-panel">
+      <div class="verdict-label">Verdict — R6 gate · 19 May 2026</div>
+      <div class="verdict-headline">PASS</div>
+      <p><strong>FMOS: 63.5%</strong> — unchanged from R5. R6 adds no new per-unit cost. The EV frame amortisation mechanism is built into the existing claim submission-to-offer sequence at zero marginal cost.</p>
+      <p>The C3 independent assessment org serves three requirements (C3, R4, R6) from a single mechanism. This is the most architecturally elegant cross-requirement connection in the design: one EV report per claim, three problems solved at no incremental cost.</p>
+      <p>The Prospect Theory grounding is robust and directly applicable — reference point manipulation through independent valuation is a well-documented approach in consumer financial services.</p>
+      <p><strong>Proceed to R7 — Activate Gateway Partners.</strong> R7 introduces the NTP placement fee and redesigns the blended acquisition cost, producing the first cost floor reduction since R4.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 6 — Conditions before capital commitment</div>
+    <ol class="conditions-list">
+      <li><span class="cond-number">Condition 1</span><strong>Validate offer acceptance rate in pilot.</strong> The R6 mechanism assumes that EV framing improves offer acceptance. Target: ≥65% of consumers who receive a Calmly offer accept it. Measure offer acceptance rate by framing variant (EV frame vs face value frame) in A/B test during pilot.</li>
+      <li><span class="cond-number">Condition 2</span><strong>Confirm EV report quality is sufficient for reference point anchoring.</strong> The EV assessment must be specific to the claim (not generic) to function as a credible reference point. The assessment org's methodology must include claim-specific EV calculation — not a range or category average. Validate with the assessment org during onboarding.</li>
+    </ol>
+  </div>
+
+  <div class="routing-block">
+    <div class="routing-title">Next step — R7</div>
+    <p><strong>Proceed to R7</strong> — Activate Gateway Partners. R7 introduces the NTP placement fee and redesigns the blended acquisition cost. Expected outcome: blended acquisition cost falls from £38 (R4 CAC) to ~£22/claim as gateway partners take on 60% of inflow. Cost floor moves from £237 to £221 and FMOS improves to 66%.</p>
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">FIT Verifier — R6 gate · 19 May 2026<br>Cumulative cost floor: £237/claim · FMOS: 63.5%</div>
+    <div class="footer-right">Builds on: calmly-fit-verifier-r5-2026-05-19.html (PASS, 63.5%)</div>
+  </div>
+
+</div>
+</body>
+</html>

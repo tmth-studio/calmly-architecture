@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Unit Economics (R6 gate)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --accent: #1f4fa8; --accent-light: #e8eef8;
+      --panel-bg: #0f2744; --panel-text: #ffffff;
+      --green-bg: #e6f4ec; --green-text: #166534;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --amber-bg: #fff8e6; --amber-text: #854d0e;
+      --yellow-hl: #fef3c7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+    .header { background: var(--panel-bg); color: var(--panel-text); padding: 24px 28px; margin-bottom: 32px; }
+    .header h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+    .header p { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    th { background: #f1f3f5; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding: 10px 14px; text-align: right; border: 1px solid var(--border); }
+    th:first-child { text-align: left; width: 42%; }
+    td { padding: 9px 14px; border: 1px solid var(--border); text-align: right; font-size: 13px; }
+    td:first-child { text-align: left; color: var(--text-secondary); }
+    .section-row td { background: #f1f3f5; font-weight: 600; color: var(--text); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; padding: 7px 14px; }
+    .total-row td { font-weight: 600; color: var(--text); border-top: 2px solid var(--text); }
+    .subtotal-row td { font-weight: 600; color: var(--text); border-top: 1px solid #b0b8c4; background: #fafaf9; }
+    .highlight-row td { background: var(--yellow-hl); font-weight: 700; font-size: 14px; border-top: 2px solid #d97706; }
+    .green-row td { background: var(--green-bg); color: var(--green-text); font-weight: 600; }
+    .red-row td { color: var(--red-text); font-weight: 600; }
+    .indent td:first-child { padding-left: 26px; font-size: 12px; color: var(--text-secondary); }
+    .dim td { color: var(--text-muted); font-size: 12px; }
+    .tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+    .tag-green { background: var(--green-bg); color: var(--green-text); }
+    .tag-red { background: var(--red-bg); color: var(--red-text); }
+    .tag-amber { background: var(--amber-bg); color: var(--amber-text); }
+    .note { font-family: 'Lora', serif; font-size: 12.5px; color: var(--text-secondary); border-left: 3px solid var(--border); padding-left: 14px; line-height: 1.75; margin-top: 20px; }
+    .label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .drillable { cursor: pointer; }
+    .drillable:hover td { background: #f7f8fc; }
+    .expand-icon { display: inline-block; margin-left: 6px; font-size: 10px; color: var(--accent); transition: transform 0.15s ease; vertical-align: middle; }
+    .drillable.open .expand-icon { transform: rotate(90deg); }
+    .driver-row { display: none; }
+    .driver-row.visible { display: table-row; }
+    .driver-row td { background: var(--accent-light); border-top: none; padding: 8px 14px 10px 38px; font-size: 12px; color: var(--text-secondary); text-align: left; border-left: 3px solid var(--accent); font-family: 'Lora', serif; line-height: 1.7; }
+    .toggle-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid #b8c8e8; border-radius: 3px; padding: 4px 10px; cursor: pointer; float: right; margin-bottom: 8px; }
+    .toggle-btn:hover { background: #d4e1f5; }
+    .clearfix::after { content: ''; display: table; clear: both; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Calmly — Unit Economics · R6 gate</h1>
+    <p>One claim resolved · R6 adds no new per-unit cost · cost floor held at £237/claim · 19 May 2026</p>
+  </div>
+
+  <div class="label clearfix">
+    Cost and price — per resolved claim (£)
+    <button class="toggle-btn" onclick="toggleAll(this)">Show all drivers</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Pilot<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">40 claims/mo</span></th>
+        <th>Ramp<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">450 claims/mo</span></th>
+        <th>At-scale<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">1,500 claims/mo</span></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="section-row"><td colspan="4">Variable cost (PVC) — per claim</td></tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-assessment')">
+        <td>Assessment org payment (C3) <span class="expand-icon">▶</span></td>
+        <td>16</td><td>16</td><td>16</td>
+      </tr>
+      <tr class="driver-row" id="d-assessment">
+        <td colspan="4">Flat fee per EV report · independent assessment org · Also serves R4 (claimant conviction) and R6 (EV frame for offer) at no additional cost — same report, three functions · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-platform-pvc')">
+        <td>Platform variable (compute, comms, storage) <span class="expand-icon">▶</span></td>
+        <td>8</td><td>8</td><td>8</td>
+      </tr>
+      <tr class="driver-row" id="d-platform-pvc">
+        <td colspan="4">Compute, comms, storage per resolved claim · Tier 4</td>
+      </tr>
+      <tr class="subtotal-row"><td>Total VC per unit</td><td>24</td><td>24</td><td>24</td></tr>
+
+      <tr class="section-row"><td colspan="4">Whole costs / unit product</td></tr>
+      <tr class="dim"><td style="padding-left:14px;">Unit sales per month</td><td>40</td><td>450</td><td>1,500</td></tr>
+      <tr class="dim"><td style="padding-left:14px;font-weight:600;color:var(--text-secondary);">Cost categories</td><td colspan="3"></td></tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-lmu')">
+        <td>LMU specialist labour (variable) <span class="expand-icon">▶</span></td>
+        <td>108</td><td>108</td><td>108</td>
+      </tr>
+      <tr class="driver-row" id="d-lmu">
+        <td colspan="4">265 min/confirmed claim · blended ~£20/hr · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-compliance')">
+        <td>Territory compliance (semi-fixed) <span class="expand-icon">▶</span></td>
+        <td>4</td><td>4</td><td>4</td>
+      </tr>
+      <tr class="driver-row" id="d-compliance">
+        <td colspan="4">Regulatory monitoring, professional indemnity, compliance time · semi-fixed · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-hq')">
+        <td>HQ central team (fixed, allocated) <span class="expand-icon">▶</span></td>
+        <td>313</td><td>93</td><td>50</td>
+      </tr>
+      <tr class="driver-row" id="d-hq">
+        <td colspan="4">£900k/year ÷ monthly volume · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-platform-fixed')">
+        <td>Platform technology (fixed, allocated) <span class="expand-icon">▶</span></td>
+        <td>417</td><td>37</td><td>11</td>
+      </tr>
+      <tr class="driver-row" id="d-platform-fixed">
+        <td colspan="4">~£17k/month fixed · includes R5 guided submission flow and R6 EV offer framing (both absorbed in platform build) · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-sc')">
+        <td>Assessment org setup (allocated) <span class="expand-icon">▶</span></td>
+        <td>1</td><td>1</td><td>1</td>
+      </tr>
+      <tr class="driver-row" id="d-sc">
+        <td colspan="4">£80k one-time · amortised over 75 months · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-wc')">
+        <td>Working capital — assessment org float <span class="expand-icon">▶</span></td>
+        <td>1</td><td>1</td><td>1</td>
+      </tr>
+      <tr class="driver-row" id="d-wc">
+        <td colspan="4">£16 × 4.65 months × 15% CoC ÷ 12 = £0.95 · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-cac')">
+        <td>Customer acquisition cost — organic (R4) <span class="expand-icon">▶</span></td>
+        <td>250</td><td>56</td><td>38</td>
+      </tr>
+      <tr class="driver-row" id="d-cac">
+        <td colspan="4">Organic SEO + word of mouth · £10k/month ÷ volume · R7 gateway partner channel will reduce this to ~£22 blended at scale · Tier 4</td>
+      </tr>
+
+      <tr class="subtotal-row"><td>Total allocated whole costs / unit</td>
+        <td>1,093</td><td>299</td><td>213</td>
+      </tr>
+
+      <tr class="section-row"><td colspan="4">Required price vs ceiling</td></tr>
+      <tr class="total-row"><td>Total cost per unit</td><td>1,117</td><td>323</td><td>237</td></tr>
+      <tr><td>Required price to customer (30% FMOS)</td><td>1,596</td><td>461</td><td>339</td></tr>
+      <tr style="background:#f8f9fb;font-weight:600;"><td>Price ceiling (bilateral KMC × 50%)</td><td>650</td><td>650</td><td>650</td></tr>
+
+      <tr class="section-row"><td colspan="4">Surplus / (deficit) vs price ceiling</td></tr>
+      <tr class="red-row"><td>Difference per unit</td>
+        <td>(467) <span class="tag tag-red">Deficit</span></td>
+        <td>327 <span class="tag tag-green">Surplus</span></td>
+        <td>413 <span class="tag tag-green">Surplus</span></td>
+      </tr>
+      <tr class="highlight-row"><td>Total difference per month</td>
+        <td style="color:#991b1b;">(18,680)</td>
+        <td>147,150</td>
+        <td>619,500</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="label">Summary — cost progression R4–R6</div>
+  <table>
+    <thead><tr><th>Gate</th><th>New cost</th><th>Cost floor</th><th>FMOS (at-scale)</th></tr></thead>
+    <tbody>
+      <tr><td>C3 base</td><td>—</td><td>£199</td><td>69%</td></tr>
+      <tr><td>R4 (CAC)</td><td>+£38</td><td>£237</td><td>64%</td></tr>
+      <tr><td>R5 (nil)</td><td>£0</td><td>£237</td><td>64%</td></tr>
+      <tr class="green-row"><td>R6 (nil)</td><td>£0</td><td>£237</td><td>64%</td></tr>
+      <tr><td>Next: R7 (NTP fee)</td><td>+£25 NTP / −£16 CAC saving</td><td>£221 (projected)</td><td>66% (projected)</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    <strong>What's excluded at R6:</strong> NTP/gateway partner fee (R7 — expected to reduce blended acquisition cost by £16/claim). Defendant fee (C6). Claimant fee structure (C6). R6 note: the EV assessment report serves C3, R4, and R6 from a single production run — zero marginal cost for the R6 amortisation mechanism. Gate: PASS at 63.5% FMOS.
+  </p>
+
+</div>
+
+<script>
+  function toggle(row, driverId) {
+    const driver = document.getElementById(driverId);
+    const isOpen = row.classList.contains('open');
+    if (isOpen) { row.classList.remove('open'); driver.classList.remove('visible'); }
+    else { row.classList.add('open'); driver.classList.add('visible'); }
+  }
+  function toggleAll(btn) {
+    const drivers = document.querySelectorAll('.driver-row');
+    const rows = document.querySelectorAll('.drillable');
+    const anyHidden = Array.from(drivers).some(d => !d.classList.contains('visible'));
+    if (anyHidden) { drivers.forEach(d => d.classList.add('visible')); rows.forEach(r => r.classList.add('open')); btn.textContent = 'Hide all drivers'; }
+    else { drivers.forEach(d => d.classList.remove('visible')); rows.forEach(r => r.classList.remove('open')); btn.textContent = 'Show all drivers'; }
+  }
+</script>
+</body>
+</html>

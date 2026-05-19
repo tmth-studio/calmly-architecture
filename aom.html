@@ -1,0 +1,1482 @@
+<!-- Updated: C3 — 19 May 2026 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — AOM v2 — C1+C2+C3 — 19 May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #0f1923;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #dde1e7;
+      --border-strong: #b0b8c4;
+      --accent: #1f4fa8;
+      --accent-light: #e8eef8;
+      --panel-bg: #0f2744;
+      --panel-text: #ffffff;
+      --warning-bg: #fff8e6;
+      --warning-border: #d4820a;
+      --inset-border: #1f4fa8;
+      --green-bg: #e6f4ec;
+      --green-text: #166534;
+      --red-bg: #fde8e8;
+      --red-text: #991b1b;
+      --yellow-bg: #fef9e6;
+      --yellow-text: #854d0e;
+      --purple-bg: #f0ebfb;
+      --purple-text: #5b21b6;
+      --tag-radius: 3px;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+      --font-body: 'Lora', Georgia, serif;
+      --width: 1060px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 48px 32px 100px; background: var(--surface); }
+
+    /* ─── Typography ─── */
+    h1 { font-size: 30px; font-weight: 600; line-height: 1.2; }
+    h2 { font-size: 22px; font-weight: 600; }
+    h3 { font-size: 18px; font-weight: 600; }
+    h4 { font-size: 16px; font-weight: 600; }
+    p.body { font-family: var(--font-body); font-size: 16px; line-height: 1.7; margin-bottom: 14px; color: var(--text-secondary); }
+    p.body:last-child { margin-bottom: 0; }
+
+    /* ─── Header ─── */
+    .doc-header { border-bottom: 2px solid var(--text); padding-bottom: 24px; margin-bottom: 40px; }
+    .doc-header .label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .doc-header .subtitle { font-family: var(--font-body); font-size: 17px; color: var(--text-secondary); font-style: italic; margin: 8px 0 20px; }
+    .meta-row { display: flex; gap: 24px; font-size: 14px; color: var(--text-muted); flex-wrap: wrap; }
+
+    /* ─── Panel ─── */
+    .panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin: 36px 0; }
+    .panel .panel-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+    .panel p { font-family: var(--font-body); font-size: 17px; line-height: 1.7; }
+    .panel p + p { margin-top: 12px; }
+
+    /* ─── Architecture discipline notice ─── */
+    .arch-notice { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 18px 24px; margin: 0 0 36px; }
+    .arch-notice .arch-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warning-border); margin-bottom: 8px; }
+    .arch-notice p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: #5a3a00; margin-bottom: 6px; }
+    .arch-notice p:last-child { margin-bottom: 0; }
+    .arch-notice ul { margin: 6px 0 0 20px; }
+    .arch-notice li { font-family: var(--font-body); font-size: 14px; color: #5a3a00; line-height: 1.65; margin-bottom: 3px; }
+
+    /* ─── Section headers ─── */
+    .section-rule { border: none; border-top: 2px solid var(--border); margin: 52px 0 0; }
+    .section-header { border-left: 4px solid var(--accent); background: var(--bg); padding: 16px 20px; margin: 52px 0 24px; }
+    .section-header .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+
+    /* ─── Tags ─── */
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--tag-radius); border: 1px solid; white-space: nowrap; }
+    .tag-blue  { background: var(--accent-light); color: var(--accent); border-color: #b8c8e8; }
+    .tag-green { background: var(--green-bg); color: var(--green-text); border-color: #a7d4b8; }
+    .tag-red   { background: var(--red-bg); color: var(--red-text); border-color: #f0b4b4; }
+    .tag-yellow { background: var(--yellow-bg); color: var(--yellow-text); border-color: #f0d98a; }
+    .tag-grey  { background: #f1f3f5; color: #4a5568; border-color: #d0d5dd; }
+    .tag-purple { background: var(--purple-bg); color: var(--purple-text); border-color: #c4aff0; }
+
+    /* ─── Assumption blocks ─── */
+    .assumption { background: var(--warning-bg); border-left: 3px solid var(--warning-border); padding: 8px 12px; margin: 8px 0; font-size: 12px; color: #7a4a00; line-height: 1.55; }
+    .assumption strong { color: var(--warning-border); }
+    .inset { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 14px 18px; margin: 12px 0; font-size: 14px; line-height: 1.7; }
+
+    /* ─── Excluded block ─── */
+    .excluded { background: #fde8e8; border-left: 4px solid #991b1b; padding: 12px 18px; margin: 12px 0; font-size: 13px; line-height: 1.65; color: #991b1b; }
+    .excluded strong { color: #7a1515; }
+
+    /* ─── Three-card operating unit summary ─── */
+    .unit-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 28px 0; }
+    .unit-card { border: 1px solid var(--border); padding: 20px; }
+    .unit-card .unit-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .unit-card h3 { font-size: 16px; margin-bottom: 12px; }
+    .unit-card dl { font-size: 14px; }
+    .unit-card dt { font-weight: 600; color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 10px; }
+    .unit-card dd { color: var(--text-secondary); margin-top: 2px; font-family: var(--font-body); font-size: 14px; }
+
+    /* ─── Tables ─── */
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    thead tr { background: #f7f7f6; }
+    th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    td.body-cell { font-family: var(--font-body); line-height: 1.65; }
+    td.number { font-weight: 600; font-variant-numeric: tabular-nums; }
+    td.driver { font-size: 12px; font-family: var(--font-body); }
+
+    /* ─── AOM matrix ─── */
+    .aom-matrix { overflow-x: auto; margin: 24px 0; }
+    .aom-matrix table { min-width: 900px; }
+    .aom-matrix th { background: #f7f7f6; }
+    .aom-matrix td { vertical-align: top; }
+    .aom-matrix td.row-header { font-weight: 600; font-size: 13px; background: #fafaf9; color: var(--text-secondary); width: 160px; }
+    .aom-matrix td.cell { font-size: 13px; line-height: 1.55; }
+    .aom-matrix td.cell ul { margin: 4px 0 0 16px; }
+    .aom-matrix td.cell li { margin-bottom: 3px; }
+    .aom-matrix td.cell em { color: var(--text-muted); font-style: normal; font-size: 12px; }
+
+    /* ─── Revenue model ─── */
+    .rev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 24px 0; }
+    .rev-card { border: 1px solid var(--border); padding: 20px; }
+    .rev-card .rev-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .rev-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+    .rev-card p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 8px; }
+    .rev-card p:last-child { margin-bottom: 0; }
+
+    /* ─── Flow diagram ─── */
+    .flow-diagram { margin: 36px 0; overflow-x: auto; }
+    .flow-wrap { min-width: 960px; }
+
+    /* ─── Routing instruction ─── */
+    .routing { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin-top: 56px; }
+    .routing .routing-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 12px; }
+    .routing p { font-family: var(--font-body); font-size: 16px; line-height: 1.7; }
+    .routing p + p { margin-top: 10px; }
+    .routing code { font-family: monospace; background: rgba(255,255,255,0.12); padding: 2px 6px; font-size: 14px; border-radius: 2px; }
+
+    /* ─── Fin-sim feed ─── */
+    .finsim { background: #fafaf9; border: 1px solid var(--border); padding: 24px 28px; margin-top: 36px; }
+    .finsim pre { font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.65; color: var(--text-secondary); white-space: pre-wrap; }
+    .finsim .finsim-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+
+    /* ─── Touchpoint badges ─── */
+    .tp { display: inline-block; padding: 4px 10px; border-radius: 3px; font-size: 11px; font-weight: 600; letter-spacing: 0.03em; margin: 2px; }
+    .tp-cp { background: var(--accent-light); color: var(--accent); border: 1px solid #b8c8e8; }
+    .tp-wp { background: #fde8e8; color: #991b1b; border: 1px solid #f0b4b4; }
+    .tp-part { background: var(--purple-bg); color: var(--purple-text); border: 1px solid #c4aff0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- HEADER -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <div class="doc-header">
+    <div class="label">Calmly — AOM v2 — C1+C2+C3 — 19 May 2026 — IVE Step 4</div>
+    <h1>At-Scale Operational Model</h1>
+    <div class="subtitle">Platform-only costs. Pool operator costs excluded by design.</div>
+    <div class="meta-row">
+      <span>Tom Manuel</span>
+      <span>19 May 2026</span>
+      <span>Based on: Design Memo v2.0 (exchange architecture)</span>
+      <span>Supersedes: AOM v2 C1+C2 (18 May 2026)</span>
+      <span>Feeds into: /ive-fin-sim-custom (Group 4)</span>
+    </div>
+  </div>
+
+  <!-- ─── Architecture Discipline Notice ─── -->
+  <div class="arch-notice">
+    <div class="arch-label">Architecture discipline — C1+C2+C3</div>
+    <p>This AOM reflects Calmly platform costs only. Pool operator costs (solicitors, litigation, court filing, working capital for claims in flight) are excluded — they belong to the pool operator's P&L, not Calmly's.</p>
+    <p>Calmly is a platform. It does not own claims, bear litigation risk, employ solicitors, or fund court proceedings. The pool operator does those things. Calmly earns platform fees from both parties (claimant and defendant) per claim resolved through the exchange.</p>
+    <ul>
+      <li><strong>Excluded:</strong> solicitor salaries, law student supervision, N1 court filing fees, ATE insurance, working capital for claims in litigation, SRA compliance costs at the operating unit level.</li>
+      <li><strong>Included:</strong> technology infrastructure, claim intake and eligibility assessment, independent EV assessment delivery (routed via independent assessment org under C3), defendant onboarding and settlement facilitation, pool operator relationship management. Independent assessment organisation as external enabler — generates every EV settlement report (C3). Calmly pays £16.28/claim per report. WP2 specialist activity changes from generation to routing and review.</li>
+      <li><strong>Not modelled (requires later architecture):</strong> securitisation vehicle management, SPV operations, investor relations infrastructure at institutional scale, AML compliance for investor onboarding. These are flagged <code>[REQUIRES later architecture]</code> and excluded from cost lines.</li>
+    </ul>
+  </div>
+
+  <!-- ─── Governing Thought ─── -->
+  <div class="panel">
+    <div class="panel-label">Governing thought</div>
+    <p>Calmly is not a law firm operating at scale. It is the market infrastructure that makes the small claims litigation market function — the exchange, the rating methodology, the settlement facilitation layer. The pool operator brings the legal machinery; Calmly provides the credible, independent signal that makes rational settlement possible on both sides.</p>
+    <p>The operating model is designed around that role. The last-mile unit is a Calmly platform team, not a student law clinic. The binding cost is Calmly's own staff time for intake, EV assessment delivery, defendant engagement, and settlement facilitation — not solicitor supervision or court filing. The exchange earns fees from both parties because it delivers real value to both: the claimant gets a credible, independently assessed offer; the defendant gets a bounded, verifiable liability and a structured path to closure.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 1: OPERATING ARCHITECTURE FLOW DIAGRAM -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 1</div>
+    <h2>Operating architecture — flow diagram</h2>
+  </div>
+
+  <p class="body">The diagram maps Calmly's operating structure from head office to the point of customer contact. Read left to right. The vertical boundary marks the last-mile operating unit — a Calmly platform team. Everything to the left is central infrastructure Calmly provides. Everything to the right is the exchange at the point of use. The pool operator sits outside this diagram — it is a partner with its own P&L, not a Calmly cost centre.</p>
+
+  <div class="flow-diagram">
+    <div class="flow-wrap">
+      <svg viewBox="0 0 1020 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:'DM Sans',sans-serif;">
+
+        <!-- Background -->
+        <rect x="0" y="0" width="1020" height="520" fill="#f5f4f1"/>
+
+        <!-- HQ box (navy) -->
+        <rect x="12" y="30" width="168" height="460" fill="#0f2744" rx="0"/>
+        <text x="96" y="56" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-size="9" font-weight="600" letter-spacing="1">HEAD OFFICE</text>
+
+        <text x="96" y="78" text-anchor="middle" fill="white" font-size="11" font-weight="600">Platform &amp; technology</text>
+        <text x="96" y="96" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Exchange platform</text>
+        <text x="96" y="112" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">EV assessment engine</text>
+        <text x="96" y="128" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Matching algorithm</text>
+        <text x="96" y="144" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Settlement system</text>
+        <line x1="32" y1="156" x2="160" y2="156" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+        <text x="96" y="178" text-anchor="middle" fill="white" font-size="11" font-weight="600">EV methodology</text>
+        <text x="96" y="196" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Assessment framework</text>
+        <text x="96" y="212" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Track record dataset</text>
+        <text x="96" y="228" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Assessor training</text>
+        <line x1="32" y1="240" x2="160" y2="240" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+        <text x="96" y="262" text-anchor="middle" fill="white" font-size="11" font-weight="600">Pool operator relations</text>
+        <text x="96" y="280" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Operator onboarding</text>
+        <text x="96" y="296" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Pool quality standards</text>
+        <text x="96" y="312" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Data feeds</text>
+        <line x1="32" y1="324" x2="160" y2="324" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+        <text x="96" y="346" text-anchor="middle" fill="white" font-size="11" font-weight="600">Commercial</text>
+        <text x="96" y="364" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">NTP partnerships</text>
+        <text x="96" y="380" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Defendant outreach</text>
+        <line x1="32" y1="392" x2="160" y2="392" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+        <text x="96" y="414" text-anchor="middle" fill="white" font-size="11" font-weight="600">Finance &amp; ops</text>
+        <text x="96" y="432" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Fee collection</text>
+        <text x="96" y="448" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Compliance (FCA/SRA)</text>
+        <text x="96" y="464" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">HR / Finance / CEO</text>
+
+        <!-- Arrow HQ → LMU boundary -->
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#b0b8c4"/>
+          </marker>
+        </defs>
+        <line x1="180" y1="260" x2="214" y2="260" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- LMU boundary line -->
+        <line x1="222" y1="20" x2="222" y2="510" stroke="#0f2744" stroke-width="2" stroke-dasharray="6,4"/>
+        <text x="226" y="16" fill="#0f2744" font-size="9" font-weight="600" letter-spacing="1">LAST-MILE UNIT (PLATFORM TEAM) · 1 per county court catchment · bounded by court geography</text>
+
+        <!-- LMU internal box -->
+        <rect x="228" y="30" width="310" height="460" fill="white" stroke="#dde1e7" stroke-width="1"/>
+        <text x="383" y="52" text-anchor="middle" fill="#718096" font-size="9" font-weight="600" letter-spacing="1">PLATFORM TEAM (LMU)</text>
+        <text x="383" y="68" text-anchor="middle" fill="#0f1923" font-size="11" font-weight="600">Intake · EV · Defendant engagement · Settlement</text>
+
+        <!-- CP1: Claim intake and eligibility -->
+        <rect x="244" y="82" width="130" height="46" fill="#e8eef8" stroke="#b8c8e8" stroke-width="1.5" rx="3"/>
+        <text x="309" y="100" text-anchor="middle" fill="#1f4fa8" font-size="10" font-weight="700">CP1</text>
+        <text x="309" y="116" text-anchor="middle" fill="#1f4fa8" font-size="10">Claim intake</text>
+
+        <!-- WP1: Claim eligibility assessment -->
+        <rect x="244" y="146" width="130" height="46" fill="#fde8e8" stroke="#f0b4b4" stroke-width="1.5" rx="3"/>
+        <text x="309" y="164" text-anchor="middle" fill="#991b1b" font-size="10" font-weight="700">WP1</text>
+        <text x="309" y="180" text-anchor="middle" fill="#991b1b" font-size="10">Eligibility assessment</text>
+
+        <!-- WP2: Independent EV assessment -->
+        <rect x="244" y="210" width="130" height="46" fill="#fde8e8" stroke="#f0b4b4" stroke-width="1.5" rx="3"/>
+        <text x="309" y="228" text-anchor="middle" fill="#991b1b" font-size="10" font-weight="700">WP2</text>
+        <text x="309" y="244" text-anchor="middle" fill="#991b1b" font-size="10">Independent EV assessment</text>
+
+        <!-- CP2: EV presented to claimant (new) -->
+        <rect x="244" y="274" width="130" height="46" fill="#e8eef8" stroke="#b8c8e8" stroke-width="1.5" rx="3"/>
+        <text x="309" y="292" text-anchor="middle" fill="#1f4fa8" font-size="10" font-weight="700">CP2 <tspan font-size="8" fill="#d4820a">NEW</tspan></text>
+        <text x="309" y="308" text-anchor="middle" fill="#1f4fa8" font-size="10">EV disclosed (claimant)</text>
+
+        <!-- WP3: Pool matching -->
+        <rect x="244" y="338" width="130" height="46" fill="#fde8e8" stroke="#f0b4b4" stroke-width="1.5" rx="3"/>
+        <text x="309" y="356" text-anchor="middle" fill="#991b1b" font-size="10" font-weight="700">WP3</text>
+        <text x="309" y="372" text-anchor="middle" fill="#991b1b" font-size="10">Pool matching</text>
+
+        <!-- CP3: Defendant onboarding + settlement (new) -->
+        <rect x="244" y="402" width="130" height="46" fill="#e8eef8" stroke="#b8c8e8" stroke-width="1.5" rx="3"/>
+        <text x="309" y="420" text-anchor="middle" fill="#1f4fa8" font-size="10" font-weight="700">CP3 <tspan font-size="8" fill="#d4820a">NEW</tspan></text>
+        <text x="309" y="436" text-anchor="middle" fill="#1f4fa8" font-size="10">Defendant settlement</text>
+
+        <!-- Vertical connectors inside LMU -->
+        <line x1="309" y1="128" x2="309" y2="146" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="309" y1="192" x2="309" y2="210" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="309" y1="256" x2="309" y2="274" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="309" y1="320" x2="309" y2="338" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="309" y1="384" x2="309" y2="402" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- Part1: Pool operator (external, right of LMU boundary) -->
+        <rect x="394" y="338" width="130" height="46" fill="#f0ebfb" stroke="#c4aff0" stroke-width="1.5" rx="3"/>
+        <text x="459" y="356" text-anchor="middle" fill="#5b21b6" font-size="10" font-weight="700">Part1</text>
+        <text x="459" y="372" text-anchor="middle" fill="#5b21b6" font-size="10">Pool operator</text>
+        <line x1="394" y1="361" x2="374" y2="361" stroke="#c4aff0" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- Part2: NTP origination (external) -->
+        <rect x="394" y="82" width="130" height="46" fill="#f0ebfb" stroke="#c4aff0" stroke-width="1.5" rx="3"/>
+        <text x="459" y="100" text-anchor="middle" fill="#5b21b6" font-size="10" font-weight="700">Part2</text>
+        <text x="459" y="116" text-anchor="middle" fill="#5b21b6" font-size="10">NTP origination</text>
+        <line x1="394" y1="105" x2="374" y2="105" stroke="#c4aff0" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- Arrow from LMU to Customers -->
+        <line x1="538" y1="260" x2="574" y2="260" stroke="#b0b8c4" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+        <!-- Claimant box -->
+        <rect x="578" y="72" width="162" height="110" fill="white" stroke="#b8c8e8" stroke-width="1.5" rx="0"/>
+        <text x="659" y="96" text-anchor="middle" fill="#1f4fa8" font-size="9" font-weight="600" letter-spacing="1">CUSTOMER — CLAIMANT</text>
+        <text x="659" y="116" text-anchor="middle" fill="#0f1923" font-size="11" font-weight="600">Consumer claimant</text>
+        <text x="659" y="134" text-anchor="middle" fill="#4a5568" font-size="10">Claim £500–£5,000</text>
+        <text x="659" y="150" text-anchor="middle" fill="#4a5568" font-size="10">Arrived via NTP</text>
+        <text x="659" y="166" text-anchor="middle" fill="#4a5568" font-size="10">Pays fee on resolution</text>
+
+        <!-- Defendant box (anti-customer / second customer) -->
+        <rect x="578" y="290" width="162" height="110" fill="white" stroke="#b8c8e8" stroke-width="1.5" rx="0"/>
+        <text x="659" y="314" text-anchor="middle" fill="#1f4fa8" font-size="9" font-weight="600" letter-spacing="1">CUSTOMER — DEFENDANT</text>
+        <text x="659" y="334" text-anchor="middle" fill="#0f1923" font-size="11" font-weight="600">SME / sole trader</text>
+        <text x="659" y="352" text-anchor="middle" fill="#4a5568" font-size="10">Receives EV + settlement</text>
+        <text x="659" y="368" text-anchor="middle" fill="#4a5568" font-size="10">offer via NTP channel</text>
+        <text x="659" y="384" text-anchor="middle" fill="#4a5568" font-size="10">Pays fee on resolution</text>
+
+        <!-- Revenue arrows annotation -->
+        <line x1="578" y1="130" x2="542" y2="290" stroke="#1f4fa8" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="578" y1="340" x2="542" y2="300" stroke="#1f4fa8" stroke-width="1" stroke-dasharray="3,3"/>
+
+        <!-- Legend -->
+        <rect x="762" y="72" width="240" height="168" fill="white" stroke="#dde1e7" stroke-width="1"/>
+        <text x="778" y="94" fill="#718096" font-size="9" font-weight="600" letter-spacing="1">LEGEND</text>
+        <rect x="778" y="104" width="16" height="14" fill="#e8eef8" stroke="#b8c8e8" stroke-width="1" rx="2"/>
+        <text x="800" y="116" fill="#0f1923" font-size="11">CP — customer product</text>
+        <rect x="778" y="126" width="16" height="14" fill="#fde8e8" stroke="#f0b4b4" stroke-width="1" rx="2"/>
+        <text x="800" y="138" fill="#0f1923" font-size="11">WP — working product</text>
+        <rect x="778" y="148" width="16" height="14" fill="#f0ebfb" stroke="#c4aff0" stroke-width="1" rx="2"/>
+        <text x="800" y="160" fill="#0f1923" font-size="11">Part — partner</text>
+        <rect x="778" y="170" width="16" height="14" fill="#fef9e6" stroke="#f0d98a" stroke-width="1" rx="2"/>
+        <text x="800" y="182" fill="#854d0e" font-size="11">NEW — added in C2</text>
+        <line x1="778" y1="204" x2="794" y2="204" stroke="#c4aff0" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="800" y="208" fill="#0f1923" font-size="11">Dashed = partner channel</text>
+        <line x1="778" y1="226" x2="794" y2="226" stroke="#b0b8c4" stroke-width="1.5"/>
+        <text x="800" y="230" fill="#0f1923" font-size="11">Solid = primary flow</text>
+
+        <!-- EXCLUDED note -->
+        <rect x="762" y="258" width="240" height="100" fill="#fde8e8" stroke="#f0b4b4" stroke-width="1.5" rx="0"/>
+        <text x="778" y="280" fill="#991b1b" font-size="9" font-weight="600" letter-spacing="1">EXCLUDED FROM THIS AOM</text>
+        <text x="778" y="298" fill="#7a1515" font-size="10">Solicitor labour</text>
+        <text x="778" y="314" fill="#7a1515" font-size="10">Law student supervision</text>
+        <text x="778" y="330" fill="#7a1515" font-size="10">Court filing fees</text>
+        <text x="778" y="346" fill="#7a1515" font-size="10">Working capital for claims</text>
+        <text x="778" y="362" fill="#5a0000" font-size="9" font-style="italic">→ pool operator P&amp;L, not Calmly</text>
+
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: OPERATING UNIT SUMMARY -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 2</div>
+    <h2>Operating unit summary</h2>
+  </div>
+
+  <div class="unit-cards">
+
+    <div class="unit-card">
+      <div class="unit-label">Last-mile unit (LMU)</div>
+      <h3>Platform team</h3>
+      <dl>
+        <dt>Structural bound</dt>
+        <dd>One LMU per county court catchment area. The county court defines the LMU boundary: all claims within a catchment file at the same court, jurisdiction is resolved by definition, and pool operators know exactly where litigation will proceed. The LMU boundary is geographic and externally defined — not a function of team headcount or throughput assumptions.</dd>
+        <dt>Headcount</dt>
+        <dd>4–5 — 1 intake and eligibility assessor, 1 EV assessment specialist, 1 defendant engagement specialist, 1 settlement facilitator (roles may overlap at lower volume). Headcount scales within the LMU as claim volume from the catchment grows — a second EV specialist is added when throughput consistently exceeds ~45 claims/month.</dd>
+        <dt>Capacity</dt>
+        <dd>Determined by claim volume arising within the county court catchment. Under C3, EV specialist time falls from ~137 min to ~67 min per confirmed claim — WP2 generation is transferred to the independent assessment org. The binding throughput constraint shifts to defendant engagement specialist time (~86 min per confirmed claim). This is an operational ceiling, not the architectural bound. The architectural bound is the court catchment.</dd>
+        <dt>Physical footprint</dt>
+        <dd>No dedicated premises required. Platform work is fully remote via the exchange system. Video calls for claimant and defendant engagement.</dd>
+        <dt>NTP supply chain</dt>
+        <dd>NTP relationships (trade bodies, housing associations, Citizens Advice branches) are regional and map onto the same geography as the county court catchment. One LMU per catchment aligns the claim supply chain with the court jurisdiction.</dd>
+        <dt>What this unit does not do</dt>
+        <dd>It does not employ solicitors. It does not prepare court bundles. It does not file claims at court. It does not carry working capital for litigation.</dd>
+      </dl>
+      <div class="assumption" style="margin-top:14px;"><strong>TIER 4 ASSUMPTION:</strong> Claim volume per county court catchment is not modelled here — this requires HMCTS small claims data by court. The at-scale LMU count is estimated at 40–60 (the busiest county courts by small claims volume in England &amp; Wales). The throughput ceiling within each LMU remains ~60 claims/month per EV specialist configuration, but the geographic bound is the court catchment, not the specialist's hours.</div>
+    </div>
+
+    <div class="unit-card">
+      <div class="unit-label">Territory</div>
+      <h3>Regional team</h3>
+      <dl>
+        <dt>Structural bound</dt>
+        <dd>A territory groups adjacent county court catchments under one regional manager. Territory boundaries follow court circuit geography (England &amp; Wales has 7 court circuits: Midland, North Eastern, Northern, South Eastern, Wales, Western, South Eastern London). Each territory is a management and compliance layer — not a claim-origination unit.</dd>
+        <dt>LMUs per territory</dt>
+        <dd>~6–10 county court catchments per territory manager, depending on circuit geography and claim density. Circuits with high density (e.g. South Eastern / London) may require more managers per LMU.</dd>
+        <dt>Territory headcount</dt>
+        <dd>1 territory manager + 1 regional compliance officer</dd>
+        <dt>Territory manager role</dt>
+        <dd>Supervises platform team leads across the circuit, manages regional NTP relationships (national body regional branches), monitors EV assessment consistency across LMUs in the circuit, escalates novel legal scenarios to HQ.</dd>
+        <dt>Regional compliance</dt>
+        <dd>1 compliance officer per territory — FCA/SRA platform compliance, data protection, complaint handling. Not claim-level legal compliance (pool operator's responsibility).</dd>
+        <dt>At-scale territories</dt>
+        <dd>~5–7 territories covering England &amp; Wales, mapped to court circuits.</dd>
+      </dl>
+      <div class="assumption" style="margin-top:14px;"><strong>TIER 4 ASSUMPTION:</strong> Territory structure mapped to court circuits is logical but unvalidated. HMCTS circuit boundaries and small claims volume distribution by circuit required to confirm territory headcount. The 7-circuit structure of England &amp; Wales is a reasonable starting framework.</div>
+    </div>
+
+    <div class="unit-card">
+      <div class="unit-label">Head office</div>
+      <h3>Central platform</h3>
+      <dl>
+        <dt>Total HQ headcount at scale</dt>
+        <dd>~14–18 people</dd>
+        <dt>Functions</dt>
+        <dd>Platform engineering (3–5), EV methodology and assessor training (2–3), pool operator relations (2), commercial / NTP partnerships (2–3), finance and compliance (2), CEO / leadership (2)</dd>
+        <dt>What HQ does not do</dt>
+        <dd>HQ does not manage solicitor networks, student labour programmes, or litigation outcomes. Pool operators manage those — HQ manages the standard by which pool operators must operate.</dd>
+        <dt>Cost structure</dt>
+        <dd>HQ costs are largely fixed and scale sub-linearly with volume. At ~18,000 claims/year, HQ cost per claim is estimated during fin-sim.</dd>
+      </dl>
+      <div class="assumption" style="margin-top:14px;"><strong>TIER 4 ASSUMPTION:</strong> HQ headcount range. Benchmarked against comparable exchange-model platforms (Resolver, Ombudsman-as-a-Service analogues). No direct UK small claims exchange comparable exists.</div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: PLATFORM TEAM DESIGN — LAST-MILE UNIT -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 3</div>
+    <h2>Platform team design — the last-mile unit</h2>
+  </div>
+
+  <p class="body">The platform team is designed right-to-left: starting from the point of customer contact (Using stream) and working back through Making. The pool operator's work sits outside this design entirely — it begins after WP3 (pool matching) and produces no cost lines on Calmly's P&L.</p>
+
+  <h3 style="margin: 28px 0 16px;">3a — Using stream (point of customer contact)</h3>
+  <p class="body">Three direct customer interactions take place through the platform team. CP1 is claimant intake. CP2 is EV disclosure to the claimant (added in C2 — this is Calmly's core value-add for the both-party model). CP3 is defendant onboarding and settlement facilitation (also C2). Both CP2 and CP3 are new relative to a claim-purchase-only architecture.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Touchpoint</th>
+        <th>Activity</th>
+        <th>Role</th>
+        <th>Time per claim</th>
+        <th>Volume driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-blue">CP1</span></td>
+        <td class="body-cell">Claim intake. Claimant submits via platform. Intake assessor reviews eligibility — jurisdiction, claim value (£500–£5,000), evidence available, category (consumer vs commercial). Pre-screen decision communicated with indicative EV range.</td>
+        <td>Intake and eligibility assessor</td>
+        <td>45 min assessor</td>
+        <td>Per inquiry. ~65% pass pre-screen. Gross up ÷ 0.65 → ~69 min per purchased claim.</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">CP2 <span class="tag tag-yellow">NEW</span></span></td>
+        <td class="body-cell">EV disclosed to claimant. EV assessment specialist presents the independent expected value assessment to the claimant. Claimant receives a factual reference point before committing to sell. Questions answered. Framing: the offer they will receive from the pool operator derives from this independent assessment — they can evaluate whether it is fair.</td>
+        <td>EV assessment specialist</td>
+        <td>30 min specialist</td>
+        <td>Per inquiry at this stage. ~80% proceed after EV disclosure. Gross up ÷ 0.80 → 37.5 min per confirmed claim.</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-blue">CP3 <span class="tag tag-yellow">NEW</span></span></td>
+        <td class="body-cell">Defendant onboarding and settlement facilitation. Defendant engagement specialist contacts defendant via NTP channel. Presents independent EV assessment and without-prejudice settlement offer. Structures settlement terms. Optional acknowledgment pathway offered. Settlement recorded on platform.</td>
+        <td>Defendant engagement specialist + settlement facilitator</td>
+        <td>60 min engagement + 30 min facilitation per settled claim</td>
+        <td>Per unit in settlement phase. Assumes ~70% settle before court (TIER 4). Full 90 min per settled claim. Claims proceeding to court: 10 min handoff to pool operator only.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="inset" style="margin-top: 8px;">
+    <strong>Conversion funnel (Calmly platform side):</strong> 100 inquiries → 65 pass pre-screen (CP1) → 65 enter EV assessment (WP2) → 52 proceed after EV disclosure (CP2, 80% of 65) → 52 matched to pool (WP3) → 36 settle via Calmly facilitation (CP3, 70% of 52). The remaining 16 proceed to pool operator litigation — Calmly's engagement ends at handoff. Pool operator bears all costs from that point.
+    <div class="assumption" style="margin-top: 8px;"><strong>TIER 4 ASSUMPTION:</strong> 65% pre-screen pass rate, 80% post-EV proceed rate, 70% pre-court settlement rate. No empirical data for this market. These are drawn from analogous claim facilitation operations and academic literature on defendant settlement rates under independent EV signalling (Babcock &amp; Loewenstein 1997; Spence 1973). Sensitivity analysis required in fin-sim.</div>
+  </div>
+
+  <div class="excluded" style="margin-top: 8px;">
+    <strong>Excluded (requires later architecture):</strong> investor onboarding to the exchange, investor KYC, securitisation vehicle administration, institutional investor relations. These require architecture beyond C3 and are not modelled here.
+  </div>
+
+  <h3 style="margin: 32px 0 16px;">3b — Making stream</h3>
+  <p class="body">Two core making activities happen inside the platform team: claim eligibility assessment (WP1) and independent EV assessment (WP2). Both happen before CP2. The pool operator takes the rated, matched claim from WP3 — Calmly's making work is complete at that point.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>Role</th>
+        <th>Level</th>
+        <th>Time per claim</th>
+        <th>Volume driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell"><span class="tag tag-red">WP1</span> Eligibility assessment — jurisdiction check, evidence review, claim categorisation</td>
+        <td>Intake and eligibility assessor</td>
+        <td>LMU</td>
+        <td>45 min</td>
+        <td>Per inquiry (gross up ÷ 0.65 for pre-screen pass rate)</td>
+      </tr>
+      <tr>
+        <td class="body-cell">
+          <span class="tag tag-red">WP2</span> Independent EV assessment — route claim to independent assessment org, receive returned report, run quality review, handle assessment disputes, record in track record dataset
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C3 update:</strong> assessment generation transferred to independent assessment org (external enabler, law students, no financial stake). Specialist time reduced from 90 min (generation) to 20 min (routing and quality review). PVC cost of £16.28/claim added — see cost stack.</div>
+        </td>
+        <td>EV assessment specialist</td>
+        <td>LMU</td>
+        <td>20 min</td>
+        <td>Per unit (every claim that passes pre-screen receives a full EV assessment)</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><span class="tag tag-red">WP3</span> Pool matching — allocate claim to appropriate pool operator, package claim file for transfer, confirm pool operator acceptance, update exchange record</td>
+        <td>Platform (automated) + intake assessor (5 min exception handling)</td>
+        <td>LMU / Platform</td>
+        <td>~5 min (exceptions) + automated</td>
+        <td>Per unit. Automated at scale. Manual only for claims outside standard pool parameters (TIER 4: ~10% of claims).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="excluded" style="margin-top: 8px;">
+    <strong>Excluded — pool operator's making activities (not Calmly cost):</strong> evidence bundle preparation (CPR Part 27), court bundle construction, N1 claim form preparation, claim filing at court, litigation monitoring, settlement enforcement. These sit entirely in the pool operator's P&L.
+  </div>
+
+  <h3 style="margin: 32px 0 16px;">3c — Selling stream</h3>
+  <p class="body">Selling at LMU level is limited to claim activation (CP2 — converting a pre-screened claimant into a committed seller) and defendant engagement (CP3). National NTP partnership development sits at HQ. Pool operator relationship management sits at HQ.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>Role</th>
+        <th>Level</th>
+        <th>Time per inquiry</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell">NTP routes claimant to platform at dispute onset</td>
+        <td>NTP staff (external — not Calmly headcount)</td>
+        <td>NTP ecosystem</td>
+        <td>&lt;5 min NTP time</td>
+        <td>Not a Calmly cost. NTP placement fee is a per-transaction cost — see revenue model.</td>
+      </tr>
+      <tr>
+        <td class="body-cell">Pre-screen and indicative EV (CP1 — doubles as selling step)</td>
+        <td>Intake and eligibility assessor</td>
+        <td>LMU</td>
+        <td>45 min</td>
+        <td>~65% proceed. This is the first sell — Calmly earns nothing if the claimant does not proceed to EV.</td>
+      </tr>
+      <tr>
+        <td class="body-cell">Full EV presented and claim activation (CP2)</td>
+        <td>EV assessment specialist</td>
+        <td>LMU</td>
+        <td>30 min</td>
+        <td>~80% proceed to pool matching. This is the commitment point.</td>
+      </tr>
+      <tr>
+        <td class="body-cell">Defendant engagement and offer presentation (CP3)</td>
+        <td>Defendant engagement specialist</td>
+        <td>LMU</td>
+        <td>60 min per defendant</td>
+        <td>~70% settle before court. This is the second fee trigger — Calmly's defendant-side revenue.</td>
+      </tr>
+      <tr>
+        <td class="body-cell">NTP national partnership activation (Stage 1–3)</td>
+        <td>Commercial team (HQ)</td>
+        <td>HQ</td>
+        <td>Fixed per NTP</td>
+        <td>Not per-claim. Amortise over lifetime claims from NTP relationship. Fin-sim Group 5.</td>
+      </tr>
+      <tr>
+        <td class="body-cell">Pool operator onboarding and quality management</td>
+        <td>Pool operator relations (HQ)</td>
+        <td>HQ</td>
+        <td>Fixed per pool operator</td>
+        <td>Not per-claim. Amortise over lifetime claims processed by that pool operator. Fin-sim Group 5.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin: 32px 0 16px;">3d — Enabler roles within the platform team</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Activity</th>
+        <th>Allocation</th>
+        <th>Scales with</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell"><strong>Platform team lead</strong></td>
+        <td class="body-cell">Supervises 4–5 platform staff, manages caseload allocation, handles escalations, owns quality metrics for the LMU. Reports to territory manager.</td>
+        <td>~20% overhead on top of delivery role (role typically held by senior EV specialist or defendant engagement specialist)</td>
+        <td>Fixed per LMU — 1 team lead regardless of volume below ~60 claims/month</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Territory compliance officer</strong></td>
+        <td class="body-cell">FCA and data protection compliance, GDPR documentation, complaint logging, escalation audit trail. Platform-level compliance only — not claim-level legal work.</td>
+        <td>~0.15 FTE per LMU (shared across 6–8 teams)</td>
+        <td>Per territory, not per LMU</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Territory manager</strong></td>
+        <td class="body-cell">Supervises team leads, monitors settlement facilitation quality, manages regional NTP relationships, escalates EV methodology edge cases to HQ.</td>
+        <td>~0.125–0.17 FTE per LMU (1 manager per 6–8 teams)</td>
+        <td>Per territory</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: LMU CAPACITY CALCULATION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 4</div>
+    <h2>Platform team capacity calculation</h2>
+  </div>
+
+  <p class="body">Under C3, EV assessment generation is transferred to the independent assessment org. The EV specialist's role shifts to routing and quality review (~20 min/claim). The previous binding constraint — 90 min WP2 generation time — no longer applies. The binding constraint should be re-validated against defendant engagement specialist time.</p>
+
+  <div class="inset" style="margin-bottom: 16px;"><strong>C3 update:</strong> EV specialist total time per claim falls from ~137 min to ~67 min. WP2 reduced from 90 to 20 min (routing and quality review, generation now external). The binding constraint shifts — recommend re-validating against defendant engagement specialist time per claim (~86 min per confirmed claim).</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Activity requiring EV specialist time</th>
+        <th>Mins per claim</th>
+        <th>Driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell">WP2 — route claim to assessment org, receive report, quality review <span class="tag tag-blue" style="font-size:10px;">C3</span></td>
+        <td class="number">20</td>
+        <td class="driver">Per unit (was 90 min generation — C3 transfers generation to independent assessment org)</td>
+      </tr>
+      <tr>
+        <td class="body-cell">CP2 — EV disclosure to claimant</td>
+        <td class="number">30</td>
+        <td class="driver">Per inquiry at this stage (gross up ÷ 0.80 → 37.5 min per confirmed claim)</td>
+      </tr>
+      <tr>
+        <td class="body-cell">Quality check and track record dataset entry</td>
+        <td class="number">15</td>
+        <td class="driver">Per unit</td>
+      </tr>
+      <tr>
+        <td class="body-cell">Methodology escalations and peer review</td>
+        <td class="number">10</td>
+        <td class="driver">Fixed per LMU per month (amortised: ~1 min/claim at 60 claims/month)</td>
+      </tr>
+      <tr style="background: #f7f7f6; font-weight: 600;">
+        <td>Total EV specialist time per confirmed claim <span class="tag tag-blue" style="font-size:10px;">C3 updated</span></td>
+        <td class="number">~67 min</td>
+        <td class="driver">Gross-up included for CP2. C3 update: WP2 reduced from 90 to 20 min.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="inset" style="margin-top: 12px;">
+    <strong>Capacity calculation (C3 revised):</strong> UK full-time effective hours/month = 137 (8 hours/day × 22 days × 78% utilisation). At ~67 min per confirmed claim: 137 hrs × 60 ÷ 67 ≈ <strong>123 claims/month per EV specialist.</strong> EV specialist is no longer the binding throughput constraint — capacity more than doubles under C3. The binding constraint shifts to defendant engagement specialist (~86 min per confirmed claim). Recommend re-validating LMU capacity ceiling against defendant engagement time.
+    <div class="assumption" style="margin-top: 8px;"><strong>TIER 4 ASSUMPTION:</strong> 20 min WP2 routing and review time. The routing-and-review figure is an estimate — actual time depends on assessment org turnaround time, dispute rate, and report quality. Recommended: validate against a structured pilot of 20–30 live assessments via the org before committing to at-scale staffing.</div>
+  </div>
+
+  <h3 style="margin: 28px 0 16px;">LMU activity time summary per confirmed claim</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Activity</th>
+        <th>Mins per confirmed claim</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Intake and eligibility assessor</strong></td>
+        <td class="body-cell">WP1 eligibility assessment + CP1 intake communication + WP3 pool matching (exceptions)</td>
+        <td class="number">~75</td>
+        <td style="font-size:12px; color: var(--text-muted);">Grossed up for pre-screen: 45 min WP1 ÷ 0.65 = 69 min + 5 min WP3 exceptions</td>
+      </tr>
+      <tr>
+        <td><strong>EV assessment specialist</strong></td>
+        <td class="body-cell">WP2 routing and quality review + CP2 disclosure + QA + dataset <span class="tag tag-blue" style="font-size:10px;">C3</span></td>
+        <td class="number">~67</td>
+        <td style="font-size:12px; color: var(--text-muted);">C3 update: WP2 reduced from 90 to 20 min (generation transferred to independent assessment org). No longer the binding constraint. Grossed up for CP2 conversion rate.</td>
+      </tr>
+      <tr>
+        <td><strong>Defendant engagement specialist</strong></td>
+        <td class="body-cell">CP3 defendant outreach and offer presentation</td>
+        <td class="number">~86</td>
+        <td style="font-size:12px; color: var(--text-muted);">60 min engagement ÷ 0.70 settle rate = 86 min per confirmed claim (includes effort on claims that proceed to court without settling)</td>
+      </tr>
+      <tr>
+        <td><strong>Settlement facilitator</strong></td>
+        <td class="body-cell">CP3 settlement structuring and recording</td>
+        <td class="number">~43</td>
+        <td style="font-size:12px; color: var(--text-muted);">30 min per settled claim × 70% settlement rate = 21 min + 5 min handoff for non-settling claims = ~26 min. Role may be shared with defendant engagement at lower volume.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: REVENUE MODEL (PLATFORM FEES) -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 5</div>
+    <h2>Revenue model — platform fees from both parties</h2>
+  </div>
+
+  <p class="body">Calmly earns platform fees from both the claimant and the defendant per claim resolved. Fees are grounded in the C2 price ceiling analysis — the maximum fee each party would pay before it becomes cheaper to revert to their existing routine. Both fees are contingent on resolution: neither party pays unless the claim is settled or adjudicated.</p>
+
+  <div class="rev-grid">
+
+    <div class="rev-card">
+      <div class="rev-label">Claimant-side fee</div>
+      <h4>Platform fee from claimant</h4>
+      <p><strong>Trigger:</strong> claim resolved (settled or adjudicated).</p>
+      <p><strong>Basis:</strong> percentage of settlement value received, deducted at settlement. Claimant pays from money they did not previously have — no budget line problem (C6).</p>
+      <p><strong>Price ceiling (C2a):</strong> the cost the claimant avoids is the full cost of legal escalation — up to £1,850 in legal support + court costs. Calmly's fee must be below this to deliver a net positive for the claimant. At a £1,500 average claim, a 20% fee = £300 — materially below the alternative cost ceiling.</p>
+      <p><strong>Indicative fee range:</strong> 15–25% of settlement value received.</p>
+      <div class="assumption"><strong>TIER 4 ASSUMPTION:</strong> 20% mid-point. Fee ceiling analysis from C2a. No empirical pricing data for this market exists. Comparator: Resolver commercial tier (flat fee); US contingency fee norm (25–40%, but in a recoverable-costs market).</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-label">Defendant-side fee</div>
+      <h4>Platform fee from defendant</h4>
+      <p><strong>Trigger:</strong> claim resolved (settled or adjudicated).</p>
+      <p><strong>Basis:</strong> fixed fee per claim resolved, structured as a percentage premium over settlement amount or a flat service fee. Defendant pays for the bounded, verified liability — certainty has value distinct from the settlement amount itself.</p>
+      <p><strong>Price ceiling (C2b):</strong> the defendant avoids the cost of uncertainty — estimated at up to £1,850 in legal fees plus the psychological and reputational cost of open-ended exposure. The independent EV assessment removes the information asymmetry that drives both over-settling and stonewalling. The bounded, credible number is worth paying for.</p>
+      <p><strong>Indicative fee range:</strong> £150–£300 flat per claim resolved, or 5–10% of settlement amount.</p>
+      <div class="assumption"><strong>TIER 4 ASSUMPTION:</strong> £200 flat fee mid-point (or 7% of settlement). Grounded in C2b price ceiling. Without-prejudice structure adds value to defendant — they pay for certainty, not just settlement. Flat fee may be preferable to percentage to reduce anchoring on settlement size.</div>
+    </div>
+
+  </div>
+
+  <div class="inset">
+    <strong>Revenue per claim (illustrative, TIER 4):</strong> At £1,500 average claim value, 70% settled before court:
+    <ul style="margin: 8px 0 0 20px; line-height: 1.9;">
+      <li>Claimant fee: 20% × £1,500 × [claimant's recovered amount] — assume 80% EV recovery → claimant receives ~£1,200; Calmly earns ~£240</li>
+      <li>Defendant fee: £200 flat per resolved claim</li>
+      <li><strong>Gross platform revenue per resolved claim: ~£440</strong></li>
+      <li>Per-claim revenue across full funnel (including non-settling claims): £440 × 70% settle rate + £0 × 30% court rate ≈ £308 blended</li>
+    </ul>
+    <div class="assumption" style="margin-top: 8px;"><strong>TIER 4 ASSUMPTION:</strong> All revenue figures are illustrative. Both fee rates and settlement amounts require empirical validation. The fin-sim will run sensitivity analysis across fee rate × average claim value × settlement rate. The key FMOS driver is the ratio of per-claim revenue to per-claim platform cost — not the absolute fee level.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 6: AOM MATRIX — PEOPLE × PLACES -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 6</div>
+    <h2>AOM matrix — people × places</h2>
+  </div>
+
+  <p class="body">Calmly's roles only. Pool operator roles are not included — they are a separate entity with a separate P&L.</p>
+
+  <div class="aom-matrix">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:160px;">Role</th>
+          <th>Making</th>
+          <th>Selling</th>
+          <th>Marketing</th>
+          <th>Using</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- CUSTOMERS -->
+        <tr>
+          <td class="row-header" style="font-weight:600; color: var(--text-secondary);">Customers<br><span style="font-size:11px;color:var(--text-muted);">Two paying parties</span></td>
+          <td class="cell">
+            <em>Claimant:</em>
+            <ul>
+              <li>Provides evidence (claim facts)</li>
+            </ul>
+            <em>Defendant:</em>
+            <ul>
+              <li>Provides response to EV assessment</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <em>Claimant:</em>
+            <ul>
+              <li>Arrives via NTP referral</li>
+              <li>Evaluates pre-screen EV</li>
+              <li>Accepts or declines at CP2</li>
+            </ul>
+            <em>Defendant:</em>
+            <ul>
+              <li>Receives EV + settlement offer via NTP</li>
+              <li>Accepts, negotiates, or declines at CP3</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <em>NTPs surface Calmly to claimants. Defendants learn of Calmly through their NTP relationship — not direct marketing. Word of mouth within NTP ecosystems is the primary awareness channel.</em>
+          </td>
+          <td class="cell">
+            <em>Claimant:</em>
+            <ul>
+              <li>Uses platform to submit claim (CP1)</li>
+              <li>Receives independent EV (CP2)</li>
+              <li>Receives settlement payment at resolution</li>
+            </ul>
+            <em>Defendant:</em>
+            <ul>
+              <li>Receives settlement offer via NTP channel</li>
+              <li>Engages settlement facilitation (CP3)</li>
+              <li>Pays bounded liability, exits exposure</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- ENABLERS — LMU -->
+        <tr>
+          <td class="row-header" style="font-weight:600; color: var(--text-secondary);">Enablers<br><span style="font-size:11px;color:var(--text-muted);">LMU level</span></td>
+          <td class="cell">
+            <strong>Intake and eligibility assessor</strong>
+            <ul>
+              <li>WP1 — eligibility assessment</li>
+              <li>WP3 — pool matching (exceptions)</li>
+            </ul>
+            <strong>EV assessment specialist</strong>
+            <ul>
+              <li>WP2 — independent EV assessment</li>
+              <li>Track record dataset maintenance</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>Intake assessor</strong>
+            <ul>
+              <li>CP1 — pre-screen and indicative EV (selling step)</li>
+            </ul>
+            <strong>EV specialist</strong>
+            <ul>
+              <li>CP2 — full EV disclosure, claim activation</li>
+            </ul>
+            <strong>Defendant engagement specialist</strong>
+            <ul>
+              <li>CP3 — defendant outreach and offer</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <em>None at LMU level. Marketing sits at HQ and NTP.</em>
+          </td>
+          <td class="cell">
+            <strong>Intake assessor</strong>
+            <ul>
+              <li>Primary claimant contact at intake</li>
+            </ul>
+            <strong>EV specialist</strong>
+            <ul>
+              <li>EV explanation and claimant questions</li>
+            </ul>
+            <strong>Defendant engagement specialist</strong>
+            <ul>
+              <li>Defendant-facing contact throughout CP3</li>
+            </ul>
+            <strong>Settlement facilitator</strong>
+            <ul>
+              <li>Structures and records agreed settlements</li>
+              <li>Optional acknowledgment pathway</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- ENABLERS — Territory -->
+        <tr>
+          <td class="row-header" style="font-weight:600; color: var(--text-secondary);">Enablers<br><span style="font-size:11px;color:var(--text-muted);">Territory</span></td>
+          <td class="cell">
+            <strong>Territory compliance officer</strong>
+            <ul>
+              <li>Data protection, FCA platform compliance</li>
+              <li>Complaint logging and audit trails</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>Territory manager</strong>
+            <ul>
+              <li>Regional NTP relationship management</li>
+              <li>LMU performance monitoring</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>Territory manager</strong>
+            <ul>
+              <li>NTP welfare impact reporting (lock-in)</li>
+              <li>Regional awareness within NTP ecosystems</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <em>Territory does not interact directly with claimants or defendants. Escalations go from LMU team lead to territory manager.</em>
+          </td>
+        </tr>
+        <!-- ENABLERS — HQ -->
+        <tr>
+          <td class="row-header" style="font-weight:600; color: var(--text-secondary);">Enablers<br><span style="font-size:11px;color:var(--text-muted);">Head office</span></td>
+          <td class="cell">
+            <strong>Platform engineering (3–5)</strong>
+            <ul>
+              <li>Exchange platform build and ops</li>
+              <li>EV assessment engine</li>
+              <li>Pool matching algorithm</li>
+              <li>Settlement automation</li>
+            </ul>
+            <strong>EV methodology team (2–3)</strong>
+            <ul>
+              <li>Assessment framework design</li>
+              <li>Assessor training and QA</li>
+              <li>Track record dataset governance</li>
+            </ul>
+            <strong>Head of Operations <span class="tag tag-blue" style="font-size:10px;">C3 absorbed</span></strong>
+            <ul>
+              <li>Assessment org methodology oversight — maintaining EV assessment standards and escalation protocols for the independent org. Estimated 0.5 days/week at scale. No new dedicated role — absorbed into existing Head of Operations scope.</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>Commercial / NTP partnerships (2–3)</strong>
+            <ul>
+              <li>National NTP activation (Stage 1–3)</li>
+              <li>Placement fee structure and agreements</li>
+            </ul>
+            <strong>Pool operator relations (2)</strong>
+            <ul>
+              <li>Pool operator onboarding standards</li>
+              <li>Operator quality monitoring</li>
+              <li>Data feed and reporting agreements</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>Commercial team</strong>
+            <ul>
+              <li>NTP welfare impact reports (lock-in)</li>
+              <li>Co-branded member communications</li>
+              <li>Case studies (with consent)</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>Platform engineering</strong>
+            <ul>
+              <li>Claimant-facing platform uptime and UX</li>
+              <li>Defendant notification system</li>
+              <li>NTP referral portal</li>
+            </ul>
+            <strong>Finance and compliance (2)</strong>
+            <ul>
+              <li>FCA / SRA (exchange-level) authorisation</li>
+              <li>Fee collection and disbursement</li>
+              <li>Without-prejudice framework maintenance</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- GATEWAY PARTNER — NTP -->
+        <tr>
+          <td class="row-header" style="font-weight:600; color: var(--text-secondary);">Gateway partners<br><span style="font-size:11px;color:var(--text-muted);">NTPs (external)</span></td>
+          <td class="cell"><em>NTPs do not make the product. They generate demand and institutional weight.</em></td>
+          <td class="cell">
+            <strong>NTP staff</strong>
+            <ul>
+              <li>Route claimants to platform at dispute onset (Part2)</li>
+              <li>&lt;5 min per referral</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>NTP communications</strong>
+            <ul>
+              <li>Signpost Calmly in member welcome packs</li>
+              <li>Reference in grievance policy</li>
+              <li>Welfare impact reports in board papers</li>
+            </ul>
+          </td>
+          <td class="cell">
+            <strong>NTP institutional relationship</strong>
+            <ul>
+              <li>Defendant notification (Part2 on defendant side) — institutional weight converts settlement notice from a legal letter to a relational obligation</li>
+              <li>Drives higher early settlement rates — the exchange's primary portfolio value driver</li>
+            </ul>
+          </td>
+        </tr>
+        <!-- POOL OPERATOR — external, not a Calmly cost -->
+        <tr>
+          <td class="row-header" style="font-weight:600; color: #991b1b;">Pool operator<br><span style="font-size:11px;color:#f0b4b4;">External P&amp;L</span></td>
+          <td class="cell"><div class="excluded" style="margin:0;font-size:12px;"><strong>EXCLUDED.</strong> Solicitors, law students, court bundle prep, N1 filing, litigation management — all pool operator cost. Calmly hands over a matched, rated claim at WP3. Everything from that point is the pool operator's P&amp;L.</div></td>
+          <td class="cell"><em style="color:#991b1b; font-size:12px;">Not a Calmly selling activity.</em></td>
+          <td class="cell"><em style="color:#991b1b; font-size:12px;">Not a Calmly marketing activity.</em></td>
+          <td class="cell"><div class="excluded" style="margin:0;font-size:12px;"><strong>EXCLUDED.</strong> Pool operator handles claimant communication post-matching, litigation proceedings, and settlement enforcement. These generate no Calmly cost or Calmly revenue beyond the platform fee already captured at WP3/CP3.</div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 7: ACTIVITY DETAIL TABLE — FIN-SIM GROUP 4 FEED -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 7</div>
+    <h2>Activity detail table — fin-sim Group 4 feed</h2>
+  </div>
+
+  <p class="body">Each row is one Calmly platform activity. Time estimates are minutes per claim at the stated volume driver. Hourly rates are left blank — the fin-sim populates them. Pool operator activities are excluded.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Activity</th>
+        <th>Role</th>
+        <th>Level</th>
+        <th>Mins per claim</th>
+        <th>Volume driver</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- CP1 / WP1 — intake -->
+      <tr>
+        <td class="body-cell"><span class="tag tag-blue">CP1</span> / <span class="tag tag-red">WP1</span> Claim intake and eligibility assessment</td>
+        <td>Intake and eligibility assessor</td>
+        <td>LMU</td>
+        <td>45</td>
+        <td class="driver">Per inquiry. Gross up ÷ 0.65 (pre-screen pass rate) = 69 min per purchased claim</td>
+        <td style="font-size:12px;">TIER 4: 65% pass rate assumed. Includes indicative EV communicated to claimant.</td>
+      </tr>
+      <!-- WP2 — EV assessment -->
+      <tr>
+        <td class="body-cell">
+          <span class="tag tag-red">WP2</span> Independent EV assessment — route claim to assessment org, receive report, quality review, handle disputes <span class="tag tag-blue" style="font-size:10px;">C3</span>
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C3 update:</strong> assessment generation transferred to independent assessment org. Specialist time reduced from 90 min (generation) to 20 min (routing and quality review). PVC cost of £16.28/claim added to Group 2.</div>
+        </td>
+        <td>EV assessment specialist</td>
+        <td>LMU</td>
+        <td>20</td>
+        <td class="driver">Per unit purchased (every claim that passes pre-screen)</td>
+        <td style="font-size:12px;">TIER 4: 20 min routing-and-review estimate. Was 90 min under C1+C2 (generation). Validate against structured pilot of 20–30 live assessments via the org.</td>
+      </tr>
+      <!-- WP2 QA -->
+      <tr>
+        <td class="body-cell">EV assessment quality check and track record dataset entry</td>
+        <td>EV assessment specialist</td>
+        <td>LMU</td>
+        <td>15</td>
+        <td class="driver">Per unit purchased</td>
+        <td style="font-size:12px;">Included in the ~67 min total EV specialist time (C3 revised). Logged separately for methodology improvement tracking.</td>
+      </tr>
+      <!-- CP2 — EV disclosure -->
+      <tr>
+        <td class="body-cell"><span class="tag tag-blue">CP2</span> EV disclosure and claim activation — present assessment to claimant, answer questions, confirm commitment</td>
+        <td>EV assessment specialist</td>
+        <td>LMU</td>
+        <td>30</td>
+        <td class="driver">Per inquiry at this stage. Gross up ÷ 0.80 (post-EV proceed rate) = 37.5 min per confirmed claim</td>
+        <td style="font-size:12px;">TIER 4: 80% of claimants who receive EV proceed. This is the commitment point for the claimant.</td>
+      </tr>
+      <!-- WP3 — pool matching -->
+      <tr>
+        <td class="body-cell"><span class="tag tag-red">WP3</span> Pool matching and claim file transfer to pool operator</td>
+        <td>Platform (automated) + intake assessor (exceptions)</td>
+        <td>LMU / Platform</td>
+        <td>5 (exceptions only)</td>
+        <td class="driver">Per unit confirmed. Automated at scale. Manual exception handling for ~10% of claims (TIER 4).</td>
+        <td style="font-size:12px;">Automated. Cost driver is platform infrastructure, not labour — see Group 5 technology costs.</td>
+      </tr>
+      <!-- CP3 — defendant engagement -->
+      <tr>
+        <td class="body-cell"><span class="tag tag-blue">CP3</span> Defendant onboarding and offer presentation — outreach via NTP channel, present independent EV, structure settlement offer</td>
+        <td>Defendant engagement specialist</td>
+        <td>LMU</td>
+        <td>60</td>
+        <td class="driver">Per unit in settlement phase. Gross up ÷ 0.70 (pre-court settlement rate) = 86 min per confirmed claim (effort is spent on non-settling defendants too)</td>
+        <td style="font-size:12px;">TIER 4: 70% settle before court. The 30% that proceed to court represent a Calmly cost with no defendant-side fee — absorbed as cost of the double-signal mechanism.</td>
+      </tr>
+      <!-- CP3 — settlement facilitation -->
+      <tr>
+        <td class="body-cell"><span class="tag tag-blue">CP3</span> Settlement facilitation — structure terms, offer acknowledgment pathway, record agreed settlement on platform</td>
+        <td>Settlement facilitator</td>
+        <td>LMU</td>
+        <td>30</td>
+        <td class="driver">Per settled claim (70% of confirmed claims). Effective driver: 30 min × 0.70 = 21 min per confirmed claim. Plus 5 min handoff for non-settling claims.</td>
+        <td style="font-size:12px;">Role may be combined with defendant engagement specialist at lower volume. Split at ~45+ claims/month.</td>
+      </tr>
+      <!-- Platform team lead overhead -->
+      <tr>
+        <td class="body-cell">Platform team lead supervision and quality management</td>
+        <td>Platform team lead (senior role)</td>
+        <td>LMU</td>
+        <td>~15 (amortised)</td>
+        <td class="driver">Fixed per LMU per month. At 60 claims/month: ~15 hrs ÷ 60 = 15 min/claim. Use fixed per LMU in fin-sim Group 5.</td>
+        <td style="font-size:12px;">Team lead role is held by a senior delivery specialist (+20% time overhead). Not a separate headcount at pilot scale.</td>
+      </tr>
+      <!-- Territory compliance -->
+      <tr>
+        <td class="body-cell">Territory compliance — FCA/data protection platform compliance</td>
+        <td>Territory compliance officer</td>
+        <td>Territory</td>
+        <td>~4</td>
+        <td class="driver">Fixed per territory per month. At 7 LMUs × 60 claims = 420 claims/territory: amortise compliance officer salary ÷ 420.</td>
+        <td style="font-size:12px;">TIER 4: 1 compliance officer per territory.</td>
+      </tr>
+      <!-- NTP partnership development -->
+      <tr>
+        <td class="body-cell">NTP national partnership activation</td>
+        <td>Commercial team (HQ)</td>
+        <td>HQ</td>
+        <td>Fixed per NTP</td>
+        <td class="driver">Fixed per NTP onboarded. Amortise over expected lifetime claims from that NTP. Fin-sim Group 5.</td>
+        <td style="font-size:12px;">TIER 4: NTP onboarding cost and lifetime claim volume not yet estimated.</td>
+      </tr>
+      <!-- Pool operator relationship -->
+      <tr>
+        <td class="body-cell">Pool operator onboarding and quality management</td>
+        <td>Pool operator relations (HQ)</td>
+        <td>HQ</td>
+        <td>Fixed per operator</td>
+        <td class="driver">Fixed per pool operator onboarded. Amortise over lifetime claims processed. Fin-sim Group 5.</td>
+        <td style="font-size:12px;">TIER 4: relationship management cost — not legal supervision. Pool operator bears its own legal infrastructure costs.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 8: TECHNOLOGY AND INFRASTRUCTURE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 8</div>
+    <h2>Technology and infrastructure (Calmly platform only)</h2>
+  </div>
+
+  <p class="body">Four technology components. All HQ-owned and platform-provided. The pool operator uses a data feed from the exchange but maintains its own case management system — Calmly does not pay for or maintain the pool operator's technology.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Function</th>
+        <th>Scales with</th>
+        <th>Build vs buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell"><strong>Exchange platform</strong></td>
+        <td class="body-cell">Manages the full Calmly-side claim lifecycle: intake, EV request, EV output, claimant commitment, pool matching, defendant engagement queue, settlement recording, fee collection. Feeds a data output to pool operators at WP3 handoff.</td>
+        <td>Volume (claims active on platform)</td>
+        <td>Build. Core IP. The exchange's integrity depends on platform architecture Calmly controls.</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>EV assessment engine</strong></td>
+        <td class="body-cell">Structures the assessment process for EV specialists — provides the framework, data inputs, comparable case database, and methodology checklist. Outputs a structured assessment document. Builds the track record dataset automatically. Published methodology is a moat — transparency is a feature, not a vulnerability.</td>
+        <td>Assessment volume (sub-linearly — methodology improves with dataset scale)</td>
+        <td>Build. The EV methodology is the double-signal mechanism's analytical foundation. It cannot be outsourced.</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Defendant communication and settlement system</strong></td>
+        <td class="body-cell">Routes structured settlement offers to defendants via NTP institutional channel. Tracks defendant response timeline. Escalation triggers at defined intervals. Records settlement terms and confirmation. Routes without-prejudice acknowledgment documents.</td>
+        <td>Claims in settlement phase</td>
+        <td>Build. NTP routing and without-prejudice framing are legally specific. NTP channel connectors require bespoke integration per NTP type.</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>NTP referral portal</strong></td>
+        <td class="body-cell">NTP staff submit claimant referrals via a lightweight portal. Records referral source (for placement fee tracking), claimant context, and NTP-assigned dispute category. Minimal friction — NTP staff are not Calmly users.</td>
+        <td>NTP count and referral volume</td>
+        <td>Build lightweight. Simple form-based submission. Integration with exchange platform for referral tracking and fee reporting.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 9: COST-OF-GOODS NOTE -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 9</div>
+    <h2>Cost-of-goods note</h2>
+  </div>
+
+  <p class="body">Calmly has no working capital commitment per claim for the exchange itself. This is the structural distinction from the v1 claims-purchase architecture and the primary reason the exchange model was adopted. Under C3, a new working capital line is introduced for assessment org payments (£16.28/claim, paid before fee recovery) — see Section 9c.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>v1 (claims purchase)</th>
+        <th>v2 (exchange / platform)</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell"><strong>Working capital per claim</strong></td>
+        <td class="body-cell">£500–£5,000 (claim purchase price) locked up for 13+ months</td>
+        <td class="body-cell"><strong>£0 — Calmly bears no working capital</strong></td>
+        <td style="font-size:12px;">Pool operator bears all working capital for claims in litigation. This is the fundamental exchange model advantage.</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Court filing fee</strong></td>
+        <td class="body-cell">£35–£500 per claim at court</td>
+        <td class="body-cell"><strong>£0 — pool operator cost</strong></td>
+        <td style="font-size:12px;">Not a Calmly cost line in any scenario.</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>NTP placement fee</strong></td>
+        <td class="body-cell">Structure TBC (C7 open item)</td>
+        <td class="body-cell">Per referred claim that enters the exchange (structure TBC)</td>
+        <td style="font-size:12px;">TIER 4: placement fee to NTP is a per-transaction cost — feeds fin-sim Group 2. Amount not yet agreed with NTP partners. Range: £0 (mission-only relationship) to ~£25–50 per claim (commercial tier).</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Consumables per claim</strong></td>
+        <td class="body-cell">Minimal</td>
+        <td class="body-cell">~£5–10 per claim (platform infrastructure variable cost: storage, compute, communication)</td>
+        <td style="font-size:12px;">TIER 4: unit technology cost. Scales sub-linearly with volume — cloud infrastructure pricing model.</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Assessment org payment <span class="tag tag-blue" style="font-size:10px;">C3</span></strong></td>
+        <td class="body-cell">Not applicable (v1 had no assessment org)</td>
+        <td class="body-cell"><strong>£16.28 per claim (PVC)</strong></td>
+        <td style="font-size:12px;">
+          Payment to independent assessment organisation per EV settlement report. Paid at point of report production, before customer fees arrive.
+          <div class="assumption" style="margin-top: 6px;"><strong>TIER 4 ASSUMPTION:</strong> Law student wages (~£12.21/hr NMW) × ~80 min per report + org overhead. Needs Tier 1 validation.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="inset" style="margin-top: 8px;">
+    <strong>Group 2 (fin-sim cost of goods — C3 updated):</strong> No capital commitment per claim. Variable cost per claim = NTP placement fee (TBC, ~£25–50 TIER 4) + platform variable cost (~£5–10) + assessment org payment (£16.28 PVC, C3). Total variable cost of goods per claim: ~£46–76. This remains dramatically below v1's £500–£5,000 working capital commitment. The net unit cost improvement from C3 is ~£3.60/claim (Calmly saves ~£19.90 in direct EV specialist labour at 90→20 min at ~£17/hr; pays £16.28 in PVC).
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 9b: STARTUP COSTS (SC) — C3 ADDITION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 9b</div>
+    <h2>Startup costs — C3 addition</h2>
+  </div>
+
+  <p class="body">C3 introduces one pre-launch startup cost: establishing the independent assessment organisation. This is a one-time structural cost, not a per-claim variable.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Cost layer</th>
+        <th>Amount</th>
+        <th>Timing</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell"><strong>Assessment org setup <span class="tag tag-blue" style="font-size:10px;">C3</span></strong></td>
+        <td><span class="tag tag-yellow">SC</span></td>
+        <td class="number">£80,000</td>
+        <td>One-time, pre-launch</td>
+        <td style="font-size:12px;">
+          Establishing the independent assessment organisation — legal structure, law school partnerships, methodology development, assessment tooling.
+          <div class="assumption" style="margin-top: 6px;"><strong>TIER 4 ASSUMPTION:</strong> £80k estimate. Needs validation. Includes legal setup, partnership agreements with university law schools, initial methodology training, and assessment tooling development.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 9c: WORKING CAPITAL — C3 ADDITION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 9c</div>
+    <h2>Working capital — assessment org payments (C3)</h2>
+  </div>
+
+  <p class="body">Under C3, Calmly pays £16.28/claim to the assessment org at report production — before customer fees arrive. This creates a working capital requirement. This is the CLO II from C3: the only WC line with contingent (not fixed-cycle) recovery, controlled by the defendant settlement rate.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="body-cell"><strong>Cash out</strong></td>
+        <td class="body-cell">£16.28/claim at report production (WP2 stage)</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Cash in</strong></td>
+        <td class="body-cell">Customer fees at settlement — 45 days (~1.5 months) for settling claims; 365 days (~12 months) for court-bound claims</td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Weighted average recovery (Y5, 70% settlement rate)</strong></td>
+        <td class="body-cell">0.7 × 1.5 months + 0.3 × 12 months = <strong>4.65 months</strong></td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>WC per unit IC cost (at 15% CoC)</strong></td>
+        <td class="body-cell">£16.28 × (0.15/12) × 4.65 = <strong>£0.95/unit</strong></td>
+      </tr>
+      <tr>
+        <td class="body-cell"><strong>Peak WC at Y5 (350,000 claims/year)</strong></td>
+        <td class="body-cell">£16.28 × (350,000/12) × 4.65 = <strong>~£2.2M</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="inset" style="margin-top: 8px;">
+    This is the CLO II from C3. The only WC line with contingent (not fixed-cycle) recovery — controlled by the defendant settlement rate, which the independent assessment org mechanism improves. Peak WC contracts from ~£4.3M baseline to ~£2.2M with mechanism active at Y5.
+    <div class="assumption" style="margin-top: 8px;"><strong>TIER 4 ASSUMPTION:</strong> Settlement rate (70%) and recovery timing (1.5 months settling / 12 months court-bound) are illustrative. Both require empirical validation. The fin-sim should run sensitivity analysis across settlement rate × recovery timing.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 10: SCALE STAGES -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <hr class="section-rule">
+  <div class="section-header">
+    <div class="section-label">Section 10</div>
+    <h2>Scale stages — 1 to at-scale</h2>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Platform teams (LMUs)</th>
+        <th>Monthly claims</th>
+        <th>Annual claims</th>
+        <th>Gate condition for next stage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Stage 1 — Pilot</strong></td>
+        <td>1</td>
+        <td>30–60</td>
+        <td>360–720</td>
+        <td>EV assessment time validated empirically. Defendant settlement rate measured (target: ≥60%). Platform team headcount confirmed. At least one NTP referral protocol live. Pool operator relationship established.</td>
+      </tr>
+      <tr>
+        <td><strong>Stage 2 — Proof of scale</strong></td>
+        <td>4–6</td>
+        <td>240–360</td>
+        <td>2,880–4,320</td>
+        <td>Platform team model replicable. EV methodology producing consistent assessments across assessors. Pool operator handling claims with no Calmly re-involvement post-WP3. Territory management structure tested. First territory NTP exclusivity in place.</td>
+      </tr>
+      <tr>
+        <td><strong>Stage 3 — Regional</strong></td>
+        <td>12–18</td>
+        <td>720–1,080</td>
+        <td>8,640–12,960</td>
+        <td>Multi-territory operational. Multiple pool operators active. EV methodology has 12-month outcome track record. Both-party fee model generating positive platform economics per claim.</td>
+      </tr>
+      <tr>
+        <td><strong>Stage 4 — At-scale</strong></td>
+        <td>~25–30</td>
+        <td>1,500–1,800</td>
+        <td>18,000–21,600</td>
+        <td>Target state. All major NTP segments activated. FMOS ≥ 60% in conservative scenario. [REQUIRES later architecture] securitisation infrastructure may be active at pool operator level — not Calmly's cost.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="assumption" style="margin-top: 16px;"><strong>TIER 4 ASSUMPTION:</strong> At-scale LMU count reduced from v1's 38 modules to ~25–30 platform teams. The platform team capacity (60 claims/month) is slightly higher than v1's module capacity (40 claims/month) because the EV specialist time constraint is less severe than v1's solicitor bottleneck — EV assessment does not require SRA authorisation, removing the regulatory binding constraint that capped v1 module replication speed.</div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- ROUTING INSTRUCTION -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <div class="routing">
+    <div class="routing-label">Routing instruction</div>
+    <p>AOM updated for C3. Independent assessment org added as external enabler. WP2 time reduced 90→20 min. PVC (£16.28/claim), SC (£80k setup), and WC for customer financing (£2.2M peak at Y5) added. Take the updated Activity detail table (Section 7) and fin-sim feed (below) into <code>/ive-fin-sim-custom</code> with updated Group 2, 4, 5, and 6 inputs.</p>
+    <p>Key inputs: Group 2 cost of goods = NTP placement fee (~£25–50, TIER 4) + platform variable cost (~£5–10) + assessment org payment (£16.28/claim PVC, C3). Group 3 resolution waterfall: Calmly revenue at settlement facilitation (months 1–4), not court judgment. Group 5: add £80k SC for assessment org setup (amortised). Group 6: C3 mechanism — £16.28/claim PVC, peak WC ~£2.2M at Y5. Group 7: at-scale volume ~18,000 claims/year.</p>
+    <p>Next: run <code>/ive-fin-sim-custom</code> with updated Group 2, 4, 5, 6 inputs, then <code>/ive-fit-verifier-custom</code> (four-layer FMOS: PVC + RC + SC + IC).</p>
+    <p><strong>Architecture discipline reminder:</strong> do not re-introduce solicitor costs, student supervision, or court filing fees in the fin-sim. If a cost line requires later architecture (securitisation, SPV, investor relations at institutional scale), flag it as [REQUIRES later architecture] and exclude it from the FMOS calculation.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- FIN-SIM FEED -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+  <div class="finsim" style="margin-top: 36px;">
+    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C3 updated)</div>
+    <pre>
+FIN-SIM INPUTS FROM AOM v2 (Calmly — platform only — C1+C2+C3)
+===============================================================
+
+GROUP 1 — Venture and unit
+Unit: one claim resolved through the Calmly exchange (matched, rated, facilitated to settlement or adjudication)
+Pricing model: platform fee from claimant (% of settlement, TIER 4: 20%) + platform fee from defendant (flat fee, TIER 4: £200)
+Revenue per unit: (settlement value × 20% × claimant recovery rate) + £200 defendant fee
+  → illustrative at £1,500 avg claim, 80% EV recovery: £240 claimant fee + £200 defendant fee = £440/resolved claim
+  → blended (70% settle pre-court): £440 × 0.70 = £308 per confirmed claim through the funnel
+
+GROUP 2 — Cost of goods and capital [C3 updated]
+Cost of goods per claim: ~£46–76
+  → NTP placement fee: ~£25–50 (TIER 4, structure TBC)
+  → Platform variable cost: ~£5–10 (compute, storage, communications)
+  → Assessment org payment: £16.28/claim (PVC, C3) — payment to independent assessment org per EV report
+Working capital per claim (Calmly exchange P&L): £0 (pool operator bears all claim working capital)
+Working capital for assessment org payments: £16.28/claim × 4.65 months weighted avg recovery at Y5 (70% settlement rate) — WC per unit IC cost: £0.95/unit at 15% CoC. Peak WC at Y5 (350,000 claims/year): ~£2.2M.
+Cost of capital: 15% CoC applied to WC position above
+
+GROUP 3 — Resolution waterfall (Calmly revenue timing, not pool operator litigation timeline)
+Month 0–2: Calmly platform work complete (intake → EV routing → pool matching). Assessment org payment made at WP2 (cash out).
+Month 1–4: Defendant settlement facilitation (CP3) — 70% settle here. Revenue received. WC recovered for settling claims.
+Month 4+: Claims that proceed to court — Calmly revenue: £0 defendant fee, claimant fee paid at eventual resolution (~12 months). WC for assessment org payment held for full period on these claims.
+Note: Calmly's cash flow position is materially better than v1 — revenue arrives at settlement facilitation (months 1–4), not at court judgment (months 13+). Higher C3 settlement rate (mechanism effect) contracts the WC position.
+
+GROUP 4 — Direct labor activities (all Calmly platform only — pool operator excluded) [C3 updated]
+Activity: CP1/WP1 Claim intake and eligibility assessment | Product: CP/WP | Role: Intake and eligibility assessor | Driver: per inquiry at 65% pass rate (gross up ÷ 0.65) | Time: 45 min
+Activity: WP2 Route claim to assessment org, receive report, quality review [C3: was 90 min generation] | Product: WP | Role: EV assessment specialist | Driver: per unit purchased | Time: 20 min
+Activity: WP2 QA and dataset entry | Product: WP | Role: EV assessment specialist | Driver: per unit purchased | Time: 15 min
+Activity: CP2 EV disclosure and claim activation | Product: CP | Role: EV assessment specialist | Driver: per inquiry at 80% proceed rate (gross up ÷ 0.80) | Time: 30 min
+Activity: WP3 Pool matching (exceptions) | Product: WP | Role: Intake assessor | Driver: per unit confirmed, 10% exceptions only | Time: 5 min
+Activity: CP3 Defendant onboarding and offer | Product: CP | Role: Defendant engagement specialist | Driver: per confirmed claim, gross up ÷ 0.70 (70% settle pre-court) | Time: 60 min
+Activity: CP3 Settlement facilitation | Product: CP | Role: Settlement facilitator | Driver: per settled claim (70% × confirmed) + 5 min handoff for non-settling | Time: 30 min (settled) / 5 min (non-settling)
+Activity: Platform team lead overhead | Product: Enabler | Role: Senior platform specialist (+20% time) | Driver: fixed per LMU per month | Time: ~15 hrs/month (amortise across monthly volume)
+Activity: Territory compliance | Product: Enabler | Role: Territory compliance officer | Driver: fixed per territory per month (÷ LMUs × volume) | Time: shared FTE, amortise
+Activity: NTP partnership activation | Product: Enabler | Role: Commercial team HQ | Driver: fixed per NTP, amortise over lifetime claims | Time: TBC
+Activity: Pool operator relationship management | Product: Enabler | Role: Pool operator relations HQ | Driver: fixed per operator, amortise over lifetime claims | Time: TBC
+
+GROUP 5 — Other costs (fixed and semi-fixed) [C3 updated]
+Platform technology (build and maintenance): HQ fixed — amortise across annual volume
+EV methodology team: HQ fixed — 2–3 FTE
+Pool operator relations: HQ fixed — 2 FTE
+Commercial / NTP partnerships: HQ fixed — 2–3 FTE
+Finance and compliance: HQ fixed — 2 FTE
+CEO / leadership: HQ fixed — 2 FTE
+Assessment org setup [C3]: £80,000 one-time startup cost (SC) — legal structure, law school partnerships, methodology development, assessment tooling. Amortise over at-scale claim volume.
+
+GROUP 6 — Mechanisms [C3 addition]
+C3 mechanism — independent assessment org: cost £16.28/claim PVC; effect: defendant settlement lag falls, peak WC contracts from ~£4.3M baseline to ~£2.2M with mechanism at Y5. Mechanism improves the weighted average recovery period by increasing the proportion of claims in the 1.5-month settlement bucket.
+
+GROUP 7 — Scale and targets
+At-scale volume: ~18,000 claims/year (~25–30 platform teams × 60 claims/month × 12)
+Target FMOS: ≥ 60% conservative scenario. Run four-layer FMOS: PVC (incl. assessment org payment) + RC + SC (incl. £80k setup amortised) + IC (incl. £0.95/unit WC cost).
+
+ARCHITECTURE DISCIPLINE CHECK
+Excluded from this fin-sim:
+✗ Solicitor salaries (pool operator cost)
+✗ Law student supervision (pool operator cost)
+✗ Court filing fees (pool operator cost)
+✗ Working capital for claims in litigation (pool operator cost)
+✗ ATE insurance (pool operator or investor cost)
+✗ Securitisation vehicle administration [REQUIRES later architecture]
+✗ Institutional investor KYC/onboarding [REQUIRES later architecture]
+    </pre>
+  </div>
+
+</div>
+</body>
+</html>

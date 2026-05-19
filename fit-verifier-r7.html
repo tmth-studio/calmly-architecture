@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIT Verifier — Calmly R7 Gate · 19 May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --border-strong: #b0b8c4;
+      --accent: #1f4fa8; --accent-light: #e8eef8; --panel-bg: #0f2744; --panel-text: #ffffff;
+      --warning-bg: #fff8e6; --warning-border: #d4820a; --inset-border: #1f4fa8;
+      --green-bg: #e6f4ec; --green-text: #166534; --green-border: #a7d4b8;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --amber-bg: #fff8e6; --amber-text: #854d0e;
+      --tag-radius: 3px; --font-ui: 'DM Sans', system-ui, sans-serif; --font-body: 'Lora', Georgia, serif; --width: 960px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 17px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+    .header-panel { background: var(--panel-bg); color: var(--panel-text); padding: 32px 36px 28px; margin-bottom: 40px; }
+    .header-panel .gate-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .header-panel h1 { font-family: var(--font-ui); font-size: 26px; font-weight: 600; color: #ffffff; margin-bottom: 20px; }
+    .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 20px; }
+    .header-meta-item .key { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
+    .header-meta-item .val { font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; }
+    .section { margin-bottom: 44px; }
+    .section-title { font-family: var(--font-ui); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 20px; }
+    h3 { font-family: var(--font-ui); font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 10px; margin-top: 24px; }
+    h4 { font-family: var(--font-ui); font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; margin-top: 20px; }
+    p { font-family: var(--font-body); font-size: 17px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .warning-block { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 16px 20px; margin-bottom: 24px; }
+    .warning-block p { font-family: var(--font-ui); font-size: 15px; color: #4a3000; margin-bottom: 10px; }
+    .warning-block p:last-child { margin-bottom: 0; }
+    .warning-block strong { font-weight: 600; }
+    .inset-block { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 16px 20px; margin-bottom: 24px; }
+    .inset-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .inset-block p:last-child { margin-bottom: 0; }
+    .inset-block strong { font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; margin-bottom: 24px; }
+    thead th { font-weight: 600; font-size: 13px; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border-strong); color: var(--text); background: #f9f9f8; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr.subtotal td { font-weight: 600; color: var(--text); background: #f5f7fa; border-top: 1px solid var(--border-strong); border-bottom: 1px solid var(--border-strong); }
+    tbody tr.total-row td { font-weight: 600; color: var(--text); background: var(--accent-light); border-top: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
+    tbody tr.highlight-row td { font-weight: 600; color: var(--green-text); background: var(--green-bg); }
+    tbody tr.saving-row td { font-weight: 600; color: var(--green-text); background: #e6f4ec; }
+    td.amount { text-align: right; font-variant-numeric: tabular-nums; }
+    th.amount { text-align: right; }
+    td.note-col { color: var(--text-muted); font-size: 13px; }
+    .fmos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+    .fmos-card { border: 1px solid var(--border); padding: 16px 18px; background: #fafaf9; }
+    .fmos-card .card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .fmos-card .card-value { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1.1; }
+    .fmos-card .card-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .fmos-card.pass { border-color: var(--green-border); background: var(--green-bg); }
+    .fmos-card.pass .card-value { color: var(--green-text); }
+    .verdict-panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; border-left: 6px solid #22c55e; margin-bottom: 40px; }
+    .verdict-panel .verdict-label { font-size: 12px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #86efac; margin-bottom: 10px; }
+    .verdict-panel .verdict-headline { font-size: 24px; font-weight: 600; color: #ffffff; margin-bottom: 18px; }
+    .verdict-panel p { font-family: var(--font-ui); font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 10px; }
+    .verdict-panel p:last-child { margin-bottom: 0; }
+    .verdict-panel strong { color: #ffffff; }
+    .fit-checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+    .fit-check { border: 1px solid var(--border); padding: 14px 16px; background: #fafaf9; }
+    .fit-check .check-letter { font-size: 28px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+    .fit-check .check-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .fit-check .check-result { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .fit-check.pass { border-color: var(--green-border); background: var(--green-bg); }
+    .fit-check.pass .check-letter { color: var(--green-text); }
+    .fit-check.pass .check-result { color: var(--green-text); }
+    .tag { display: inline-block; font-family: var(--font-ui); font-size: 12px; font-weight: 500; border-radius: var(--tag-radius); padding: 2px 8px; border: 1px solid; }
+    .tag-green { background: #e6f4ec; color: #166534; border-color: #a7d4b8; }
+    .tag-amber { background: #fff8e6; color: #854d0e; border-color: #f0d98a; }
+    .tag-grey { background: #f1f3f5; color: #4a5568; border-color: #d0d5dd; }
+    .tag-blue { background: #e8eef8; color: #1f4fa8; border-color: #b8c8e8; }
+    .conditions-list { list-style: none; padding: 0; }
+    .conditions-list li { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 14px 18px; margin-bottom: 12px; font-family: var(--font-ui); font-size: 15px; color: #3a2800; line-height: 1.6; }
+    .conditions-list li strong { font-weight: 600; }
+    .conditions-list li .cond-number { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--warning-border); display: block; margin-bottom: 5px; }
+    .routing-block { background: var(--accent-light); border: 1px solid #b8c8e8; padding: 24px 28px; margin-top: 40px; }
+    .routing-block .routing-title { font-family: var(--font-ui); font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .routing-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .routing-block p:last-child { margin-bottom: 0; }
+    .routing-block strong { font-weight: 600; color: var(--accent); }
+    .doc-footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .doc-footer .footer-left { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .doc-footer .footer-right { font-size: 12px; color: var(--text-muted); text-align: right; font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-panel">
+    <div class="gate-label">FIT Verifier · R7 gate — Gateway Partner Activation (NTP)</div>
+    <h1>FIT Verifier — Calmly — R7 gate</h1>
+    <div class="header-meta">
+      <div class="header-meta-item"><div class="key">Date</div><div class="val">19 May 2026</div></div>
+      <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — consumer small claims exchange (E&amp;W)</div></div>
+      <div class="header-meta-item"><div class="key">Unit</div><div class="val">One claim resolved</div></div>
+      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R7 restructures acquisition · cost floor falls £237 → £221</div></div>
+    </div>
+  </div>
+
+  <div class="fit-checks">
+    <div class="fit-check pass">
+      <div class="check-letter">F</div>
+      <div class="check-label">Financial margin of safety</div>
+      <div class="check-result">Pass — 66% FMOS (↑ from 63.5%)</div>
+    </div>
+    <div class="fit-check pass">
+      <div class="check-letter">I</div>
+      <div class="check-label">Intrinsic performance capability</div>
+      <div class="check-result">Pass — partner volume compounds</div>
+    </div>
+    <div class="fit-check pass">
+      <div class="check-letter">T</div>
+      <div class="check-label">Theorem-driven design</div>
+      <div class="check-result">Pass — Rogers (1962)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 1 — Strategic design: R7 Gateway Partner Activation</div>
+
+    <h3>Gateway partner diagnosis</h3>
+    <div class="inset-block">
+      <p><strong>Category entry point:</strong> The moment a consumer receives a company's final refusal and begins searching for options. This is when the job-to-be-done is most salient and search intent is highest.</p>
+      <p><strong>Primary gateway partner type:</strong> Consumer rights organisations and charities — Citizens Advice, Which?, MoneySavingExpert, Resolver. These are the trusted institutions consumers turn to at the exact moment Calmly needs to reach them. They currently refer consumers to the small claims court — an intimidating, uncertain path. Calmly is a better referral for qualifying claims.</p>
+      <p><strong>Secondary gateway partner type:</strong> Claims management companies (CMCs) and comparison sites — existing regulated infrastructure for consumer financial claims. Adjacent market, existing acquisition funnels.</p>
+      <p><strong>Primary target: Resolver.</strong> Data-driven, agile, consumer-facing, already processes structured complaint data. Resolver's existing claim categorisation aligns with Calmly's criteria. Early adopter profile — smaller, data-driven organisations move first (Rogers 1962 diffusion).</p>
+    </div>
+
+    <h3>Theory of Change — Partner Activation (CMO format)</h3>
+    <div class="inset-block">
+      <p><strong>Class of problem:</strong> Partner adoption requires the gateway partner to change their referral behaviour. Partners are risk-averse institutions. They adopt new referrals when trusted peers have adopted and outcomes are verifiable.</p>
+      <p><strong>Theory:</strong> Rogers (1962) diffusion of innovations — early adopters validate the channel for later adopters. Cialdini (1984) authority and social proof — large trusted institutions (Citizens Advice) follow when smaller data-driven peers (Resolver) have demonstrated verified better outcomes. Both are well-replicated frameworks with extensive application in B2B partnership development.</p>
+      <p><strong>Context:</strong> Consumer rights orgs that currently refer to the small claims court, knowing consumers struggle to navigate it and often recover nothing.</p>
+      <p><strong>Mechanism:</strong> Calmly provides Resolver with transparent outcome data (claim resolution rates, amounts recovered, time to settlement) — verified, auditable. Resolver sees better outcomes than their current referral. They integrate Calmly API into their standard advice workflow. Resolver's published outcome data then serves as the proof point for Citizens Advice and Which? partnerships.</p>
+      <p><strong>Outcome:</strong> Gateway partners integrate Calmly referrals into standard workflows. Consumers reach Calmly at peak receptivity without Calmly bearing the full direct acquisition cost. NTP placement fee replaces a portion of organic CAC.</p>
+    </div>
+
+    <h3>Partner activation sequence</h3>
+    <p>Step 1: Resolver API integration and outcome data sharing (pilot phase). Step 2: Resolver publishes outcome data publicly (Resolver already publishes resolution statistics). Step 3: Citizens Advice partnership scoping using Resolver data as proof point. Step 4: Which? and MoneySavingExpert integration (larger orgs, longer sales cycles). No single gateway partner controls more than 30% of inflow — concentration risk managed through the organic channel maintained in parallel.</p>
+
+    <h3>Acquisition cost structure — R7 redesign</h3>
+    <div class="inset-block">
+      <p>R7 introduces the NTP placement fee and restructures the blended acquisition cost. The R4 CAC of £38/claim assumed 100% organic acquisition. R7 introduces a two-channel model:</p>
+      <p><strong>Gateway-referred claims (60% of inflow):</strong> £25 NTP placement fee per accepted claim. Zero organic content cost for this channel.</p>
+      <p><strong>Organic claims (40% of inflow):</strong> £18/claim net CAC (organic SEO + word of mouth, now serving a smaller proportion of total inflow — same fixed content investment divided across fewer claims).</p>
+      <p><strong>Blended acquisition cost:</strong> (0.60 × £25) + (0.40 × £18) = £15.00 + £7.20 = <strong>£22.20 → £22/claim</strong>.</p>
+      <p><strong>Net saving vs R4:</strong> £38 → £22 = £16/claim improvement. Source: gateway partners reduce CAC while adding NTP fee. The net effect is positive because the NTP fee (£25) is lower than the full organic CAC (£38) it displaces for 60% of claims.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 2 — F: Financial margin of safety (FMOS)</div>
+
+    <table>
+      <thead><tr><th>Layer</th><th>Component</th><th class="amount">£/claim</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-grey">C3 base</span></td><td>Assessment org, LMU, HQ, platform, SC, IC (PVC £24 + RC £175 + SC £1 + IC £1)</td><td class="amount">£199</td><td class="note-col">Unchanged from C3 gate.</td></tr>
+        <tr><td><span class="tag tag-grey">R4</span></td><td>CAC (original 100% organic)</td><td class="amount">£38</td><td class="note-col">Designed at R4. Now restructured at R7.</td></tr>
+        <tr><td><span class="tag tag-blue">R7 restructure</span></td><td>Gateway-referred: NTP fee £25 × 60% share</td><td class="amount">£15</td><td class="note-col">NTP placement fee for 60% of claims via gateway partners.</td></tr>
+        <tr><td></td><td>Organic: CAC £18 × 40% share</td><td class="amount">£7</td><td class="note-col">Reduced organic CAC for remaining 40% direct/SEO.</td></tr>
+        <tr class="saving-row"><td></td><td>Net acquisition cost saving (R7 vs R4)</td><td class="amount">−£16</td><td class="note-col">R7 blended £22 vs R4 CAC £38 = £16/claim improvement.</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Cost floor — R7 cumulative</strong></td><td class="amount"><strong>£221</strong></td><td class="note-col">£199 + £22 blended acquisition</td></tr>
+      </tbody>
+    </table>
+
+    <h3>FMOS calculation</h3>
+    <div class="fmos-grid">
+      <div class="fmos-card"><div class="card-label">Price ceiling</div><div class="card-value">£650</div><div class="card-sub">Bilateral KMC × 50% surplus (C2)</div></div>
+      <div class="fmos-card"><div class="card-label">Cost floor (R7)</div><div class="card-value">£221</div><div class="card-sub">C3 £199 + blended acquisition £22</div></div>
+      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">66%</div><div class="card-sub">↑ from 63.5% at R4–R6 · first improvement since C3</div></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Item</th><th class="amount">£/claim</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Price ceiling</td><td class="amount">£650</td><td class="note-col">C2.</td></tr>
+        <tr><td>Cost floor (R7 cumulative)</td><td class="amount">£221</td><td class="note-col">C3 base + blended acquisition</td></tr>
+        <tr><td>Net contribution</td><td class="amount">£429</td><td class="note-col">£650 − £221</td></tr>
+        <tr class="highlight-row"><td><strong>FMOS</strong></td><td class="amount"><strong>66%</strong></td><td class="note-col">£429 ÷ £650</td></tr>
+        <tr><td>vs R4–R6 FMOS</td><td class="amount">+2.5pp</td><td class="note-col">Gateway partners reduce blended acquisition cost by £16/claim.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Sensitivity — channel mix and NTP fee</h3>
+    <table>
+      <thead><tr><th>Scenario</th><th class="amount">NTP fee</th><th class="amount">Gateway share</th><th class="amount">Blended CAC</th><th class="amount">FMOS</th></tr></thead>
+      <tbody>
+        <tr style="background:#f5faf7;"><td>Optimistic (strong partnerships)</td><td class="amount">£20</td><td class="amount">70%</td><td class="amount">£19</td><td class="amount">68%</td></tr>
+        <tr style="background:#f5f7fa;"><td><strong>Central (Tier 4)</strong></td><td class="amount"><strong>£25</strong></td><td class="amount"><strong>60%</strong></td><td class="amount"><strong>£22</strong></td><td class="amount"><strong>66%</strong></td></tr>
+        <tr style="background:#fff8f8;"><td>Pessimistic (weak partnerships)</td><td class="amount">£35</td><td class="amount">40%</td><td class="amount">£29</td><td class="amount">63%</td></tr>
+        <tr style="background:#fff8f8;"><td>Gateway fails (organic only)</td><td class="amount">—</td><td class="amount">0%</td><td class="amount">£38</td><td class="amount">63.5%</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--text-muted);">Even in the gateway-failure scenario (reverts to R4 CAC), FMOS remains at 63.5% — above the 60% final gate. R7 is a net improvement with no downside below R4 baseline.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 3 — I: Intrinsic performance capability</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
+    <div class="inset-block">
+      <p>The gateway partner channel has three intrinsic performance properties. First, as Calmly's outcome data accumulates, the proof point for new partner recruitment strengthens — each resolved claim makes the next partnership easier to close. Second, gateway partners at scale (Citizens Advice handles ~2.7 million consumer queries/year in the UK) provide volume that further dilutes fixed acquisition costs. Third, the partner referral fee (£25) is negotiable downward at scale — volume commitments unlock better rates. The floor is not fixed. <strong>Pass.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 4 — T: Theorem-driven design</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
+
+    <h4>Partner adoption — Rogers (1962) diffusion of innovations</h4>
+    <div class="inset-block">
+      <p>Rogers' innovation diffusion framework predicts that early adopters (smaller, data-driven organisations like Resolver) validate a new practice, reducing perceived risk for later adopters (larger, more risk-averse organisations like Citizens Advice). The sequencing strategy — Resolver first, Citizens Advice second — is a direct application. Rogers (1962) is one of the foundational frameworks in technology and behaviour adoption; extensively validated across healthcare, education, financial services, and public sector settings. <strong>Pass.</strong></p>
+    </div>
+
+    <h4>Social proof — Cialdini (1984)</h4>
+    <div class="inset-block">
+      <p>Risk-averse institutions reference peer behaviour when evaluating new adoptions. Resolver's published outcome data is a social proof mechanism for Citizens Advice. Cialdini's authority and social proof principles are well-replicated in both consumer and institutional settings. <strong>Pass.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 5 — Verdict</div>
+    <div class="verdict-panel">
+      <div class="verdict-label">Verdict — R7 gate · 19 May 2026</div>
+      <div class="verdict-headline">PASS</div>
+      <p><strong>FMOS: 66%</strong> — first improvement since C3 gate (63.6% → 66%). Gateway partners restructure acquisition cost from 100% organic (£38/claim) to a two-channel blended model (60% gateway at £25 NTP, 40% organic at £18 CAC = £22/claim blended). Net saving: £16/claim. Cost floor: £221/claim.</p>
+      <p>The gateway-failure scenario (Resolver integration fails) reverts to the R4 CAC model at 63.5% FMOS — above the 60% gate. R7 has no downside below the R4 baseline. The improvement is asymmetric: upside if partnerships are stronger, no meaningful downside if weaker.</p>
+      <p>Concentration risk is managed: no single gateway partner controls more than 30% of inflow. Organic channel maintained in parallel as backstop.</p>
+      <p><strong>Proceed to R8 — Create a Switching Cost.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 6 — Conditions before capital commitment</div>
+    <ol class="conditions-list">
+      <li><span class="cond-number">Condition 1</span><strong>Validate NTP placement fee (£25/claim central).</strong> Negotiated at partnership initiation. Resolver is data-driven — they will benchmark against their existing referral fee income. Validate through scoping conversations before pilot launch. The C3 gate flagged this at £25–50/claim; R7 design uses £25 as the at-scale rate based on volume leverage.</li>
+      <li><span class="cond-number">Condition 2</span><strong>Confirm gateway partner pre-screen quality.</strong> The 65% pre-screen pass rate (C3 condition) is sensitive to gateway partner referral quality. Resolver and Citizens Advice referrals are likely to have higher claim quality (users have already described their dispute in detail) than cold organic. Track gateway vs organic pass rate in pilot — gateway quality should outperform organic by ≥5pp.</li>
+      <li><span class="cond-number">Condition 3</span><strong>Maintain 30% organic inflow minimum.</strong> Concentration risk limit. If any single gateway partner exceeds 30% of monthly inflow, activate organic CAC investment to rebalance. This is a portfolio management condition, not a design condition.</li>
+    </ol>
+  </div>
+
+  <div class="routing-block">
+    <div class="routing-title">Next step — R8</div>
+    <p><strong>Proceed to R8</strong> — Create a Switching Cost (Lock-in). The question: what makes returning claimants prefer Calmly for a second or subsequent dispute? The store of value is claim history and institutional relationship capital.</p>
+    <p>R8 and R9 add no new per-unit costs. The cost floor remains at £221/claim through to R10.</p>
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">FIT Verifier — R7 gate · 19 May 2026<br>Cumulative cost floor: £221/claim · FMOS: 66% · ↑ from 63.5% at R6</div>
+    <div class="footer-right">Builds on: calmly-fit-verifier-r6-2026-05-19.html (PASS, 63.5%)</div>
+  </div>
+
+</div>
+</body>
+</html>

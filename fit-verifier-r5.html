@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIT Verifier — Calmly R5 Gate · 19 May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --border-strong: #b0b8c4;
+      --accent: #1f4fa8; --accent-light: #e8eef8; --panel-bg: #0f2744; --panel-text: #ffffff;
+      --warning-bg: #fff8e6; --warning-border: #d4820a; --inset-border: #1f4fa8;
+      --green-bg: #e6f4ec; --green-text: #166534; --green-border: #a7d4b8;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --amber-bg: #fff8e6; --amber-text: #854d0e;
+      --tag-radius: 3px; --font-ui: 'DM Sans', system-ui, sans-serif; --font-body: 'Lora', Georgia, serif; --width: 960px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 17px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+    .header-panel { background: var(--panel-bg); color: var(--panel-text); padding: 32px 36px 28px; margin-bottom: 40px; }
+    .header-panel .gate-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .header-panel h1 { font-family: var(--font-ui); font-size: 26px; font-weight: 600; color: #ffffff; margin-bottom: 20px; }
+    .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 20px; }
+    .header-meta-item .key { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
+    .header-meta-item .val { font-size: 14px; color: rgba(255,255,255,0.9); font-weight: 500; }
+    .section { margin-bottom: 44px; }
+    .section-title { font-family: var(--font-ui); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 20px; }
+    h3 { font-family: var(--font-ui); font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 10px; margin-top: 24px; }
+    h4 { font-family: var(--font-ui); font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; margin-top: 20px; }
+    p { font-family: var(--font-body); font-size: 17px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .warning-block { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 16px 20px; margin-bottom: 24px; }
+    .warning-block p { font-family: var(--font-ui); font-size: 15px; color: #4a3000; margin-bottom: 10px; }
+    .warning-block p:last-child { margin-bottom: 0; }
+    .warning-block strong { font-weight: 600; }
+    .inset-block { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 16px 20px; margin-bottom: 24px; }
+    .inset-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .inset-block p:last-child { margin-bottom: 0; }
+    .inset-block strong { font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; margin-bottom: 24px; }
+    thead th { font-weight: 600; font-size: 13px; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border-strong); color: var(--text); background: #f9f9f8; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr.total-row td { font-weight: 600; color: var(--text); background: var(--accent-light); border-top: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
+    tbody tr.highlight-row td { font-weight: 600; color: var(--green-text); background: var(--green-bg); }
+    td.amount { text-align: right; font-variant-numeric: tabular-nums; }
+    th.amount { text-align: right; }
+    td.note-col { color: var(--text-muted); font-size: 13px; }
+    .fmos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+    .fmos-card { border: 1px solid var(--border); padding: 16px 18px; background: #fafaf9; }
+    .fmos-card .card-label { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .fmos-card .card-value { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1.1; }
+    .fmos-card .card-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .fmos-card.pass { border-color: var(--green-border); background: var(--green-bg); }
+    .fmos-card.pass .card-value { color: var(--green-text); }
+    .verdict-panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; border-left: 6px solid #22c55e; margin-bottom: 40px; }
+    .verdict-panel .verdict-label { font-size: 12px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #86efac; margin-bottom: 10px; }
+    .verdict-panel .verdict-headline { font-size: 24px; font-weight: 600; color: #ffffff; margin-bottom: 18px; }
+    .verdict-panel p { font-family: var(--font-ui); font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 10px; }
+    .verdict-panel p:last-child { margin-bottom: 0; }
+    .verdict-panel strong { color: #ffffff; }
+    .fit-checks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+    .fit-check { border: 1px solid var(--border); padding: 14px 16px; background: #fafaf9; }
+    .fit-check .check-letter { font-size: 28px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+    .fit-check .check-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .fit-check .check-result { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .fit-check.pass { border-color: var(--green-border); background: var(--green-bg); }
+    .fit-check.pass .check-letter { color: var(--green-text); }
+    .fit-check.pass .check-result { color: var(--green-text); }
+    .tag { display: inline-block; font-family: var(--font-ui); font-size: 12px; font-weight: 500; border-radius: var(--tag-radius); padding: 2px 8px; border: 1px solid; }
+    .tag-green { background: #e6f4ec; color: #166534; border-color: #a7d4b8; }
+    .tag-grey { background: #f1f3f5; color: #4a5568; border-color: #d0d5dd; }
+    .conditions-list { list-style: none; padding: 0; }
+    .conditions-list li { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 14px 18px; margin-bottom: 12px; font-family: var(--font-ui); font-size: 15px; color: #3a2800; line-height: 1.6; }
+    .conditions-list li strong { font-weight: 600; }
+    .conditions-list li .cond-number { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--warning-border); display: block; margin-bottom: 5px; }
+    .routing-block { background: var(--accent-light); border: 1px solid #b8c8e8; padding: 24px 28px; margin-top: 40px; }
+    .routing-block .routing-title { font-family: var(--font-ui); font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .routing-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .routing-block p:last-child { margin-bottom: 0; }
+    .routing-block strong { font-weight: 600; color: var(--accent); }
+    .doc-footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .doc-footer .footer-left { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .doc-footer .footer-right { font-size: 12px; color: var(--text-muted); text-align: right; font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-panel">
+    <div class="gate-label">FIT Verifier · R5 gate — Use Block (Consumer Adoption)</div>
+    <h1>FIT Verifier — Calmly — R5 gate</h1>
+    <div class="header-meta">
+      <div class="header-meta-item"><div class="key">Date</div><div class="val">19 May 2026</div></div>
+      <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — consumer small claims exchange (E&amp;W)</div></div>
+      <div class="header-meta-item"><div class="key">Unit</div><div class="val">One claim resolved</div></div>
+      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R5 adds £0 new cost · cost floor held at £237/claim</div></div>
+    </div>
+  </div>
+
+  <div class="fit-checks">
+    <div class="fit-check pass">
+      <div class="check-letter">F</div>
+      <div class="check-label">Financial margin of safety</div>
+      <div class="check-result">Pass — 63.5% FMOS (unchanged)</div>
+    </div>
+    <div class="fit-check pass">
+      <div class="check-letter">I</div>
+      <div class="check-label">Intrinsic performance capability</div>
+      <div class="check-result">Pass — guided flow reduces drop-off</div>
+    </div>
+    <div class="fit-check pass">
+      <div class="check-letter">T</div>
+      <div class="check-label">Theorem-driven design</div>
+      <div class="check-result">Pass — Bandura (1986)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 1 — Strategic design: R5 Use Block</div>
+
+    <h3>Use Block diagnosis</h3>
+    <div class="inset-block">
+      <p><strong>Primary block:</strong> Evidence assembly anxiety. The consumer does not know what evidence is needed, does not know if they have enough, and fears that submitting an incomplete case will weaken their position or waste time.</p>
+      <p><strong>Key clarification:</strong> In Calmly's exchange model, the consumer is not submitting to court — they are submitting to Calmly. The activation question is whether the consumer can submit dispute details in a way that gives the assessment org sufficient input to produce a valid EV report.</p>
+      <p><strong>Secondary block:</strong> Intimidation from perceived legal complexity. Consumers associate claim submission with legal form-filling (County Court Money Claims Centre) — a genuinely complex process. They must understand that Calmly's submission is not a court filing.</p>
+    </div>
+
+    <h3>Theory of Change — Adoption (CMO format)</h3>
+    <div class="inset-block">
+      <p><strong>Class of problem:</strong> Competence gap + completion anxiety — consumers do not know what "good enough" looks like and fear failure.</p>
+      <p><strong>Theory:</strong> Bandura (1986) self-efficacy — belief in one's ability to complete a task determines whether one attempts it and persists through difficulty. Guided structured input with explicit evidence standards reduces perceived competence gap and raises task completion probability. Thaler &amp; Sunstein (2008) choice architecture — defaults and progress indicators guide behaviour toward completion without removing agency.</p>
+      <p><strong>Context:</strong> Consumer who has accepted in principle (R4 PASS) but faces the evidence submission step with a pile of emails, screenshots, and receipts and no sense of what matters.</p>
+      <p><strong>Mechanism:</strong> A structured claim submission flow with progressive disclosure (step-by-step, showing one category at a time), in-context evidence standards (examples of sufficient evidence for each claim type), and a live completeness indicator produces self-efficacy — consumer sees they already have enough to proceed.</p>
+      <p><strong>Outcome:</strong> Consumer completes claim submission with all required evidence. Assessment org receives sufficient input to produce EV assessment within 48 hours.</p>
+    </div>
+
+    <h3>Adoption Strategy</h3>
+    <p>Guided claim submission flow with progressive disclosure and real-time completeness feedback. The platform shows the consumer: (1) exactly which categories of evidence are needed for their specific claim type, (2) examples of sufficient evidence at each step, (3) a live completeness indicator confirming when they have enough. No legal jargon. Auto-save prevents loss of progress. The consumer is told whether they have a complete submission before submitting — eliminating fear of an incomplete case and reducing support burden.</p>
+
+    <h3>Cross-requirement consistency</h3>
+    <div class="inset-block">
+      <p>The R5 guided submission flow is also the R3 assessment org input quality mechanism. The evidence categories the flow collects are designed around what the assessment org requires to produce a valid EV report. R5 and R3 share a single designed artefact: the claim intake form architecture. This is not incidental — the two requirements are structurally linked through the assessment org's input specification.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 2 — F: Financial margin of safety (FMOS)</div>
+
+    <div class="warning-block">
+      <p>⚠ <strong>R5 adds no new per-unit cost.</strong> The guided submission flow is a product development investment. That investment is already captured in the SC layer (platform development, amortised at £1/claim from C3). No additional per-claim cost is introduced at R5. The FMOS calculation is identical to R4.</p>
+    </div>
+
+    <div class="fmos-grid">
+      <div class="fmos-card"><div class="card-label">Price ceiling</div><div class="card-value">£650</div><div class="card-sub">Bilateral KMC × 50% surplus (C2)</div></div>
+      <div class="fmos-card"><div class="card-label">Cost floor (R5)</div><div class="card-value">£237</div><div class="card-sub">Unchanged from R4 · no new cost</div></div>
+      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.5%</div><div class="card-sub">Unchanged from R4</div></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Item</th><th class="amount">£/claim</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Price ceiling</td><td class="amount">£650</td><td class="note-col">C2.</td></tr>
+        <tr><td>C3 base cost floor</td><td class="amount">£199</td><td class="note-col">PVC £24 + RC £175 + SC £1 + IC £1. Carried from C3.</td></tr>
+        <tr><td>R4 CAC</td><td class="amount">£38</td><td class="note-col">Organic SEO + word of mouth. Designed at R4.</td></tr>
+        <tr><td>R5 new cost</td><td class="amount">£0</td><td class="note-col">UX/product development in SC layer. No per-unit cost.</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Cost floor — R5 cumulative</strong></td><td class="amount"><strong>£237</strong></td></tr>
+        <tr><td>Net contribution</td><td class="amount">£413</td><td class="note-col">£650 − £237</td></tr>
+        <tr class="highlight-row"><td><strong>FMOS</strong></td><td class="amount"><strong>63.5%</strong></td><td class="note-col">Unchanged from R4</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 3 — I: Intrinsic performance capability</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
+    <div class="inset-block">
+      <p>The guided submission flow has two intrinsic performance properties. First, it reduces drop-off during submission — fewer incomplete submissions means more claims reach the assessment org, which means more assessments per unit of fixed content/acquisition cost. This improves the effective CAC (more completions per £ of acquisition spend). Second, higher evidence quality at intake reduces back-and-forth between the assessment org and the claimant, cutting the LMU specialist intake time (currently 69 min/confirmed claim). Both effects reduce cost per resolved claim over time without requiring additional investment. <strong>Pass.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 4 — T: Theorem-driven design</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
+
+    <h4>Adoption — Bandura (1986) self-efficacy</h4>
+    <div class="inset-block">
+      <p>Perceived competence is the primary determinant of task initiation and completion. Bandura's self-efficacy theory is one of the most replicated findings in behavioural psychology — applied extensively in digital product design (onboarding flows, step-by-step guidance, progress indicators). The specific mechanism — guided structured input with explicit standards — directly reduces perceived competence gap. Applicable precedent: financial services (open banking claim flows), legal tech (Resolver's structured complaint submission), consumer platforms (insurance claim flows). <strong>Pass.</strong></p>
+    </div>
+
+    <h4>Choice architecture — Thaler &amp; Sunstein (2008)</h4>
+    <div class="inset-block">
+      <p>Progressive disclosure (showing one step at a time) and a live completeness indicator are choice architecture interventions that reduce cognitive load and nudge toward completion. Thaler &amp; Sunstein's nudge framework is well-grounded and extensively applied in digital consumer products. <strong>Pass.</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 5 — Verdict</div>
+    <div class="verdict-panel">
+      <div class="verdict-label">Verdict — R5 gate · 19 May 2026</div>
+      <div class="verdict-headline">PASS</div>
+      <p><strong>FMOS: 63.5%</strong> — unchanged from R4. R5 adds no new per-unit cost. The guided submission flow is a product design investment within the existing SC/platform development budget.</p>
+      <p>The Adoption Strategy is grounded in Bandura (1986) self-efficacy — a well-replicated theory with extensive digital product application. The R5 mechanism (guided submission flow) also serves R3 (assessment org input quality) — same designed artefact, two requirements served. Consistent.</p>
+      <p><strong>Proceed to R6 — Circumvent the Cash Flow Constraint (Amortisation).</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 6 — Conditions before capital commitment</div>
+    <ol class="conditions-list">
+      <li><span class="cond-number">Condition 1</span><strong>Validate evidence category requirements with the assessment org.</strong> The guided submission flow must be built around the specific evidence categories the assessment org needs. This requires a detailed intake specification from the assessment org before the product is built. Dependency: assessment org partnership confirmed (C3 condition).</li>
+      <li><span class="cond-number">Condition 2</span><strong>Measure submission completion rate in pilot.</strong> Target: ≥75% of consumers who begin submission complete it. If below 60%, the flow needs redesign before scaling. Pilot must instrument completion at each step to identify drop-off points.</li>
+      <li><span class="cond-number">Condition 3</span><strong>Validate LMU intake time reduction.</strong> If the guided flow improves evidence quality, intake assessor time should fall below the 69 min/confirmed claim baseline. Track in pilot — every 10-minute reduction saves ~£5/claim on the RC layer.</li>
+    </ol>
+  </div>
+
+  <div class="routing-block">
+    <div class="routing-title">Next step — R6</div>
+    <p><strong>Proceed to R6</strong> — Circumvent the Cash Flow Constraint (Amortisation / Buy Block). The question: a consumer who can use the product (R5 PASS) now faces the "payment" — which in Calmly's model is the discount they must accept relative to face value. How do we circumvent loss aversion at the offer stage?</p>
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">FIT Verifier — R5 gate · 19 May 2026<br>Cumulative cost floor: £237/claim · FMOS: 63.5%</div>
+    <div class="footer-right">Builds on: calmly-fit-verifier-r4-2026-05-19.html (PASS, 63.5%)</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<!-- CTM v2 — Calmly — C1+C2+C3 — 19 May 2026 -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Customer Transformation Model v2 (C1+C2+C3)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #0f1923;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #dde1e7;
+      --border-strong: #b0b8c4;
+      --accent: #1f4fa8;
+      --accent-light: #e8eef8;
+      --panel-bg: #0f2744;
+      --panel-text: #ffffff;
+      --warning-bg: #fff8e6;
+      --warning-border: #d4820a;
+      --inset-border: #1f4fa8;
+      --green-bg: #e6f4ec;
+      --green-text: #166534;
+      --green-border: #a7d4b8;
+      --red-bg: #fde8e8;
+      --red-text: #991b1b;
+      --red-border: #f0b4b4;
+      --yellow-bg: #fef9e6;
+      --yellow-text: #854d0e;
+      --yellow-border: #f0d98a;
+      --grey-bg: #f1f3f5;
+      --grey-text: #4a5568;
+      --grey-border: #d0d5dd;
+      --purple-bg: #f0ebfb;
+      --purple-text: #5b21b6;
+      --purple-border: #c4aff0;
+      --tag-radius: 3px;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+      --font-body: 'Lora', Georgia, serif;
+      --width: 1060px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 48px 32px 100px; background: var(--surface); }
+
+    /* ── Header ── */
+    .doc-header { border-bottom: 2px solid var(--text); padding-bottom: 24px; margin-bottom: 36px; }
+    .doc-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .doc-header h1 { font-size: 30px; font-weight: 600; line-height: 1.2; margin-bottom: 6px; }
+    .doc-subtitle { font-family: var(--font-body); font-size: 17px; color: var(--text-secondary); font-style: italic; margin-bottom: 20px; }
+    .meta-row { display: flex; gap: 28px; font-size: 14px; color: var(--text-muted); flex-wrap: wrap; }
+
+    /* ── Architecture discipline notice ── */
+    .arch-discipline { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 20px 24px; margin-bottom: 32px; }
+    .arch-discipline .ad-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warning-border); margin-bottom: 8px; }
+    .arch-discipline h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .arch-discipline p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 8px; }
+    .arch-discipline p:last-child { margin-bottom: 0; }
+    .arch-discipline ul { margin: 8px 0 0 20px; }
+    .arch-discipline li { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 4px; }
+
+    /* ── Panel ── */
+    .panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin: 32px 0; }
+    .panel .panel-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+    .panel p { font-family: var(--font-body); font-size: 17px; line-height: 1.65; }
+    .panel p + p { margin-top: 12px; }
+    .panel strong { font-family: var(--font-ui); font-weight: 600; }
+
+    /* ── Inset block ── */
+    .inset { border-left: 4px solid var(--inset-border); background: var(--accent-light); padding: 14px 18px; margin: 14px 0; }
+    .inset p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
+    .inset p + p { margin-top: 8px; }
+    .inset strong { font-family: var(--font-ui); }
+
+    /* ── Warning block ── */
+    .warning { border-left: 4px solid var(--warning-border); background: var(--warning-bg); padding: 14px 18px; margin: 14px 0; }
+    .warning p { font-family: var(--font-ui); font-size: 13px; line-height: 1.6; color: #7a4a00; }
+
+    /* ── C3+ flag ── */
+    .c3plus-flag { background: var(--red-bg); border: 1px solid var(--red-border); padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--red-text); font-family: var(--font-ui); line-height: 1.5; border-radius: 2px; }
+    .c3plus-flag strong { font-weight: 600; }
+
+    /* ── Body prose ── */
+    p.body { font-family: var(--font-body); font-size: 16px; line-height: 1.75; margin-bottom: 16px; color: var(--text-secondary); }
+
+    /* ── Section headers ── */
+    .section-h2 { font-size: 22px; font-weight: 600; margin: 52px 0 8px; border-top: 2px solid var(--border); padding-top: 32px; }
+    .section-intro { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 28px; padding-left: 20px; border-left: 1px solid var(--border); }
+
+    /* ── Customer state grid ── */
+    .state-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 28px 0; }
+    .state-box { border: 1px solid var(--border); padding: 20px 22px; }
+    .state-box .state-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .state-box h4 { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+    .state-box ul { margin-left: 18px; font-family: var(--font-body); font-size: 14px; line-height: 1.75; color: var(--text-secondary); }
+    .state-box li { margin-bottom: 6px; }
+    .state-box.before { border-top: 3px solid var(--warning-border); }
+    .state-box.after { border-top: 3px solid #166534; }
+
+    /* ── Journey heading ── */
+    .journey-heading { background: var(--text); color: #fff; padding: 12px 20px; margin: 48px 0 0; display: flex; align-items: center; gap: 14px; }
+    .journey-heading .jh-icon { font-size: 18px; }
+    .journey-heading h2 { font-size: 17px; font-weight: 600; letter-spacing: 0.01em; }
+    .journey-heading .jh-subtitle { font-size: 13px; color: rgba(255,255,255,0.6); margin-left: auto; font-style: italic; }
+
+    /* ── Phase header ── */
+    .phase-header { display: flex; align-items: flex-start; gap: 16px; margin: 36px 0 0; }
+    .phase-number { min-width: 44px; height: 44px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .phase-number.working { background: var(--accent); }
+    .phase-number.comms { background: #166534; }
+    .phase-number.payment { background: #854d0e; }
+    .phase-number.convergence { background: var(--text); }
+    .phase-title { flex: 1; }
+    .phase-title h3 { font-size: 18px; font-weight: 600; line-height: 1.2; }
+    .phase-title .phase-arc { font-size: 13px; color: var(--text-muted); margin-top: 3px; font-style: italic; }
+
+    /* ── State change card ── */
+    .state-card { border: 1px solid var(--border); margin: 16px 0; }
+    .state-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; background: #fafaf9; border-bottom: 1px solid var(--border); }
+    .state-card-title { font-size: 13px; font-weight: 600; }
+    .state-card-body { padding: 16px; }
+    .state-dim { margin-bottom: 12px; }
+    .state-dim:last-child { margin-bottom: 0; }
+    .dim-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .dim-content { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
+    .dim-mechanism { background: var(--bg); border: 1px solid var(--border); padding: 10px 14px; margin-top: 8px; font-size: 13px; line-height: 1.55; color: var(--text-secondary); }
+    .dim-mechanism .mech-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+
+    /* ── CTM full matrix table ── */
+    .ctm-table-wrap { overflow-x: auto; margin: 28px 0 48px; }
+    table.ctm { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table.ctm thead tr { background: #f0f0ee; }
+    table.ctm th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); padding: 10px 12px; text-align: left; border-bottom: 2px solid var(--border-strong); white-space: nowrap; }
+    table.ctm td { padding: 13px 12px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 13px; line-height: 1.55; }
+    table.ctm tr:last-child td { border-bottom: none; }
+    table.ctm td.col-phase { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); width: 80px; }
+    table.ctm td.col-subphase { font-weight: 600; color: var(--text-secondary); width: 120px; }
+    table.ctm td.col-state { font-family: var(--font-body); }
+    table.ctm td.col-product { width: 160px; }
+    table.ctm td.col-balm { width: 70px; text-align: center; }
+
+    /* Row colour coding by 4-D product */
+    tr.row-working td { border-left: 3px solid var(--accent); }
+    tr.row-comms td { border-left: 3px solid #166534; }
+    tr.row-payment td { border-left: 3px solid #854d0e; }
+    tr.row-convergence td { border-left: 3px solid var(--text); }
+    tr.row-working td:first-child { border-left: 3px solid var(--accent); }
+
+    /* ── Tags ── */
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--tag-radius); border: 1px solid; white-space: nowrap; font-family: var(--font-ui); }
+    .tag-blue { background: var(--accent-light); color: var(--accent); border-color: #b8c8e8; }
+    .tag-green { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+    .tag-amber { background: var(--yellow-bg); color: var(--yellow-text); border-color: var(--yellow-border); }
+    .tag-red { background: var(--red-bg); color: var(--red-text); border-color: var(--red-border); }
+    .tag-grey { background: var(--grey-bg); color: var(--grey-text); border-color: var(--grey-border); }
+    .tag-dark { background: var(--text); color: #fff; border-color: var(--text); }
+    .tag-c1 { background: var(--accent-light); color: var(--accent); border-color: #b8c8e8; }
+    .tag-c2 { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+    .tag-c3plus { background: var(--red-bg); color: var(--red-text); border-color: var(--red-border); }
+
+    /* ── BALM mapping table ── */
+    table.balm { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+    table.balm th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); background: #f7f7f6; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
+    table.balm td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; font-size: 13px; }
+    table.balm tr:last-child td { border-bottom: none; }
+    table.balm td.balm-req { font-weight: 600; color: var(--text-secondary); width: 170px; font-size: 12px; }
+    table.balm td.balm-note { font-family: var(--font-body); line-height: 1.6; color: var(--text-secondary); }
+
+    /* ── Finding ── */
+    .finding { border: 1px solid var(--border); margin-bottom: 16px; }
+    .finding-header { display: flex; align-items: center; gap: 12px; padding: 13px 18px; background: #fafaf9; border-bottom: 1px solid var(--border); }
+    .finding-body { padding: 14px 18px; font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
+    .finding-body p + p { margin-top: 10px; }
+    .finding-body ul { margin: 8px 0 0 20px; }
+    .finding-body li { margin-bottom: 6px; }
+
+    /* ── Convergence block ── */
+    .convergence-block { background: var(--text); color: #fff; padding: 24px 28px; margin: 32px 0; }
+    .convergence-block .conv-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+    .convergence-block h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+    .convergence-block p { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: rgba(255,255,255,0.85); }
+    .convergence-block p + p { margin-top: 10px; }
+
+    /* ── Routing panel ── */
+    .routing-panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin: 52px 0 0; }
+    .routing-panel .rp-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; }
+    .routing-panel p { font-family: var(--font-body); font-size: 15px; line-height: 1.7; margin-bottom: 12px; }
+    .routing-panel p:last-child { margin-bottom: 0; }
+    .routing-panel code { font-family: monospace; font-size: 13px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 2px; }
+    .routing-panel strong { font-family: var(--font-ui); font-weight: 600; }
+
+    /* ── Legend ── */
+    .legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 16px 0 28px; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
+    .legend-swatch { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+    .swatch-working { background: var(--accent); }
+    .swatch-comms { background: #166534; }
+    .swatch-payment { background: #854d0e; }
+    .swatch-convergence { background: var(--text); }
+
+    /* ── Divider between claimant/defendant sections ── */
+    .journey-divider { border: none; border-top: 2px dashed var(--border); margin: 48px 0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ══════════════════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="doc-header">
+    <div class="doc-label">Calmly — IVE Customer Transformation Model v2 — C1+C2+C3 — 19 May 2026</div>
+    <h1>Customer Transformation Model</h1>
+    <div class="doc-subtitle">Two customer journeys — claimant and defendant — converging at settlement. C1, C2, and C3.</div>
+    <div class="meta-row">
+      <span>Tom Manuel</span>
+      <span>19 May 2026</span>
+      <span>Framework: IVE CTM — Simanis / Cornell</span>
+      <span>Scope: C1 + C2 + C3</span>
+      <span>Supersedes: CTM v2 C1+C2 (18 May 2026)</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ARCHITECTURE DISCIPLINE NOTICE
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="arch-discipline">
+    <div class="ad-label">Architecture discipline — C1+C2+C3 scope</div>
+    <h3>This CTM reflects C1, C2, and C3. Elements requiring C4+ are excluded.</h3>
+    <p>Only challenges with formally completed sub-requirements are represented. C1, C2, and C3 sub-requirements are complete; C4 through C10 are not yet formally complete for CTM purposes.</p>
+    <ul>
+      <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1+C2+C3, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation (structurally separate from Calmly, law students, no financial stake) — generates every EV settlement report (C3).</li>
+      <li><strong>Excluded:</strong> ATE insurance reframe (C4), pre-sale indicative valuation (C5), payment contingency detail (C6), NTP referral architecture (C7), lock-in (C8), lock-out (C9, C10). These appear as <strong>[REQUIRES C3+]</strong> placeholders where they would otherwise be required.</li>
+      <li><strong>Platform architecture:</strong> Calmly is a platform — it does not own claims, does not bear litigation risk, does not employ solicitors. Those belong to the pool operator. Calmly earns platform fees from both parties per claim resolved. No CTM element implies otherwise.</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       GOVERNING STATEMENT
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="panel">
+    <div class="panel-label">Governing statement</div>
+    <p>This CTM maps the state changes required for <strong>claimants and defendants in England and Wales with unresolved small claims (£500–£5,000)</strong> to reach a settlement through Calmly's C1+C2+C3 architecture — a pooling mechanism that makes litigation credible at portfolio level, combined with a two-sided value mechanism that removes each party's key monetizable cost, combined with an independent assessment organisation that forecloses source-credibility delay tactics in mediation (C3).</p>
+    <p>Both claimants and defendants are paying customers. Both journeys must reach the shared HIO: <em>"we reach a settlement that reflects the merits of the case."</em> C1 makes that settlement structurally possible. C2 makes it happen early and at fair value. Every state change below follows from one of those two mechanisms.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       TWO-CUSTOMER ARCHITECTURE EXPLAINED
+  ══════════════════════════════════════════════════════════════════ -->
+  <h2 class="section-h2">Two-customer architecture</h2>
+  <p class="section-intro">C2 names two distinct customers, each with a distinct key monetizable cost. Both receive value. Both pay. The CTM must therefore map two parallel journeys that converge at a single point — settlement — which is the shared HIO.</p>
+
+  <div class="state-grid">
+    <div class="state-box before">
+      <div class="state-label">Current state — before C1+C2</div>
+      <h4>Structurally stranded — both parties</h4>
+      <ul>
+        <li><strong>Claimant:</strong> Has a legitimate claim. Cannot credibly threaten litigation — no solicitor will take the case, costs are unrecoverable. Defendant correctly reads the threat as empty. Non-participation is rational.</li>
+        <li><strong>Claimant KMC:</strong> The settlement amount already owed is framed as a loss being actively sustained — not a potential future gain. Defendant's delay strategy exploits temporal discounting.</li>
+        <li><strong>Defendant:</strong> Faces a complaint but correctly assesses that pursuit is irrational for an individual claimant. Stonewalls. Does not know — or wants not to know — what they legitimately owe.</li>
+        <li><strong>Defendant KMC:</strong> Cannot distinguish a fair claim from an inflated one. Every valuation is adversarial. Open-ended uncertainty drives either over-settlement or motivated disengagement. Both are more expensive than a fair settlement.</li>
+        <li>Dispute resolves through abandonment or inadequate capitulation — not merit.</li>
+      </ul>
+    </div>
+    <div class="state-box after">
+      <div class="state-label">Transformed state — after C1+C2</div>
+      <h4>Settlement at fair value — rational for both</h4>
+      <ul>
+        <li><strong>Claimant:</strong> Claim is pooled. The pool pursues at portfolio level — making litigation the rational committed strategy for the pool operator. Individual variance is irrelevant. Claimant is no longer the threatening party.</li>
+        <li><strong>Claimant C2 transform:</strong> Delay is reframed as active loss accrual. The settlement already owed is a loss being sustained each week. Early resolution is the rational response — not capitulation, but recovery.</li>
+        <li><strong>Defendant:</strong> Faces a credible adversary (C1) and receives an independent EV assessment from a party with no financial stake in the outcome (C2). The signal is credible by design. Motivated disengagement loses its factual basis.</li>
+        <li><strong>Defendant C2 transform:</strong> Open-ended uncertainty collapses to a bounded, calculable liability. The defendant can now act rationally rather than stonewalling. Settlement at fair value becomes the dominant response.</li>
+        <li><strong>Shared HIO:</strong> Settlement reflects the merits of the case — because both parties now have the information and the incentive structure to make it rational.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BFF statement -->
+  <div class="inset" style="margin-top:28px;">
+    <p><strong>Business Form Factor — C1+C2:</strong> A mediator that helps claimants pool their claims, pursue them on shared costs and revenues, and provides both parties with an independent assessment of the claim's expected value — giving the claimant a factual basis for what they are owed and the defendant a credible signal they cannot rationally dismiss.</p>
+    <p style="margin-top:8px;"><strong>Platform note:</strong> Calmly facilitates this. The pool operator holds the claims and bears the litigation risk. Calmly earns platform fees from both parties per claim resolved.</p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       CLAIMANT JOURNEY
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="journey-heading">
+    <span class="jh-icon">→</span>
+    <h2>Claimant journey</h2>
+    <span class="jh-subtitle">From "I have an unresolved claim" → pooling → EV assessment → settlement</span>
+  </div>
+
+  <!-- Phase 1 — Becoming a customer (Claimant) -->
+  <h2 class="section-h2">Phase 1 — Becoming a customer (claimant)</h2>
+  <p class="section-intro">Start state: claimant has an unresolved dispute, no workable path, and correctly believes the defendant has no reason to engage. End state: claimant has joined the pool, understands their claim will be pursued, and has an independent reference point for its value. Note: awareness and channel (how the claimant finds Calmly) are C7 mechanisms. The C1+C2 architecture provides the premise; the conversion mechanism is flagged [REQUIRES C3+] where applicable.</p>
+
+  <!-- 1A Awareness -->
+  <div class="phase-header">
+    <div class="phase-number comms">1A</div>
+    <div class="phase-title">
+      <h3>Awareness</h3>
+      <div class="phase-arc">Unaware → aware that pooling changes their position</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 premise</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 1A Awareness</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"There is a way to pursue my claim that doesn't require me to fund it alone. When claims are pooled, someone will actually follow through — and the other side knows it."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Surprised — most claimants have already concluded their only options are expensive or hopeless. Cautious — not yet convinced the pool applies to their case. The emotional shift is from resigned to cautiously interested.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Encounters a description of the pool concept. Reads enough to recognise that the credibility problem has a structural solution. Does not yet need to understand how the pool is managed or how they would be paid.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> How the claimant encounters Calmly — which channel, which referral, which institutional partner routes them — is not established by C1 or C2. That is a C7 (NTP gateway partner) problem. C1+C2 is silent on origination.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Communications Product — pool concept statement. The logical premise that individual pursuit is irrational and pooled pursuit is credible. No channel specified at C1+C2 scope.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1B Consideration -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number comms">1B</div>
+    <div class="phase-title">
+      <h3>Consideration</h3>
+      <div class="phase-arc">Aware → beginning to believe pooling changes their specific situation</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 premise</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 1B Consideration</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"The reason I couldn't get anywhere is that I was pursuing this alone. The defendant knew I wouldn't follow through. If the pool pursues — not me — the defendant faces a different adversary."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Intellectually engaged — working through a new frame. The C1 premise is not emotionally obvious: "the pool threatens so I don't have to" is an abstract concept. The emotional shift — from hopeless to plausibly hopeful — depends on whether the logical premise lands. Doubt persists: "but what's in it for whoever runs the pool?"</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Reads or asks enough to understand pool economics — why the pool pursues, not just that it does. Begins comparing the pool path against self-directed pursuit or abandonment.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> The framing intervention that shifts the claimant's anchor from "the amount I lost" to "what I can realistically recover given the risk" is the C4 Attraction Strategy (ATE insurance reframe). C1+C2 provides the logical premise that makes this reframe coherent — but the reframe itself requires C4. A claimant who understands the pool logic but anchors emotionally on their loss amount will not convert without C4.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Communications Product — pool economics explanation. The Schelling precommitment argument: at portfolio level, the pool operator's payoff makes litigating every qualifying claim the dominant strategy. The claimant does not need to fund it. The pool does.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1C Conviction -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number comms">1C</div>
+    <div class="phase-title">
+      <h3>Conviction</h3>
+      <div class="phase-arc">Considering → convinced the pool will pursue and their claim has a factual basis for value</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 mechanism</span>
+      <span class="tag tag-c2" style="margin-left:4px;">C2a — EV assessment</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 1C Conviction</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"The pool operator has a payoff structure that makes pursuit rational — that is what makes the threat credible. And I have an independent reference point for what my claim is worth: the cost of legal escalation is the value I recover by resolving this early rather than waiting for the defendant to force court."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Trust in the mechanism — not relational trust in Calmly, but structural trust in the pool's payoff logic. Additionally, at C2 level: relief that the cost of delay is now visible and calculable. The open-ended stress of waiting collapses to a specific, bounded number — the legal escalation cost being actively accrued.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Accepts the pool logic. Understands the cost of the defendant's delay as active loss accrual — every week of non-settlement increases the legal escalation costs that could have been avoided. Moves toward sign-up.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> A claim-specific independent valuation — confirming this particular claim is worth pursuing — requires the pre-sale indicative valuation from the rating organisation. That is a C5 mechanism. At C1+C2 scope, conviction rests on the pool concept and the C2a cost framing. Claim-specific qualification is not yet available.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — pool pursuit mechanism (C1). Communications Product — C2a loss framing: the settlement already owed is a loss being actively sustained. The cost of legal escalation — any work to progress through the legal system that could have been avoided by earlier settlement — is reframed as the claimant's key monetizable cost. Prospect Theory (Kahneman &amp; Tversky 1979): losses loom larger than equivalent gains.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1D Sign-up -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number comms">1D</div>
+    <div class="phase-title">
+      <h3>Sign-up</h3>
+      <div class="phase-arc">Convinced → joined the pool, claim submitted</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 mechanism</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 1D Sign-up</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"I am pooling my claim with others. The costs of pursuing it are shared. The revenues from resolution are shared. I am not doing this alone."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Relief at having a path. Residual uncertainty about the specific payment amount — because C6 (amortisation detail) is not yet fully in scope. The budget constraint is removed in principle (no upfront payment); the exact share structure is a C6 design question.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Submits claim and evidence. Agrees to pool participation terms (costs and revenues shared across the pool). Does not pay anything upfront.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> The onboarding flow, evidence submission process, and the specific terms of the payment instrument are product design questions not yet specified at C1+C2 scope. The principle (payment contingent on recovery from the pool) is the C6 amortisation strategy — but the detailed mechanism is a C6 design output.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — pool participation mechanism. Payment Product — contingency structure in principle: payment from recovered money, not existing funds. No upfront cost.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Consuming (Claimant) -->
+  <h2 class="section-h2">Phase 2 — Consuming the product (claimant)</h2>
+  <p class="section-intro">Start state: claim is in the pool. The claimant is no longer the threatening party — the pool is. End state: the pool's threat reaches the defendant, mediation is operative, and the defendant's rational calculus has changed. The claimant's Phase 2 is largely passive — the pool acts on their behalf. Value arrives when the defendant engages.</p>
+
+  <!-- 2A Activation (Claimant) -->
+  <div class="phase-header">
+    <div class="phase-number working">2A</div>
+    <div class="phase-title">
+      <h3>Activation</h3>
+      <div class="phase-arc">Claim in pool → operational burden transfers to the pool</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 mechanism</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 2A Activation</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"My claim is in the pool. The pool will pursue it. I do not need to do anything else."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Passive expectation. The emotional shift from active stress (self-directing a failing dispute) to passive waiting (pool operating on their behalf) is significant. The claimant no longer holds the operational burden. The C2a framing — delay as active loss — means they feel time working in their favour rather than against them.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">No required action. Waits for the pool to initiate contact with the defendant.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> How the pool notifies the defendant — through what mechanism, at what point, performed by whom — is a C7 (NTP gateway partner) and operational design question. C1+C2 establishes that the pool will pursue; it does not specify the notification mechanism.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — pool operation. The pool acts on the claimant's behalf. This is the core structural shift C1 produces: the threatening party is now the pool operator, not the claimant.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2B Engagement (Claimant) -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number working">2B</div>
+    <div class="phase-title">
+      <h3>Engagement — mediation</h3>
+      <div class="phase-arc">Pool threat active → defendant engages, claimant participates</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 mechanism</span>
+      <span class="tag tag-c2" style="margin-left:4px;">C2a — loss framing operative</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 2B Engagement</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"The defendant is engaging. The pool threat worked. The legal escalation cost the defendant is accruing each week makes early settlement the rational move for them too."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Vindication — the first external confirmation that the grievance is legitimate and the adversary had to engage. This moment carries disproportionate emotional weight. At C2 level: the time pressure is now on the defendant, not the claimant. The power asymmetry has inverted.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Participates in mediation — likely passively, through the pool's mediation process rather than direct claimant-defendant negotiation.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> The mediation process itself — who runs it, what the defendant is presented with, how a settlement figure is proposed, who is present — is not designed at C1+C2 scope. C1 establishes mediation is operative; C2 establishes the time-cost dynamic. The operating model is a product design question.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — mediation facilitation. C1 makes engagement operative. C2a applies: with each week of delay, the defendant's legal escalation costs increase — a manufactured "savings" the defendant loses by waiting, creating genuine time pressure.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Phase 3 — Payment (Claimant) -->
+  <h2 class="section-h2">Phase 3 — Payment (claimant)</h2>
+  <p class="section-intro">C1 establishes that costs and revenues are shared across the pool. C6 (amortisation) confirms no upfront cost is required — payment is contingent on recovery. The budget line problem dissolves structurally: payment and value arrive at the same moment.</p>
+
+  <div class="phase-header">
+    <div class="phase-number payment">3A</div>
+    <div class="phase-title">
+      <h3>Payment</h3>
+      <div class="phase-arc">Settlement reached → claimant receives share of pool recovery</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 premise</span>
+      <span class="tag tag-c2" style="margin-left:4px;">C2a — loss resolved</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 3A Payment</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"I shared the costs of pursuing this and I receive a share of what was recovered. I paid nothing upfront — my contribution was the claim itself. The legal escalation costs the defendant avoided through early settlement reduced what they had to pay."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Closure. The open loop closes. The loss being actively sustained — the C2a KMC — is resolved. The emotional anchor is not "I won in court" but "the thing that was hanging over me is done." C2a framing means the claimant's sense of justice is about recovery, not punishment.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Receives payment from the pool's recovery. No action required — the pool distributes.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> The payment structure — contingent on outcome, embedded in the pool's revenue-sharing model, delivered through the ATE mutual or equivalent instrument — is a C6 (amortisation strategy) design problem. C1 says costs and revenues are shared. C6 specifies how. The payment amount, timing, and instrument are not defined at C1+C2 scope.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Payment Product — contingent recovery structure. Payment contingent on settlement or judgment outcome; claimant pays from recovered money, not existing funds. No budget line required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 — Repeating (Claimant) -->
+  <h2 class="section-h2">Phase 4 — Repeating (claimant)</h2>
+  <p class="section-intro">Retention at C1+C2 is structurally thin. The pool concept and the C2a cost resolution — once experienced as effective — provide a rational basis for return if a future dispute arises. Structured lock-in (C8) is not yet in scope.</p>
+
+  <div class="phase-header">
+    <div class="phase-number comms">4A</div>
+    <div class="phase-title">
+      <h3>Retention</h3>
+      <div class="phase-arc">Outcome delivered → claimant holds a rational basis for returning</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 premise</span>
+      <span class="state-card-title" style="margin-left:4px;">Claimant — 4A Retention</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"Pooling worked. If I have another dispute, this is the path — not courts, not lawyers, not abandonment."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Residual trust in the mechanism — structural trust (the payoff logic holds) persists without relationship maintenance. Individual claimants are low-frequency and event-driven; the more important retention dynamic is at the NTP partner level, not the individual level.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">No active re-engagement required. Returns if a new dispute arises.
+          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> Structured lock-in — case history reusable, accumulated credentials reducing future onboarding friction, NTP recommending return — is a C8 mechanism. C1+C2 provides the rational premise for return. Switching cost creation is not yet designed.</div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Communications Product — outcome-driven return prompt. The pool concept, once experienced as effective, is sufficient rational basis for future return at C1+C2 scope.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       DEFENDANT JOURNEY
+  ══════════════════════════════════════════════════════════════════ -->
+  <hr class="journey-divider">
+
+  <div class="journey-heading">
+    <span class="jh-icon">→</span>
+    <h2>Defendant journey</h2>
+    <span class="jh-subtitle">From "I have received a claim" → independent EV signal → settlement decision</span>
+  </div>
+
+  <p class="section-intro" style="margin-top:20px;">The defendant is a paying customer. Their key monetizable cost is the cost of not knowing what they legitimately owe. C2b resolves this through Spence signalling — an independent EV assessment from a party with no financial stake. C1 is the precondition: it changes the defendant's rational calculus so that engagement is necessary. C2b makes settlement at fair value the rational response.</p>
+
+  <!-- Phase 1 — Becoming a customer (Defendant) -->
+  <h2 class="section-h2">Phase 1 — Awareness and engagement (defendant)</h2>
+  <p class="section-intro">The defendant does not voluntarily seek Calmly. They receive a notification. Their journey begins at the point of contact — and their first state change is the recognition that the adversary they face is not the individual claimant they could previously ignore.</p>
+
+  <!-- D1A — Receipt of demand -->
+  <div class="phase-header">
+    <div class="phase-number comms">D1A</div>
+    <div class="phase-title">
+      <h3>Receipt of demand</h3>
+      <div class="phase-arc">Unaware → receives pool demand, assesses position</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 mechanism — core</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D1A Receipt</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"I have received a demand from an entity that has pooled multiple claims and will pursue them. This is not an individual claimant I can wait out. The party now threatening me does not have the same payoff problem I have always relied on."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Unease — the defendant's standard calculation (the claimant will give up) no longer holds. The pool operator is not emotionally invested in this specific case. They are making an EV decision across a portfolio. That is a qualitatively different adversary. Cluster 1 (SME/corporate): institutional recognition of a changed threat environment. Cluster 2 (micro/sole trader): personal unease, suppressed guilt surfacing.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Receives the pool's demand. Assesses their position. For the first time, non-engagement carries a genuine consequence: court, pursued by a party whose payoff structure makes following through the dominant strategy.
+          <div class="inset" style="margin-top:8px;"><p><strong>[C3 UPDATE]</strong> The defendant's capacity to extend mediation on source-credibility grounds is foreclosed by the independent assessment org (C3). The report is generated by law students with no financial stake — the objection "Calmly has an interest in the settlement amount" loses its structural basis. Without this objection, the primary delay tactic within mediation is unavailable.</p></div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — pool credibility mechanism. The pool's payoff structure makes litigating every qualifying claim the dominant strategy (Schelling 1960). Non-participation is no longer rational. Mediation becomes operative.
+      </div>
+    </div>
+  </div>
+
+  <!-- D1B — EV signal received -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number comms">D1B</div>
+    <div class="phase-title">
+      <h3>Independent EV signal received</h3>
+      <div class="phase-arc">Threat received → defendant receives credible signal of what they legitimately owe</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c2">C2b — Spence signalling</span>
+      <span class="tag tag-blue" style="margin-left:4px;">C3</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D1B EV signal</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"I have received an independent assessment of what I legitimately owe from a party that has no financial stake in whether I settle or not. This is not the claimant's valuation. It is not Calmly's valuation. It is a signal I cannot dismiss on the grounds that it is motivated."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">The open-ended uncertainty — "how much do I actually owe?" — collapses to a bounded, calculable liability. The emotional relief of knowing the number is real, even if the number is uncomfortable. For Cluster 2 (sole trader): the guilt that was suppressed through motivated reasoning now has a specific addressable target. Acknowledgment becomes possible.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Evaluates the independent EV assessment. Compares it against their own self-serving estimate. The gap between the two is now publicly visible to both parties — which changes the settlement negotiation dynamics.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — independent EV assessment. Spence, M. (1973): a signal from a party with no financial stake in the outcome is credible by design. The information asymmetry that made motivated disengagement rational collapses. Defendant can now act rationally: settle at fair value rather than over-settle or stonewall. <strong>C3 update:</strong> assessment generated by independent assessment org — law students, no financial stake. Spence (1973): signal credible because structural conditions for motivated bias are absent.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 — Consuming (Defendant) -->
+  <h2 class="section-h2">Phase 2 — Consuming the product (defendant)</h2>
+  <p class="section-intro">The defendant's Phase 2 is active, not passive. They are making a rational settlement calculation in real time. C1 established that non-engagement leads to court. C2b provides the information needed to make the settlement decision rational rather than resistant.</p>
+
+  <!-- D2A Engagement -->
+  <div class="phase-header">
+    <div class="phase-number working">D2A</div>
+    <div class="phase-title">
+      <h3>Mediation engagement</h3>
+      <div class="phase-arc">EV signal received → defendant engages in mediation</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c1">C1 mechanism</span>
+      <span class="tag tag-c2" style="margin-left:4px;">C2b — bounded liability</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D2A Mediation engagement</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"My best outcome now is a settlement that reflects the merits — not a wait-and-see. Refusal leads to court with a credible adversary. Delay adds to the cost I will eventually pay. The number I am being asked to settle at is independently assessed; I cannot dismiss it as motivated."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">A shift from passive stonewalling to active rational engagement. Not necessarily willing — but rational. The defendant participates because the alternative is court with a credible adversary (C1) and the settlement amount is bounded and independently justified (C2b). The without-prejudice framing removes the liability cascade fear: any settlement offer cannot be used as evidence of admission in other proceedings.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Engages in mediation. Responds to the pool's demand. Makes a settlement offer or enters negotiation from a position where the expected value is known to both parties.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — mediation platform. C1 makes engagement necessary (BATNA has changed). C2b makes engagement rational (bounded liability rather than open-ended exposure). Without-prejudice framework is the enabling condition for genuine engagement: the door opened by engaging stays closed beyond this claim.
+      </div>
+    </div>
+  </div>
+
+  <!-- D2B Value realisation (time pressure) -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number working">D2B</div>
+    <div class="phase-title">
+      <h3>Early settlement</h3>
+      <div class="phase-arc">Engaged → settles early to avoid accruing legal escalation costs</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c2">C2b — loss accrual (Prospect Theory)</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D2B Early settlement</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"Each week I delay, the cost of resolution increases. The savings I could have made by settling last week are now gone. Early settlement is not a concession — it is the rational move given the time structure of the costs I face."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Urgency — manufactured by the cost-of-delay mechanism. This is Prospect Theory applied to the defendant's frame: delay is reframed from a neutral hold (no immediate cost) to active loss accrual (costs increasing with each week of non-settlement). The emotional register shifts from passive resistance to calculated urgency.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Makes a settlement offer at or near the independently assessed fair value. Does not wait. The "savings" manufactured by C2 — the legal escalation costs the defendant would lose by waiting — make earlier settlement the dominant strategy.
+          <div class="inset" style="margin-top:8px;"><p><strong>C2 Efficacy Strategy (Defendant):</strong> Manufacture a store of "savings" for the defendant that they will lose if they delay settlement, akin to a switching cost. With each week of non-settlement, the defendant's legal escalation costs increase. Framed as loss accrual (Prospect Theory), not future expense, this changes the temporal discounting calculation decisively.</p></div>
+        </div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — cost-of-delay schedule. Kahneman &amp; Tversky (1979): losses loom approximately twice as large as equivalent gains. The time-indexed cost-of-delay mechanism reframes each week of non-settlement as a loss the defendant is actively incurring — not a future discretionary payment. Early settlement becomes the rational response.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 — Payment (Defendant) -->
+  <h2 class="section-h2">Phase 3 — Payment (defendant)</h2>
+  <p class="section-intro">The defendant's payment is the settlement itself. Their key monetizable cost — the cost of not knowing what they legitimately owe — has been eliminated by C2b. Payment at fair value is now the dominant rational strategy.</p>
+
+  <div class="phase-header">
+    <div class="phase-number payment">D3A</div>
+    <div class="phase-title">
+      <h3>Settlement payment</h3>
+      <div class="phase-arc">Agreement reached → defendant pays fair settlement</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c2">C2b resolved</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D3A Settlement payment</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"I am paying what I legitimately owe — no more. The independent assessment gave me the factual basis to know that. I am not over-settling out of fear, and I am not under-settling out of motivated reasoning."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Resolution without admission cascade. The without-prejudice framing means paying does not constitute an admission for other proceedings. For Cluster 2 defendants (sole traders): optional acknowledgment pathway — a structured non-admissible statement — allows genuine psychological closure rather than purely financial settlement. Tangney (1994): guilt resolves through acknowledgment and amends, not through financial settlement alone.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Pays the settled amount. Closes the dispute. No further legal proceedings.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Payment Product — settlement execution. Without-prejudice framing as enabling condition. Optional acknowledgment pathway for Cluster 2 defendants (not required for payment; available for psychological closure).
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       CONVERGENCE — SHARED HIO
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="convergence-block" style="margin-top:52px;">
+    <div class="conv-label">Convergence — shared HIO</div>
+    <h3>Both journeys meet at settlement</h3>
+    <p>The claimant journey and the defendant journey converge at a single point: settlement that reflects the merits of the case. This is the shared HIO — the job both parties hired Calmly to do.</p>
+    <p>C1 makes the convergence structurally possible: without the pool, the defendant has no rational reason to engage, and the claimant has no path to resolution. C2 makes convergence happen early and at fair value: C2a manufactures time pressure on the defendant through loss framing; C2b gives both parties a common independent reference point for what fair value is.</p>
+    <p>Neither mechanism alone is sufficient for the HIO. C1 without C2: the defendant engages but may delay indefinitely and dispute the value. C2 without C1: the defendant has an independent signal but no credible threat forcing them to act on it. Together, they produce a settlement that reflects the merits — which is the definition of the HIO.</p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       FULL CTM MATRIX
+  ══════════════════════════════════════════════════════════════════ -->
+  <h2 class="section-h2">Full CTM matrix</h2>
+  <p class="section-intro">A consolidated view of all state changes across both journeys and all four phases. Colour-coded by 4-D product component.</p>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch swatch-working"></div>Working Product</div>
+    <div class="legend-item"><div class="legend-swatch swatch-comms"></div>Communications Product</div>
+    <div class="legend-item"><div class="legend-swatch swatch-payment"></div>Payment Product</div>
+    <div class="legend-item"><div class="legend-swatch swatch-convergence"></div>Convergence point</div>
+  </div>
+
+  <div class="ctm-table-wrap">
+    <table class="ctm">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Phase</th>
+          <th>Sub-phase</th>
+          <th>Cognitive state change</th>
+          <th>Emotive state change</th>
+          <th>Behavioural action</th>
+          <th>4-D product component</th>
+          <th>BALM req.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Claimant Phase 1 -->
+        <tr class="row-comms">
+          <td rowspan="4">Claimant</td>
+          <td rowspan="4" class="col-phase">1 — Becoming</td>
+          <td class="col-subphase">1A Awareness</td>
+          <td class="col-state">Pooling changes my position — pursuit is possible without funding it alone</td>
+          <td class="col-state">Surprised; cautiously interested</td>
+          <td class="col-state">Encounters pool concept; recognises credibility has a structural solution</td>
+          <td class="col-product"><span class="tag tag-green">Comms</span> Pool concept statement</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+        </tr>
+        <tr class="row-comms">
+          <td class="col-subphase">1B Consideration</td>
+          <td class="col-state">The pool pursues because its payoff makes following through rational — not me</td>
+          <td class="col-state">Intellectually engaged; doubt about mechanism</td>
+          <td class="col-state">Reads pool economics; compares against self-directed pursuit</td>
+          <td class="col-product"><span class="tag tag-green">Comms</span> Pool economics explanation</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+        </tr>
+        <tr class="row-comms">
+          <td class="col-subphase">1C Conviction</td>
+          <td class="col-state">Pool pursuit is credible by design; delay is already costing me in legal escalation risk</td>
+          <td class="col-state">Structural trust; relief that cost of delay is calculable</td>
+          <td class="col-state">Accepts pool logic; understands C2a loss framing; moves toward sign-up</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> + <span class="tag tag-green">Comms</span> Pool mechanism + C2a loss framing</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2a</span></td>
+        </tr>
+        <tr class="row-comms">
+          <td class="col-subphase">1D Sign-up</td>
+          <td class="col-state">I am pooling my claim; costs and revenues shared; I am not doing this alone</td>
+          <td class="col-state">Relief; residual uncertainty about payment amount</td>
+          <td class="col-state">Submits claim and evidence; agrees to pool participation; no upfront cost</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Pool participation + <span class="tag tag-amber">Payment</span> Contingency in principle</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+        </tr>
+
+        <!-- Claimant Phase 2 -->
+        <tr class="row-working">
+          <td rowspan="2">Claimant</td>
+          <td rowspan="2" class="col-phase">2 — Consuming</td>
+          <td class="col-subphase">2A Activation</td>
+          <td class="col-state">My claim is in the pool; the pool will pursue it; I do not need to act</td>
+          <td class="col-state">Passive expectation; operational burden transferred</td>
+          <td class="col-state">No action; waits for pool to contact defendant</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Pool operation</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+        </tr>
+        <tr class="row-working">
+          <td class="col-subphase">2B Engagement</td>
+          <td class="col-state">The defendant had to engage; time pressure is now on them not me</td>
+          <td class="col-state">Vindication; power asymmetry inverted</td>
+          <td class="col-state">Participates passively in mediation through pool process</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Mediation facilitation + C2a time pressure</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2a</span></td>
+        </tr>
+
+        <!-- Claimant Phase 3 -->
+        <tr class="row-payment">
+          <td>Claimant</td>
+          <td class="col-phase">3 — Payment</td>
+          <td class="col-subphase">3A Payment</td>
+          <td class="col-state">I receive a share of what was recovered; paid nothing upfront</td>
+          <td class="col-state">Closure; active loss resolved</td>
+          <td class="col-state">Receives distribution from pool recovery</td>
+          <td class="col-product"><span class="tag tag-amber">Payment</span> Contingent recovery structure</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2a</span></td>
+        </tr>
+
+        <!-- Claimant Phase 4 -->
+        <tr class="row-comms">
+          <td>Claimant</td>
+          <td class="col-phase">4 — Repeating</td>
+          <td class="col-subphase">4A Retention</td>
+          <td class="col-state">Pooling worked; this is my path for future disputes</td>
+          <td class="col-state">Residual structural trust in mechanism</td>
+          <td class="col-state">Returns if new dispute arises; no active re-engagement required</td>
+          <td class="col-product"><span class="tag tag-green">Comms</span> Outcome-driven return</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+        </tr>
+
+        <!-- Defendant Phase 1 -->
+        <tr class="row-working">
+          <td rowspan="2">Defendant</td>
+          <td rowspan="2" class="col-phase">1 — Becoming</td>
+          <td class="col-subphase">D1A Receipt of demand</td>
+          <td class="col-state">This is not an individual claimant I can wait out; the pool's payoff makes following through their dominant strategy</td>
+          <td class="col-state">Unease; standard calculation no longer holds</td>
+          <td class="col-state">Receives pool demand; assesses position; non-engagement now has genuine consequences</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Pool credibility mechanism</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+        </tr>
+        <tr class="row-working">
+          <td class="col-subphase">D1B EV signal</td>
+          <td class="col-state">I have an independent assessment of what I legitimately owe from a party with no financial stake</td>
+          <td class="col-state">Open-ended uncertainty collapses to bounded liability; acknowledgment becomes possible</td>
+          <td class="col-state">Evaluates independent EV assessment; compares against self-serving estimate</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Independent EV assessment (Spence signalling)</td>
+          <td class="col-balm"><span class="tag tag-c2">C2b</span> <span class="tag tag-blue">C3</span></td>
+        </tr>
+
+        <!-- Defendant Phase 2 -->
+        <tr class="row-working">
+          <td rowspan="2">Defendant</td>
+          <td rowspan="2" class="col-phase">2 — Consuming</td>
+          <td class="col-subphase">D2A Mediation</td>
+          <td class="col-state">Refusal leads to court; settlement is bounded and independently justified; without-prejudice framing removes admission risk</td>
+          <td class="col-state">Shift from passive stonewalling to rational active engagement</td>
+          <td class="col-state">Engages in mediation; responds to pool demand; negotiates from known EV basis</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Mediation platform + without-prejudice framework</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2b</span></td>
+        </tr>
+        <tr class="row-working">
+          <td class="col-subphase">D2B Early settlement</td>
+          <td class="col-state">Each week of delay costs me more; settling now is the rational move</td>
+          <td class="col-state">Urgency; time pressure manufactured by cost-of-delay schedule</td>
+          <td class="col-state">Makes settlement offer at or near independently assessed fair value</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Cost-of-delay schedule (Prospect Theory)</td>
+          <td class="col-balm"><span class="tag tag-c2">C2b</span></td>
+        </tr>
+
+        <!-- Defendant Phase 3 -->
+        <tr class="row-payment">
+          <td>Defendant</td>
+          <td class="col-phase">3 — Payment</td>
+          <td class="col-subphase">D3A Settlement</td>
+          <td class="col-state">I am paying what I legitimately owe — no more; independently assessed; without admission cascade</td>
+          <td class="col-state">Resolution without liability cascade; optional acknowledgment for psychological closure</td>
+          <td class="col-state">Pays settlement; closes dispute</td>
+          <td class="col-product"><span class="tag tag-amber">Payment</span> Settlement execution + optional acknowledgment pathway</td>
+          <td class="col-balm"><span class="tag tag-c2">C2b</span></td>
+        </tr>
+
+        <!-- Convergence -->
+        <tr class="row-convergence">
+          <td colspan="2" style="font-weight:600;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--text);">Both</td>
+          <td class="col-phase" style="color:var(--text);font-weight:600;">HIO</td>
+          <td class="col-subphase" style="font-weight:600;">Settlement</td>
+          <td class="col-state" colspan="3" style="font-family:var(--font-body);font-style:italic;">We reach a settlement that reflects the merits of the case.</td>
+          <td class="col-product"></td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       BALM MAPPING
+  ══════════════════════════════════════════════════════════════════ -->
+  <h2 class="section-h2">BALM mapping — C1 and C2 in the CTM</h2>
+  <p class="section-intro">Each BALM requirement solution that appears in this CTM, where it lands in the journey, and what it overrides or adds relative to standard industry practice.</p>
+
+  <table class="balm">
+    <thead>
+      <tr>
+        <th>BALM requirement</th>
+        <th>CTM phase and customer</th>
+        <th>4-D product component</th>
+        <th>What it overrides vs standard practice</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="balm-req"><span class="tag tag-c1">C1</span> Workaround strategy<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">EV/risk pooling; Schelling precommitment</span></td>
+        <td class="balm-note">Phase 1 (both customers — awareness through sign-up); Phase 2 (claimant activation; defendant receipt of demand); Phase 2 mediation engagement</td>
+        <td class="balm-note">Working Product — pool pursuit mechanism. Communications Product — pool concept and economics explanation.</td>
+        <td class="balm-note">Standard practice: claimant manages dispute individually; threat credibility depends on personal financial commitment. C1 override: threat is a pool property — credible because the pool operator's payoff makes following through the dominant strategy. Claimant is no longer the threatening party.</td>
+      </tr>
+      <tr>
+        <td class="balm-req"><span class="tag tag-c2">C2a</span> Claimant efficacy strategy<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Prospect Theory; loss framing; cost of legal escalation as KMC</span></td>
+        <td class="balm-note">Phase 1C (conviction) — reframes delay as active loss accrual; Phase 2B (engagement) — time pressure on defendant; Phase 3A (payment) — loss resolved</td>
+        <td class="balm-note">Communications Product — C2a loss framing. Working Product — cost-of-delay schedule applied to defendant on claimant's behalf.</td>
+        <td class="balm-note">Standard practice: claimant is passive victim waiting for defendant to act; time works against the claimant (discounting, fatigue, abandonment). C2a override: delay is reframed as active loss accrual for the defendant — every week of non-settlement increases the legal escalation costs that could have been avoided. Time pressure inverts.</td>
+      </tr>
+      <tr>
+        <td class="balm-req"><span class="tag tag-c2">C2b</span> Defendant efficacy strategy<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Spence signalling; independent EV assessment; without-prejudice framing</span></td>
+        <td class="balm-note">Phase 1D1B (defendant receives EV signal); Phase 2 D2A (mediation engagement with bounded liability); Phase 2 D2B (early settlement driven by cost-of-delay)</td>
+        <td class="balm-note">Working Product — independent EV assessment (Spence signalling). Working Product — cost-of-delay schedule. Payment Product — without-prejudice settlement execution; optional acknowledgment pathway.</td>
+        <td class="balm-note">Standard practice: defendant receives only the claimant's valuation — adversarial and dismissible as motivated. Motivated disengagement is rational. C2b override: defendant receives an independent EV signal from a party with no financial stake. Signal is credible by design (Spence 1973). Open-ended uncertainty collapses to a calculable liability. Rational settlement becomes possible.</td>
+      </tr>
+      <tr>
+        <td class="balm-req"><span class="tag tag-blue">C3</span> Scaling strategy — independent assessment org<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Spence (1973) — speed dimension</span></td>
+        <td class="balm-note">D1B (defendant EV signal — now fully resolved); D2A (mediation — credibility delay tactic foreclosed)</td>
+        <td class="balm-note">Working Product — independent EV assessment generated by org with no financial stake</td>
+        <td class="balm-note">Standard practice: report produced by interested party (Calmly). C3 override: report generated by independent org — law students, no financial stake. Defendant cannot extend mediation on source-credibility grounds. Average recovery time shortens. WC contracts.</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       REVIEW FINDINGS
+  ══════════════════════════════════════════════════════════════════ -->
+  <h2 class="section-h2">Review findings</h2>
+
+  <div class="finding">
+    <div class="finding-header">
+      <span class="tag tag-blue">Logical viability</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--accent);">State transitions follow directly from the mechanisms — no non-sequiturs</span>
+    </div>
+    <div class="finding-body">
+      <p>Every state change in the CTM follows from one of two mechanisms: the pool's payoff structure (C1) or the EV/loss framing (C2). The transitions are logically ordered — a claimant who has not reached conviction (1C) cannot meaningfully enter the pool (1D). A defendant who has not received the EV signal (D1B) cannot engage rationally in mediation (D2A). Each sub-phase is a genuine prerequisite for the next.</p>
+      <p>One tension worth naming: the claimant's conviction at 1C rests partly on the C2a loss framing — but the full C2a mechanism (time-indexed cost of delay applied to the defendant) requires the defendant to already be in the process. This is not a logical failure — the claimant's conviction can rest on the pool concept alone at C1, and C2a supplements it. But the C2a framing at conviction is prospective ("this is how it will work") rather than demonstrated ("here is evidence it worked"). The C4 and C5 mechanisms will close this gap.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-header">
+      <span class="tag tag-green">Elegance</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--green-text);">C2b operates on both customers simultaneously — one signal, two transformations</span>
+    </div>
+    <div class="finding-body">
+      <p>The independent EV assessment (C2b) is an elegant double-function mechanism. For the defendant, it collapses open-ended uncertainty to a bounded liability — the Spence signal. For the claimant, the same assessment gives them a factual basis for what they are owed — a symmetric information benefit. One product component drives two distinct state changes across two customer journeys. This is worth preserving explicitly in the AOM: the EV assessment service is a shared cost that produces value on both sides of the platform.</p>
+      <p>Similarly, the without-prejudice framing operates on both sides: it removes the defendant's legal objection to engaging (liability cascade risk) while providing the claimant with a more genuine settlement rather than a technical minimum-to-avoid-admission offer.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-header">
+      <span class="tag tag-amber">Realistic progressions</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--yellow-text);">Phase 1 for the claimant is logically coherent but practically incomplete without C4 and C5</span>
+    </div>
+    <div class="finding-body">
+      <p>Every Phase 1 claimant sub-phase is achievable in principle at C1+C2 — the logical premises are sound. But the conversion mechanisms that move real claimants through those phases are not yet specified:</p>
+      <ul>
+        <li><strong>1A (awareness)</strong> depends on an origination channel. C1+C2 is silent on this. That is a C7 problem.</li>
+        <li><strong>1B (consideration)</strong> depends on a psychological framing shift that C4 (Attraction Strategy, ATE insurance reframe) delivers. C1+C2 provides the rational basis; C4 provides the mechanism.</li>
+        <li><strong>1C (conviction)</strong> is strengthened by claim-specific qualification — which requires the pre-sale indicative valuation (C5). Without it, conviction rests on the pool concept alone.</li>
+        <li><strong>1D (sign-up)</strong> requires the specific payment structure — which is C6 detail.</li>
+      </ul>
+      <p>This is not an architecture weakness. It is what the challenge sequence was designed to address progressively. Claimants who encounter Calmly at C1+C2 scope will understand the concept — they will not reliably convert. The CTM accurately represents where the architecture is now.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-header">
+      <span class="tag tag-blue">Strategic operationalisation</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--accent);">C2b does more work than the standard practice it overrides</span>
+    </div>
+    <div class="finding-body">
+      <p>The standard industry approach to defendant engagement is coercive: serve notice, threaten court, hope the defendant folds. C2b does something structurally different — it provides the defendant with the information they need to act rationally. This is the Spence insight: the signal changes behaviour not through threat but through information provision. The AOM implication is significant: the EV assessment operation is not a legal operation (threatening notice), it is an analytical operation (independent valuation). The staffing profile and cost structure are different — and considerably cheaper.</p>
+      <p>The AOM should treat the EV assessment as a platform service, not a legal service. Calmly operates the exchange. The pool operator runs the litigation. The EV assessment is the market infrastructure that makes rational behaviour possible on both sides.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-header">
+      <span class="tag tag-green">Architecture discipline check</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--green-text);">C1+C2+C3 complete — no C4+ mechanisms present</span>
+    </div>
+    <div class="finding-body">
+      <p>C3 is now complete: independent assessment organisation (law students, no financial stake) is reflected in D1B and D1A.</p>
+      <p>The following mechanisms are explicitly excluded and flagged [REQUIRES C3+] where they would otherwise appear:</p>
+      <ul>
+        <li>ATE insurance reframe (anchor shift from loss-amount to risk-weighted EV) — C4</li>
+        <li>Pre-sale indicative valuation (claim-specific independent EV before commitment) — C5</li>
+        <li>Payment instrument detail (ATE mutual, specific distribution mechanism) — C6</li>
+        <li>NTP referral architecture and defendant notification mechanism — C7</li>
+        <li>Lock-in (case history, switching costs) — C8</li>
+        <li>Lock-out (scarce resource strategy) — C9, C10</li>
+      </ul>
+      <p>The EV assessment at D1B is now fully resolved by C3: generated by the independent assessment org (law students, no financial stake). The Spence signalling principle is operationally grounded — not a theoretical promise.</p>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ROUTING INSTRUCTIONS
+  ══════════════════════════════════════════════════════════════════ -->
+  <div class="routing-panel">
+    <div class="rp-label">Next steps</div>
+    <p><strong>CTM v2 now reflects C1, C2, and C3.</strong> C3 resolves the D1B independent assessment placeholder and forecloses the defendant's mediation delay tactic. Every sub-phase is grounded in a confirmed mechanism; every remaining gap is flagged with the challenge that closes it.</p>
+    <p><strong>What C1+C2+C3 delivers:</strong> C1 makes mediation structurally operative — the defendant's BATNA changes so that non-participation leads somewhere costly. C2a inverts the time pressure — delay becomes active loss accrual for the defendant, not the claimant. C2b collapses the defendant's information asymmetry — an independent EV signal removes the factual basis for motivated disengagement. C3 grounds that signal operationally: the assessment is generated by law students with no financial stake, removing the defendant's source-credibility objection and shortening mediation timelines. Together, these three challenges define a settlement that reflects the merits of the case as the rational outcome for both parties.</p>
+    <p><strong>What the CTM cannot yet map (requires C4+):</strong> origination channel (C7), ATE insurance reframe and anchor shift (C4), pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6), lock-in (C8).</p>
+    <p><strong>AOM implication:</strong> Each state change implies a product component. Each product component implies a role and activity in the AOM. The EV assessment is a platform service (analytical, not legal) — produced by the independent assessment org (law students, no financial stake). The mediation operation belongs to the pool operator, not Calmly. Calmly's AOM footprint is exchange infrastructure — origination (via NTPs, C7), assessment facilitation, matching, and fee collection. Run <code>/ive-aom-custom</code> to begin. Run <code>/ive-ctm-custom</code> again after each subsequent challenge is designed to extend this CTM incrementally.</p>
+  </div>
+
+</div>
+</body>
+</html>

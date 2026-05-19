@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Unit Economics (R8 gate)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --accent: #1f4fa8; --accent-light: #e8eef8;
+      --panel-bg: #0f2744; --panel-text: #ffffff;
+      --green-bg: #e6f4ec; --green-text: #166534;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --amber-bg: #fff8e6; --amber-text: #854d0e;
+      --yellow-hl: #fef3c7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+    .header { background: var(--panel-bg); color: var(--panel-text); padding: 24px 28px; margin-bottom: 32px; }
+    .header h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+    .header p { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    th { background: #f1f3f5; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding: 10px 14px; text-align: right; border: 1px solid var(--border); }
+    th:first-child { text-align: left; width: 42%; }
+    td { padding: 9px 14px; border: 1px solid var(--border); text-align: right; font-size: 13px; }
+    td:first-child { text-align: left; color: var(--text-secondary); }
+    .section-row td { background: #f1f3f5; font-weight: 600; color: var(--text); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; padding: 7px 14px; }
+    .total-row td { font-weight: 600; color: var(--text); border-top: 2px solid var(--text); }
+    .subtotal-row td { font-weight: 600; color: var(--text); border-top: 1px solid #b0b8c4; background: #fafaf9; }
+    .highlight-row td { background: var(--yellow-hl); font-weight: 700; font-size: 14px; border-top: 2px solid #d97706; }
+    .green-row td { background: var(--green-bg); color: var(--green-text); font-weight: 600; }
+    .red-row td { color: var(--red-text); font-weight: 600; }
+    .clv-row td { background: #e8eef8; color: #1f4fa8; font-style: italic; font-size: 12px; }
+    .indent td:first-child { padding-left: 26px; font-size: 12px; color: var(--text-secondary); }
+    .dim td { color: var(--text-muted); font-size: 12px; }
+    .tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+    .tag-green { background: var(--green-bg); color: var(--green-text); }
+    .tag-red { background: var(--red-bg); color: var(--red-text); }
+    .tag-amber { background: var(--amber-bg); color: var(--amber-text); }
+    .tag-blue { background: #e8eef8; color: #1f4fa8; }
+    .note { font-family: 'Lora', serif; font-size: 12.5px; color: var(--text-secondary); border-left: 3px solid var(--border); padding-left: 14px; line-height: 1.75; margin-top: 20px; }
+    .label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .drillable { cursor: pointer; }
+    .drillable:hover td { background: #f7f8fc; }
+    .expand-icon { display: inline-block; margin-left: 6px; font-size: 10px; color: var(--accent); transition: transform 0.15s ease; vertical-align: middle; }
+    .drillable.open .expand-icon { transform: rotate(90deg); }
+    .driver-row { display: none; }
+    .driver-row.visible { display: table-row; }
+    .driver-row td { background: var(--accent-light); border-top: none; padding: 8px 14px 10px 38px; font-size: 12px; color: var(--text-secondary); text-align: left; border-left: 3px solid var(--accent); font-family: 'Lora', serif; line-height: 1.7; }
+    .toggle-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-light); border: 1px solid #b8c8e8; border-radius: 3px; padding: 4px 10px; cursor: pointer; float: right; margin-bottom: 8px; }
+    .toggle-btn:hover { background: #d4e1f5; }
+    .clearfix::after { content: ''; display: table; clear: both; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Calmly — Unit Economics · R8 gate</h1>
+    <p>One claim resolved · R8 adds no new per-unit cost · cost floor held at £221/claim · FMOS 66% · 19 May 2026</p>
+  </div>
+
+  <div class="label clearfix">
+    Cost and price — per resolved claim (£)
+    <button class="toggle-btn" onclick="toggleAll(this)">Show all drivers</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Pilot<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">40 claims/mo</span></th>
+        <th>Ramp<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">450 claims/mo</span></th>
+        <th>At-scale<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">1,500 claims/mo</span></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="section-row"><td colspan="4">Variable cost (PVC) — per claim</td></tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-assessment')">
+        <td>Assessment org payment (C3) <span class="expand-icon">▶</span></td>
+        <td>16</td><td>16</td><td>16</td>
+      </tr>
+      <tr class="driver-row" id="d-assessment">
+        <td colspan="4">Flat fee per EV report · serves C3, R4, R6 · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-platform-pvc')">
+        <td>Platform variable <span class="expand-icon">▶</span></td>
+        <td>8</td><td>8</td><td>8</td>
+      </tr>
+      <tr class="driver-row" id="d-platform-pvc">
+        <td colspan="4">Compute, comms, storage per resolved claim · Tier 4</td>
+      </tr>
+      <tr class="subtotal-row"><td>Total VC per unit</td><td>24</td><td>24</td><td>24</td></tr>
+
+      <tr class="section-row"><td colspan="4">Whole costs / unit product</td></tr>
+      <tr class="dim"><td style="padding-left:14px;">Unit sales per month</td><td>40</td><td>450</td><td>1,500</td></tr>
+      <tr class="dim"><td style="padding-left:14px;font-weight:600;color:var(--text-secondary);">Cost categories</td><td colspan="3"></td></tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-lmu')">
+        <td>LMU specialist labour (variable) <span class="expand-icon">▶</span></td>
+        <td>108</td><td>108</td><td>108</td>
+      </tr>
+      <tr class="driver-row" id="d-lmu">
+        <td colspan="4">265 min/confirmed claim · blended ~£20/hr · R8 note: returning claimants expected to reduce intake time (established evidence patterns) — saving tracked in pilot, not assumed in model · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-compliance')">
+        <td>Territory compliance (semi-fixed) <span class="expand-icon">▶</span></td>
+        <td>4</td><td>4</td><td>4</td>
+      </tr>
+      <tr class="driver-row" id="d-compliance">
+        <td colspan="4">Regulatory monitoring, professional indemnity, compliance time · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-hq')">
+        <td>HQ central team (fixed, allocated) <span class="expand-icon">▶</span></td>
+        <td>313</td><td>93</td><td>50</td>
+      </tr>
+      <tr class="driver-row" id="d-hq">
+        <td colspan="4">£900k/year ÷ monthly volume · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-platform-fixed')">
+        <td>Platform technology (fixed, allocated) <span class="expand-icon">▶</span></td>
+        <td>417</td><td>37</td><td>11</td>
+      </tr>
+      <tr class="driver-row" id="d-platform-fixed">
+        <td colspan="4">~£17k/month fixed. Includes claim history storage and surfacing (R8 switching cost mechanism — absorbed in platform build) · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-sc')">
+        <td>Assessment org setup (allocated) <span class="expand-icon">▶</span></td>
+        <td>1</td><td>1</td><td>1</td>
+      </tr>
+      <tr class="driver-row" id="d-sc">
+        <td colspan="4">£80k one-time ÷ 75 months · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-wc')">
+        <td>Working capital — assessment org float <span class="expand-icon">▶</span></td>
+        <td>1</td><td>1</td><td>1</td>
+      </tr>
+      <tr class="driver-row" id="d-wc">
+        <td colspan="4">£16 × 4.65 months × 15% CoC ÷ 12 · Tier 4</td>
+      </tr>
+      <tr class="indent drillable" onclick="toggle(this, 'd-acquisition')">
+        <td>Blended acquisition cost (R7) <span class="expand-icon">▶</span></td>
+        <td>275</td><td>61</td><td>22</td>
+      </tr>
+      <tr class="driver-row" id="d-acquisition">
+        <td colspan="4">60% gateway at £25 NTP + 40% organic at £18 CAC = £22 blended at-scale (R7 design). R8 returning claimants have zero CAC — improving blended portfolio CAC over time as returning segment grows. This benefit is not modelled in the per-claim cost floor above. Tier 4.</td>
+      </tr>
+
+      <tr class="subtotal-row"><td>Total allocated whole costs / unit</td>
+        <td>1,118</td><td>304</td><td>197</td>
+      </tr>
+
+      <tr class="section-row"><td colspan="4">Required price vs ceiling</td></tr>
+      <tr class="total-row"><td>Total cost per unit</td><td>1,142</td><td>328</td><td>221</td></tr>
+      <tr><td>Required price (30% FMOS)</td><td>1,631</td><td>469</td><td>316</td></tr>
+      <tr style="background:#f8f9fb;font-weight:600;"><td>Price ceiling (bilateral KMC × 50%)</td><td>650</td><td>650</td><td>650</td></tr>
+
+      <tr class="section-row"><td colspan="4">Surplus / (deficit) vs price ceiling</td></tr>
+      <tr class="red-row"><td>Difference per unit</td>
+        <td>(492) <span class="tag tag-red">Deficit</span></td>
+        <td>322 <span class="tag tag-green">Surplus</span></td>
+        <td>429 <span class="tag tag-green">Surplus</span></td>
+      </tr>
+      <tr class="highlight-row"><td>Total difference per month</td>
+        <td style="color:#991b1b;">(19,680)</td>
+        <td>144,900</td>
+        <td>643,500</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="label">R8 supplementary: CLV uplift by segment (not in cost floor)</div>
+  <table>
+    <thead><tr><th>Segment</th><th>Assumed repeat frequency</th><th>CAC on return claim</th><th>Net CLV benefit vs single-claim consumer</th></tr></thead>
+    <tbody>
+      <tr class="clv-row"><td>Tenant (primary)</td><td>2.5 claims over 5 years</td><td>£0 (returning claimant)</td><td>+£44 per additional claim (avoided CAC £22 + reduced intake £22) — Tier 4</td></tr>
+      <tr class="clv-row"><td>Small business (secondary)</td><td>5 claims/year</td><td>£0 (returning account)</td><td>+£44 per additional claim — Tier 4</td></tr>
+      <tr class="clv-row"><td>Advocate (tertiary)</td><td>1 direct + 2.3 referred</td><td>£0 direct + £22 NTP on referred</td><td>Net referral value: ~£29/referred claim (NTP £22 vs £38 organic) — Tier 4</td></tr>
+      <tr class="clv-row"><td>One-time consumer</td><td>1 claim total</td><td>N/A</td><td>No CLV uplift. R8 switching cost mechanism does not apply.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    <strong>What's excluded from cost floor at R8:</strong> CLV uplift from repeat segments (not modelled in per-claim cost floor — add to fin-sim separately). R8 adds no new per-unit cost. The switching cost mechanism (claim history surfacing) is absorbed in platform technology. Gate: PASS at 66% FMOS. Note: the per-claim FMOS model understates the R8 benefit — CLV modelling in the fin-sim will capture it.
+  </p>
+
+</div>
+
+<script>
+  function toggle(row, driverId) {
+    const driver = document.getElementById(driverId);
+    const isOpen = row.classList.contains('open');
+    if (isOpen) { row.classList.remove('open'); driver.classList.remove('visible'); }
+    else { row.classList.add('open'); driver.classList.add('visible'); }
+  }
+  function toggleAll(btn) {
+    const drivers = document.querySelectorAll('.driver-row');
+    const rows = document.querySelectorAll('.drillable');
+    const anyHidden = Array.from(drivers).some(d => !d.classList.contains('visible'));
+    if (anyHidden) { drivers.forEach(d => d.classList.add('visible')); rows.forEach(r => r.classList.add('open')); btn.textContent = 'Hide all drivers'; }
+    else { drivers.forEach(d => d.classList.remove('visible')); rows.forEach(r => r.classList.remove('open')); btn.textContent = 'Show all drivers'; }
+  }
+</script>
+</body>
+</html>

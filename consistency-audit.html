@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Cross-Requirement Consistency Audit · 19 May 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --border-strong: #b0b8c4;
+      --accent: #1f4fa8; --accent-light: #e8eef8; --panel-bg: #0f2744; --panel-text: #ffffff;
+      --warning-bg: #fff8e6; --warning-border: #d4820a;
+      --green-bg: #e6f4ec; --green-text: #166534; --green-border: #a7d4b8;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --tag-radius: 3px; --font-ui: 'DM Sans', system-ui, sans-serif; --font-body: 'Lora', Georgia, serif; --width: 960px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 17px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+    .header-panel { background: var(--panel-bg); color: var(--panel-text); padding: 32px 36px 28px; margin-bottom: 40px; }
+    .header-panel .gate-label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .header-panel h1 { font-size: 26px; font-weight: 600; color: #ffffff; margin-bottom: 12px; }
+    .header-panel p { font-family: var(--font-body); font-size: 16px; color: rgba(255,255,255,0.75); margin-top: 8px; }
+    .section { margin-bottom: 48px; }
+    .section-title { font-family: var(--font-ui); font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 24px; }
+    h3 { font-family: var(--font-ui); font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 10px; margin-top: 28px; }
+    p { font-family: var(--font-body); font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .check-item { border: 1px solid var(--border); margin-bottom: 20px; }
+    .check-header { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid var(--border); background: #fafaf9; }
+    .check-badge { width: 32px; height: 32px; min-width: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; font-size: 14px; }
+    .check-badge.pass { background: var(--green-bg); color: var(--green-text); }
+    .check-badge.flag { background: var(--warning-bg); color: #854d0e; }
+    .check-title { font-family: var(--font-ui); font-size: 16px; font-weight: 600; color: var(--text); flex: 1; }
+    .check-verdict { font-family: var(--font-ui); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .check-verdict.pass { color: var(--green-text); }
+    .check-verdict.flag { color: #854d0e; }
+    .check-body { padding: 16px 20px; }
+    .check-body p { font-size: 15px; margin-bottom: 10px; }
+    .check-body p:last-child { margin-bottom: 0; }
+    .inset-block { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 14px 18px; margin-bottom: 16px; }
+    .inset-block p { font-family: var(--font-ui); font-size: 14px; color: #1a2a4a; margin-bottom: 8px; }
+    .inset-block p:last-child { margin-bottom: 0; }
+    .inset-block strong { font-weight: 600; }
+    .flag-block { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 14px 18px; margin-bottom: 16px; }
+    .flag-block p { font-family: var(--font-ui); font-size: 14px; color: #4a3000; margin-bottom: 8px; }
+    .flag-block p:last-child { margin-bottom: 0; }
+    .flag-block strong { font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; margin-bottom: 24px; }
+    thead th { font-weight: 600; font-size: 13px; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border-strong); color: var(--text); background: #f9f9f8; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; font-size: 14px; }
+    tbody tr:last-child td { border-bottom: none; }
+    .tag { display: inline-block; font-family: var(--font-ui); font-size: 11px; font-weight: 600; border-radius: var(--tag-radius); padding: 2px 8px; border: 1px solid; }
+    .tag-green { background: #e6f4ec; color: #166534; border-color: #a7d4b8; }
+    .tag-amber { background: #fff8e6; color: #854d0e; border-color: #f0d98a; }
+    .tag-blue { background: #e8eef8; color: #1f4fa8; border-color: #b8c8e8; }
+    .bff-panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin-bottom: 32px; }
+    .bff-panel .bff-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 12px; }
+    .bff-panel p { font-family: var(--font-body); font-size: 16px; color: rgba(255,255,255,0.9); line-height: 1.75; margin-bottom: 14px; }
+    .bff-panel p:last-child { margin-bottom: 0; }
+    .doc-footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .doc-footer .footer-left { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .doc-footer .footer-right { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-panel">
+    <div class="gate-label">Consistency Audit — post R10 · IVE F2 complete</div>
+    <h1>Calmly — Cross-Requirement Consistency Audit</h1>
+    <p>Verifies that all 10 requirements are internally consistent, cost calculations are coherent across gates, and model limitations are documented before F3 begins.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 1 — Cumulative BFF (C1–R10)</div>
+
+    <div class="bff-panel">
+      <div class="bff-label">Business Form Factor — full F2 architecture</div>
+      <p>Calmly is a claims origination and litigation risk market infrastructure business with a compounding data advantage.</p>
+      <p>Consumer-side: Organic search and gateway partner referrals (Resolver, Citizens Advice, Which?) bring consumers to Calmly at the moment of peak receptivity — immediately after receiving a company's final refusal. The independent assessment org (a network of university law departments trained on Calmly's methodology) provides a free EV assessment within 48 hours, simultaneously resolving claimant credibility doubt (R4), establishing the correct reference point for the offer (R6), and producing investor-grade portfolio data (C3). The guided submission flow (R5) ensures every consumer can complete the process without legal expertise. Calmly's offer is presented as a percentage of independently-assessed expected value — not a percentage of face value — making acceptance the rational choice. Returning consumers benefit from established claim history and fast-track processing (R8).</p>
+      <p>Supply-side: Pool operators (law firms) compete for access to Calmly's assessed claim pools. LMU specialists execute the pre-trial bundle strategy (C2), manufacturing switching costs for defendants and producing early settlement in the majority of cases. Multiple university law departments compete for assessment volume under Calmly's methodology, preventing single-source leverage (R9). Gateway partners integrate Calmly referrals into their standard advice workflows, earning per-claim fees and reducing Calmly's organic acquisition cost (R7).</p>
+      <p>Moat: As claim volume grows, EV accuracy improves → pool operators price tighter → Calmly offers better claimant deals → more volume → more accuracy. The compound data advantage is the primary competitive moat (R10). Assessment org network depth and pool operator calibration are secondary moats. No single partner controls more than 30% of any supply or demand channel.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 2 — Cross-requirement dependency checks</div>
+
+    <div class="check-item">
+      <div class="check-header">
+        <div class="check-badge pass">✓</div>
+        <div class="check-title">Check 1: C3 assessment org → R4 attraction → R6 amortisation</div>
+        <div class="check-verdict pass">Consistent</div>
+      </div>
+      <div class="check-body">
+        <div class="inset-block">
+          <p><strong>Dependency:</strong> C3 designs the independent assessment org. R4 uses it as the claimant conviction mechanism (free EV assessment). R6 uses the same EV report as the reference point frame for the offer.</p>
+          <p><strong>Verification:</strong> The same EV report is produced once per claim and serves all three functions: (1) defendant/investor credibility signal (C3), (2) claimant conviction mechanism before commitment (R4), (3) reference point anchor for Calmly's offer (R6). All three functions are structurally consistent — the report runs once, costs £16, and is used three times.</p>
+          <p><strong>Consistency check:</strong> The R4 free assessment must be delivered before Calmly's offer (R6 requirement). The sequencing is: consumer submits → assessment org produces EV report → consumer receives report → Calmly makes offer. This is the correct order. No tension. <strong>PASS.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-header">
+        <div class="check-badge pass">✓</div>
+        <div class="check-title">Check 2: R4 CAC → R7 NTP restructure</div>
+        <div class="check-verdict pass">Consistent — calculation verified</div>
+      </div>
+      <div class="check-body">
+        <div class="inset-block">
+          <p><strong>R4 CAC:</strong> £38/claim (100% organic — amortised SEO content investment at 1,500 claims/month).</p>
+          <p><strong>R7 restructure:</strong> 60% of inflow via gateway partners at £25 NTP fee + 40% organic at £18 effective rate.</p>
+          <p><strong>Blended calculation:</strong> (0.60 × £25) + (0.40 × £18) = £15.00 + £7.20 = £22.20 → £22/claim.</p>
+          <p><strong>Net saving:</strong> £38 (R4) − £22 (R7) = £16/claim improvement. Cost floor falls from £237 to £221.</p>
+          <p><strong>Coherence check:</strong> The organic rate falls from £38 (100% of claims) to £18 (40% of claims) because the same fixed content investment is now divided across fewer organic claims (gateway partners handle 60%). This is mathematically coherent — it is not double-counting. The organic CAC per organic claim stays around £18; the blend with NTP-referred claims produces the £22 blended rate. <strong>PASS.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-header">
+        <div class="check-badge pass">✓</div>
+        <div class="check-title">Check 3: R5 guided submission → R3 assessment org input</div>
+        <div class="check-verdict pass">Consistent</div>
+      </div>
+      <div class="check-body">
+        <div class="inset-block">
+          <p><strong>Dependency:</strong> The R5 guided submission flow must produce the evidence input the assessment org requires to produce a valid EV report (R3 scaling condition).</p>
+          <p><strong>Verification:</strong> The guided flow is designed around evidence categories specified by the assessment org (R5 condition 1). This is a co-design requirement — the intake form architecture is driven by assessment org input specifications. The dependency is explicit and bi-directional: R5 depends on R3's assessment org specification, and R3's EV quality depends on R5's submission completeness.</p>
+          <p><strong>Consistency check:</strong> No tension. The two requirements strengthen each other — better submissions produce more accurate EV reports, which produces more credible conviction mechanisms (R4), which improves offer acceptance (R6). All downstream effects are positive. <strong>PASS.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-header">
+        <div class="check-badge flag">!</div>
+        <div class="check-title">Check 4: R8 switching cost — individual consumer vs repeat-use segments</div>
+        <div class="check-verdict flag">Flagged — fin-sim limitation</div>
+      </div>
+      <div class="check-body">
+        <div class="flag-block">
+          <p><strong>Finding:</strong> The R8 switching cost mechanism is weakest for the general consumer population (infrequent disputes — typically one claim in a 5-year period). The mechanism is strongest for specific high-frequency segments: tenants (landlord deposit disputes, recurring every 1–3 years), small businesses (B2C disputes), and advocates (referral value).</p>
+          <p><strong>Implication for CLV assumptions:</strong> The current fin-sim models one claim per consumer. This is conservative for the tenant and small business segments but accurate for the general population. The fin-sim must add segment-level CLV modelling before Phase III capital decisions. Assumption that all consumers are one-time understates the portfolio value.</p>
+          <p><strong>Does this invalidate the architecture?</strong> No. The switching cost mechanism provides value even for one-time consumers through the advocate/referral channel (R8). The per-claim economics are unchanged. The understatement is in CLV, not in the per-claim FMOS model. <strong>FLAG — fin-sim development required.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-header">
+        <div class="check-badge pass">✓</div>
+        <div class="check-title">Check 5: R9 multi-university model → C3 assessment org cost</div>
+        <div class="check-verdict pass">Consistent — upside identified</div>
+      </div>
+      <div class="check-body">
+        <div class="inset-block">
+          <p><strong>Finding:</strong> The C3 assessment org cost is £16/claim (single-org model). R9 introduces a multi-university competition model. If 3+ assessment orgs compete on quality and fee, the assessment fee is expected to fall to £10–12/claim at scale.</p>
+          <p><strong>Impact:</strong> A £6/claim reduction in assessment fee reduces the cost floor from £221 to £215 and improves FMOS from 66% to 67%. This is an upside scenario, not assumed in the central model.</p>
+          <p><strong>Additional SC cost:</strong> Each additional assessment org adds ~£80k one-time setup, increasing the SC allocation by ~£1/claim. Net: £6 fee saving − £1 SC increase = £5/claim net improvement. Central model is conservative. <strong>PASS — upside flagged for fin-sim sensitivity.</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-header">
+        <div class="check-badge flag">!</div>
+        <div class="check-title">Check 6: R10 data flywheel → fin-sim model limitation</div>
+        <div class="check-verdict flag">Flagged — fin-sim development required</div>
+      </div>
+      <div class="check-body">
+        <div class="flag-block">
+          <p><strong>Finding:</strong> The R10 data flywheel (EV accuracy improvement → pool operator pricing improvement → better claimant deals → more volume) is not modelled in the fin-sim. The fin-sim models static per-claim economics. It does not show the Year 3 vs Year 1 improvement that the flywheel produces.</p>
+          <p><strong>Impact:</strong> The fin-sim understates the at-scale value of the architecture. The flywheel benefit is real but unquantified. It is an upside that makes the central FMOS calculation conservative.</p>
+          <p><strong>What needs to be modelled:</strong> A sensitivity showing Year 1 vs Year 3 EV accuracy (proxy: confidence interval on claim EV narrows from ±30% to ±15%), pool operator pricing improvement (reduced risk premium), and the resulting improvement in per-claim Calmly fee income. This is a fin-sim development task, not an architecture change. <strong>FLAG — fin-sim development required before Phase III capital.</strong></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 3 — Cost progression table (all gates)</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Gate</th>
+          <th>New cost added (£/claim)</th>
+          <th style="text-align:right;">Cost floor</th>
+          <th style="text-align:right;">FMOS</th>
+          <th>Key design</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>C3</td><td>Assessment org £16, LMU £108, compliance £4, HQ £50, platform tech £11, platform var £8, SC £1, IC £1</td><td style="text-align:right;"><strong>£199</strong></td><td style="text-align:right;">69%</td><td style="font-size:13px;color:#718096;">Exchange model F1 architecture</td></tr>
+        <tr><td>R4</td><td>CAC £38 (organic SEO + word of mouth)</td><td style="text-align:right;"><strong>£237</strong></td><td style="text-align:right;">64%</td><td style="font-size:13px;color:#718096;">Want Block — free EV assessment as conviction</td></tr>
+        <tr><td>R5</td><td>£0 (UX in SC platform budget)</td><td style="text-align:right;"><strong>£237</strong></td><td style="text-align:right;">64%</td><td style="font-size:13px;color:#718096;">Use Block — guided submission flow</td></tr>
+        <tr><td>R6</td><td>£0 (framing delivered via platform)</td><td style="text-align:right;"><strong>£237</strong></td><td style="text-align:right;">64%</td><td style="font-size:13px;color:#718096;">Cash flow — EV reference point frame</td></tr>
+        <tr><td>R7</td><td>NTP £25 × 60% + organic £18 × 40% = £22 blended (−£16 vs R4)</td><td style="text-align:right;"><strong>£221</strong></td><td style="text-align:right;">66%</td><td style="font-size:13px;color:#718096;">Gateway partners — Resolver first, Citizens Advice second</td></tr>
+        <tr><td>R8</td><td>£0 (claim history in platform)</td><td style="text-align:right;"><strong>£221</strong></td><td style="text-align:right;">66%</td><td style="font-size:13px;color:#718096;">Switching cost — CLV uplift not in model (flag)</td></tr>
+        <tr><td>R9</td><td>£0 (methodology ownership)</td><td style="text-align:right;"><strong>£221</strong></td><td style="text-align:right;">66%</td><td style="font-size:13px;color:#718096;">Supplier leverage — multi-org competition upside</td></tr>
+        <tr style="background:#e6f4ec;"><td><strong>R10</strong></td><td>£0 (data flywheel — volume benefit)</td><td style="text-align:right;"><strong>£221</strong></td><td style="text-align:right;"><strong>66%</strong></td><td style="font-size:13px;color:#166534;"><strong>Final gate — F2 complete</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 4 — Architectural elegance map</div>
+
+    <p>Six cross-requirement connections where one mechanism serves multiple requirements, with zero marginal cost for the downstream functions:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Mechanism</th>
+          <th>Primary requirement</th>
+          <th>Secondary requirements served</th>
+          <th>Cost impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Independent EV assessment</strong></td>
+          <td>C3 (assessment org design)</td>
+          <td>R4 (claimant conviction) · R6 (offer reference frame)</td>
+          <td>Zero marginal cost for R4 and R6. Same £16 report, three functions.</td>
+        </tr>
+        <tr>
+          <td><strong>Guided submission flow</strong></td>
+          <td>R5 (consumer activation)</td>
+          <td>R3 (assessment org input quality)</td>
+          <td>Absorbed in platform SC. No per-unit cost for R3 benefit.</td>
+        </tr>
+        <tr>
+          <td><strong>Outcome data accumulation</strong></td>
+          <td>R7 (gateway partner proof point)</td>
+          <td>R10 (EV accuracy data flywheel)</td>
+          <td>Zero additional cost. Same data, two functions.</td>
+        </tr>
+        <tr>
+          <td><strong>Methodology ownership</strong></td>
+          <td>R9 (supplier leverage elimination)</td>
+          <td>R10 (moat component — methodology IP)</td>
+          <td>Zero per-unit cost. IP is a design property.</td>
+        </tr>
+        <tr>
+          <td><strong>Claim history storage</strong></td>
+          <td>R8 (switching cost)</td>
+          <td>R10 (pool operator calibration data)</td>
+          <td>Absorbed in platform technology (£11/claim already in model).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 5 — Fin-sim development requirements (before Phase III)</div>
+
+    <table>
+      <thead><tr><th>Item</th><th>Source requirement</th><th>Description</th><th>Priority</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1. Rebuild to AOM v2 cost structure</strong></td><td>C3 condition</td><td>Replace law clinic module (solicitor + students) with LMU specialist model. Expected impact: cost floor £307 → £221, FMOS improves to 66%.</td><td><span class="tag tag-amber">High</span></td></tr>
+        <tr><td><strong>2. CLV segmentation</strong></td><td>R8 flag</td><td>Add tenant (2.5 claims/5 years) and small business (5 claims/year) segments. Model zero CAC on return claims. Improves at-scale revenue without changing per-claim costs.</td><td><span class="tag tag-amber">High</span></td></tr>
+        <tr><td><strong>3. Data flywheel sensitivity</strong></td><td>R10 flag</td><td>Model Year 1 vs Year 3 EV accuracy improvement. Show pool operator pricing improvement as confidence interval narrows. Quantify per-claim fee income upside.</td><td><span class="tag tag-blue">Medium</span></td></tr>
+        <tr><td><strong>4. Multi-org assessment fee sensitivity</strong></td><td>R9 upside</td><td>Show £16 → £10–12 assessment fee scenario with offsetting SC increase. Net impact: −£5/claim on cost floor, FMOS improves to 67–68%.</td><td><span class="tag tag-blue">Medium</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Section 6 — Audit verdict</div>
+
+    <div style="background:var(--panel-bg);color:var(--panel-text);padding:28px 32px;border-left:6px solid #22c55e;margin-bottom:32px;">
+      <div style="font-size:12px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:#86efac;margin-bottom:10px;">Consistency Audit Verdict · 19 May 2026</div>
+      <div style="font-size:24px;font-weight:600;color:#ffffff;margin-bottom:18px;">CONSISTENT — ARCHITECTURE CONFIRMED</div>
+      <p style="font-family:var(--font-ui);font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:10px;line-height:1.65;">All 6 cross-requirement dependency checks pass or are appropriately flagged. The architecture is internally consistent. No contradictions between requirements. No mechanisms that claim to reduce cost while actually shifting it elsewhere (cost-shifting prohibition: PASS).</p>
+      <p style="font-family:var(--font-ui);font-size:15px;color:rgba(255,255,255,0.85);margin-bottom:10px;line-height:1.65;"><strong>Two flags raised</strong> — both are model limitations (fin-sim understatement of value), not architecture failures: (a) R8 CLV for repeat-use segments; (b) R10 data flywheel effect on pool operator pricing. Both flags improve the economics when modelled. Neither reduces FMOS below 66%.</p>
+      <p style="font-family:var(--font-ui);font-size:15px;color:rgba(255,255,255,0.85);line-height:1.65;"><strong>Proceed to fin-sim rebuild (C3 condition) then F3 — Productise.</strong></p>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <div class="footer-left">Calmly — Cross-Requirement Consistency Audit · 19 May 2026<br>Produced after completion of R4–R10 design pass</div>
+    <div class="footer-right">10 requirements complete · 14 FIT Verifier/unit economics files produced</div>
+  </div>
+
+</div>
+</body>
+</html>

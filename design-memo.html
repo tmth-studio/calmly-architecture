@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Are We Building the Right Thing? (v2.0)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #0f1923;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #dde1e7;
+      --border-strong: #b0b8c4;
+      --accent: #1f4fa8;
+      --accent-light: #e8eef8;
+      --panel-bg: #0f2744;
+      --panel-text: #ffffff;
+      --warning-bg: #fff8e6;
+      --warning-border: #d4820a;
+      --inset-border: #1f4fa8;
+      --green-bg: #e6f4ec;
+      --green-text: #166534;
+      --red-bg: #fde8e8;
+      --red-text: #991b1b;
+      --yellow-bg: #fef9e6;
+      --yellow-text: #854d0e;
+      --tag-radius: 3px;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+      --font-body: 'Lora', Georgia, serif;
+      --width: 980px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 48px 32px 100px; background: var(--surface); }
+
+    .doc-header { border-bottom: 2px solid var(--text); padding-bottom: 24px; margin-bottom: 40px; }
+    .doc-header .label { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .doc-header h1 { font-size: 30px; font-weight: 600; line-height: 1.2; margin-bottom: 8px; }
+    .doc-header .subtitle { font-family: var(--font-body); font-size: 18px; color: var(--text-secondary); font-style: italic; margin-bottom: 20px; }
+    .meta-row { display: flex; gap: 28px; font-size: 14px; color: var(--text-muted); flex-wrap: wrap; }
+
+    .panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin: 36px 0; }
+    .panel .panel-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+    .panel p { font-family: var(--font-body); font-size: 18px; line-height: 1.6; }
+
+    .arch-change { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 20px 24px; margin-bottom: 36px; }
+    .arch-change .arch-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warning-border); margin-bottom: 10px; }
+    .arch-change h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+    .arch-change p { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 8px; }
+    .arch-change p:last-child { margin-bottom: 0; }
+    .arch-change ul { margin: 8px 0 0 20px; }
+    .arch-change li { font-family: var(--font-body); font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 4px; }
+
+    p.body { font-family: var(--font-body); font-size: 16px; line-height: 1.7; margin-bottom: 16px; color: var(--text-secondary); }
+
+    .function-header { background: var(--bg); border-left: 4px solid var(--accent); padding: 16px 20px; margin: 52px 0 8px; }
+    .function-header .fn-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+    .function-header h2 { font-size: 20px; font-weight: 600; }
+    .function-intro { font-family: var(--font-body); color: var(--text-secondary); font-size: 15px; line-height: 1.65; margin-bottom: 32px; padding-left: 24px; border-left: 1px solid var(--border); }
+
+    .challenge { border: 1px solid var(--border); margin-bottom: 28px; }
+    .challenge-header { display: flex; align-items: flex-start; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--border); background: #fafaf9; }
+    .challenge-number { width: 34px; height: 34px; min-width: 34px; background: var(--accent); color: white; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-top: 2px; }
+    .challenge-header-text { flex: 1; }
+    .challenge-header-text h3 { font-size: 16px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+    .challenge-header-text .challenge-def { font-size: 13px; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+    .challenge-status { flex-shrink: 0; padding-top: 2px; }
+
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--tag-radius); border: 1px solid; white-space: nowrap; }
+    .tag-green { background: var(--green-bg); color: var(--green-text); border-color: #a7d4b8; }
+    .tag-yellow { background: var(--yellow-bg); color: var(--yellow-text); border-color: #f0d98a; }
+    .tag-red { background: var(--red-bg); color: var(--red-text); border-color: #f0b4b4; }
+    .tag-blue { background: var(--accent-light); color: var(--accent); border-color: #b8c8e8; }
+
+    .subreqs { width: 100%; border-collapse: collapse; }
+    .subreqs thead tr { background: #f7f7f6; }
+    .subreqs th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); padding: 9px 20px; text-align: left; border-bottom: 1px solid var(--border); }
+    .subreqs td { padding: 13px 20px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .subreqs tr:last-child td { border-bottom: none; }
+    .subreqs td.req-name { font-size: 12px; font-weight: 600; letter-spacing: 0.01em; color: var(--text-secondary); width: 190px; min-width: 160px; }
+    .subreqs td.req-answer { font-family: var(--font-body); font-size: 14px; line-height: 1.65; }
+    .subreqs td.req-status { width: 76px; text-align: center; }
+
+    .open-note { background: var(--warning-bg); border-left: 3px solid var(--warning-border); padding: 10px 14px; margin-top: 10px; font-size: 13px; color: #7a4a00; font-family: var(--font-ui); line-height: 1.55; }
+    .open-note strong { color: var(--warning-border); }
+
+    .updated-note { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 10px 14px; margin-top: 10px; font-size: 13px; color: var(--accent); font-family: var(--font-ui); line-height: 1.55; }
+    .updated-note strong { color: var(--accent); }
+
+    h2.section-h2 { font-size: 22px; font-weight: 600; margin: 56px 0 20px; border-top: 2px solid var(--border); padding-top: 32px; }
+
+    .summary-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+    .summary-table th { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); background: #f7f7f6; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
+    .summary-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+    .summary-table tr:last-child td { border-bottom: none; }
+    .fn-label-sm { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+
+    .verdict { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 18px 22px; margin: 32px 0; }
+    .verdict p { font-family: var(--font-body); font-size: 15px; line-height: 1.7; }
+    .verdict strong { font-family: var(--font-ui); font-weight: 600; }
+
+    .challenge-ac { border: 1px solid var(--warning-border); margin-bottom: 28px; margin-top: -16px; }
+    .challenge-ac summary { display: flex; align-items: flex-start; gap: 16px; padding: 14px 24px; cursor: pointer; list-style: none; background: var(--warning-bg); border-bottom: 1px solid transparent; }
+    .challenge-ac summary::-webkit-details-marker { display: none; }
+    .challenge-ac[open] summary { border-bottom: 1px solid var(--warning-border); }
+    .challenge-ac summary:hover { background: #fff3d6; }
+    .challenge-ac-number { width: 34px; height: 34px; min-width: 34px; background: var(--warning-border); color: white; font-weight: 600; font-size: 13px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-top: 2px; flex-shrink: 0; }
+    .challenge-ac-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warning-border); margin-bottom: 3px; }
+    .challenge-ac summary h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .challenge-ac summary .challenge-def { font-size: 12px; color: #7a4a00; font-style: italic; line-height: 1.45; }
+    .challenge-ac-toggle { margin-left: auto; flex-shrink: 0; font-size: 12px; font-weight: 600; color: var(--warning-border); padding-top: 4px; }
+    details.challenge-ac[open] .challenge-ac-toggle::after { content: "▲ Collapse"; }
+    details.challenge-ac:not([open]) .challenge-ac-toggle::after { content: "▶ Expand"; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="doc-header">
+    <div class="label">Calmly — IVE Design Memo v2.0 — Exchange Architecture</div>
+    <h1>Are we building the right thing?</h1>
+    <div class="subtitle">A challenge-by-challenge audit of the Business Architecture Logic Model</div>
+    <div class="meta-row">
+      <span>Tom Manuel</span>
+      <span>18 May 2026</span>
+      <span>Framework: Integrative Venture Engineering (Simanis / Cornell)</span>
+      <span>Supersedes: v1.0 (12 May 2026)</span>
+    </div>
+  </div>
+
+  <!-- Architecture Change Notice -->
+  <div class="arch-change">
+    <div class="arch-label">Architecture change — v1.0 → v2.0 · 18 May 2026</div>
+    <h3>Discontinuous shift: from claim purchaser to litigation risk exchange</h3>
+    <p>v1.0 modelled Calmly as a claims pooler that purchases consumer disputes outright, bears litigation risk on its own balance sheet, and earns revenue through the settlement spread. v2.0 reframes Calmly as a <strong>litigation risk exchange</strong> — infrastructure through which third-party investors purchase claims, earn the spread, and bear the litigation risk. Calmly operates the exchange and earns platform fees on each transaction.</p>
+    <p>This change is discontinuous. It affects the cost structure, the revenue model, the working capital position, the gateway partner architecture, and the definition of Calmly's customers. The core value proposition for claimants and defendants is unchanged; what changes is who bears the risk and how Calmly captures value.</p>
+    <ul>
+      <li><strong>C1 updated:</strong> Workaround Strategy and BFF statements revised — from "claims pooler that buys" to "exchange that facilitates investor purchase."</li>
+      <li><strong>C3 updated:</strong> BFF statement revised to reflect capital-light exchange model.</li>
+      <li><strong>C7 fully rewritten:</strong> Gateway partner confirmed as NTPs (not solicitors) for the exchange model. NTPs now perform a two-sided function — claimant origination and defendant notification — making them part of the exchange's operating infrastructure, not merely a referral channel. Integration ToC updated to Morgan &amp; Hunt (1994) commitment-trust theory.</li>
+      <li><strong>Two customers explicitly named:</strong> Claimants (supply side — sell claims to the exchange) and defendants (activated through NTP notification mechanism). The exchange serves both.</li>
+      <li><strong>C2, C4, C5, C6, C8, C9, C10:</strong> Unchanged. The "market in litigation risk" framing in C4–C6 BFF statements is exchange-compatible and requires no revision.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <div class="panel-label">Governing thought</div>
+    <p>The exchange architecture resolves the working capital constraint structurally — Calmly facilitates the market rather than bearing risk on its own balance sheet — and introduces two explicit customers (claimants and defendants) with NTPs serving as two-sided originators on both sides. The open design questions shift from C3 (working capital ToC, now resolved by the exchange model) to C7 (exchange originator activation) and C8 (NTP switching cost).</p>
+  </div>
+
+  <p class="body">The Business Architecture Logic Model poses ten universal functional requirements that any market-creating venture must satisfy, irrespective of industry or technology. This memo walks through each requirement, shows the current answer for every named sub-requirement, and flags what is resolved, partial, or still open. The goal is not to assess market size — that analysis sits in the pursuit memo and FMOS simulation. The goal is to check whether the design is internally coherent.</p>
+
+  <p class="body">Architecture in view: the litigation risk exchange model (v2.0, 18 May 2026). The earlier risk-pooling / claims-purchase architecture (v1.0, 12 May 2026) is preserved at <code>calmly-design-memo.html</code>.</p>
+
+  <!-- PCO -->
+  <div class="challenge" style="margin-bottom: 48px;">
+    <div class="challenge-header">
+      <div class="challenge-number" style="background: var(--text); font-size: 11px;">PCO</div>
+      <div class="challenge-header-text">
+        <h3>Prime Commercial Opportunity</h3>
+        <div class="challenge-def">The target customer, the outcome of greatest importance to them, and the commercial opportunity they define together. The PCO is the scope-setter for all ten challenges — every sub-requirement flows from it.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Target Customer</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The specific population of actors whose high-import outcome the venture addresses.</div></td>
+          <td class="req-answer">Claimants and defendants in England &amp; Wales with unresolved small claims (typically £500–£5,000) in county court jurisdiction, where legal costs are unrecoverable and no commercial operator currently facilitates fair settlement.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>High-Import Outcome</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The job that holds the greatest importance to the greatest number of target customers that the venture can meaningfully deliver on. Clinical statement — no "how", no adverbs.</div></td>
+          <td class="req-answer">We reach a settlement that reflects the merits of the case.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>PCO Statement</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The commercial opportunity in one sentence: who, what outcome, and why the market doesn't currently serve them.</div></td>
+          <td class="req-answer">Claimants and defendants in England &amp; Wales face millions of small claims that never reach a fair settlement — because without recoverable legal costs, claimants cannot credibly threaten court, defendants have no incentive to engage, and no commercial operator exists to change that dynamic.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- F1 -->
+  <!-- ================================================================ -->
+
+  <div class="function-header">
+    <div class="fn-label">F1 — Challenges 1–3</div>
+    <h2>Neutralise the Value Barrier</h2>
+  </div>
+  <p class="function-intro">Drives a wedge between value creation and cost incursion. C1 targets the procedure that costs the most at scale. C2 eliminates the biggest monetizable cost for the customer. C3 circumvents the biggest working capital drain during the scaling period.</p>
+
+  <!-- C1 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C1</div>
+      <div class="challenge-header-text">
+        <h3>Circumvent the at-scale operational cost bottleneck</h3>
+        <div class="challenge-def">Circumvent the operational procedure in the 'default' business operating system/s that contributes the greatest share of running costs once the venture is operating at-scale.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Conventional Business Operating System</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The 'gold standard' way the core functionality or a commercial solution to a societal problem would typically be productised, made, sold, and delivered.</div></td>
+          <td class="req-answer">Mediator. If someone has a dispute, they would first attempt to resolve it directly. If that fails, a mediator helps both parties reach a settlement — a process anchored to each side's BATNA (best alternative to a negotiated agreement). The settlement emerges from what each party would rationally accept given what they could achieve without agreement.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Critical Limiting Operation</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">A key operation in the conventional business operating system that disproportionately drives up cost and creates a cost threshold that exceeds target customers' ability or willingness to pay.</div></td>
+          <td class="req-answer">Creating a credible litigation backstop — the operation that gives mediation its leverage over the defendant. In markets where legal costs are recoverable, a solicitor performs this operation: they advise the claimant, serve notice, and make the threat credible by being professionally involved. The defendant participates in mediation because non-participation leads somewhere costly.<br><br>In the small claims market, no solicitor will take the case because there are no recoverable costs to fund them. The operation cannot be performed — not because it is too expensive, but because the structural precondition for it to exist is absent. The mediation BFF does not become uneconomic; it becomes structurally inoperative. The defendant can refuse to engage and face no consequences.<br><br><strong>Zone:</strong> Selling the product.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Workaround Theory of Change</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The class of problem the critical limiting operation represents/falls into, and the theory/ies most effective in explaining how to solve that class of problem.</div></td>
+          <td class="req-answer">
+            <strong>Class of problem:</strong> Credible commitment failure. The claimant cannot credibly commit to litigation — individual claim economics make following through irrational. The defendant reads this correctly. Non-participation is their dominant strategy, not a misperception.<br><br>
+            <strong>Theory:</strong> Schelling, T.C. (1960). <em>The Strategy of Conflict.</em> Harvard University Press. A threat changes behaviour only when the threatening party would actually follow through. Credibility is not about intent — it is about payoff structure. A party whose payoff makes following through rational is credible by design. Precommitment manufactures this credibility: by changing its own payoff structure, a party makes following through the dominant strategy and removes the option to back down.<br><br>
+            <strong>Context:</strong> Defendants in the small claims market correctly assess that individual claimants cannot afford court. Costs are not recoverable at county court level. No solicitor will take the case. The claimant's BATNA is zero. Mediation is structurally inoperative — the defendant can decline and face no consequences.<br><br>
+            <strong>Mechanism:</strong> A single claim presents a binary outcome: the claimant wins or loses, and that variance makes pursuit irrational even when EV is positive — the full downside falls on them alone. A portfolio investor holds a different problem. Across hundreds of claims, individual binary outcomes average out. The investor experiences the portfolio's expected value — a predictable return at known win rates and average claim values. Pursuit is rational not because it is cheap, but because they are making an EV decision, not a single bet. The investor's payoff makes litigating every qualifying claim the dominant strategy. That is the precommitment device. The defendant's position changes not because they are persuaded — but because the party they now face experiences litigation as an EV decision and has no rational reason to back down.<br><br>
+            <strong>Outcome:</strong> Defendants face a credible litigation threat in the small claims market for the first time. Non-participation is no longer rational. The mediation BFF becomes operative — defendants face a genuine choice between settlement and court, and settlement is the rational response when the claim has merit.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Workaround Strategy</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The best way to operationalize the Workaround TOC to eliminate the need for the Critical Limiting Operation in the core business operating system.</div></td>
+          <td class="req-answer">Pool claimants' claims together, splitting the costs and revenues of litigation across the pool. At individual claim level, variance makes pursuit irrational even when EV is positive — the full downside falls on one person. At pool level, individual outcomes average out: pursuit becomes the rational committed strategy for whoever operates the pool.
+            <div class="updated-note"><strong>v2.0 update:</strong> v1.0 stated "A third-party investor purchases rights to the claim." This revision makes two things explicit: (1) Calmly facilitates investor purchase, it does not make the purchase itself; (2) claims are pooled into investor-held portfolios — pooling is what makes the litigation threat credible, and the pool is owned by the investor vehicle, not Calmly.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1)</strong></td>
+          <td class="req-answer">A mediator that helps claimants pool their claims and pursue them on shared costs and revenues.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C2 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C2</div>
+      <div class="challenge-header-text">
+        <h3>Eliminate both parties' biggest monetizable cost</h3>
+        <div class="challenge-def">Eliminate the target customer's biggest cost measured in money from their current routine for achieving an outcome that is important to them. Both claimant and defendant are paying customers. The strategy is the same for both: produce an expected value settlement report that tells each party what fair settlement looks like, and shows how the settlement ask escalates at each stage of legal escalation as claimant costs accumulate.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>High-Import Outcome &amp; Attendant Routines</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The outcome of greatest importance to target customers, and what they currently do, buy, think, and feel to achieve it.</div></td>
+          <td class="req-answer">
+            <strong>HIO (shared):</strong> We reach a settlement that reflects the merits of the case.<br>
+            <em>Claimant perspective:</em> I receive what I am owed. <em>Defendant perspective:</em> I pay what I legitimately owe — no more.<br>
+            <strong>KPI:</strong> Settlement amount relative to independent expected value; time to settlement; total cost incurred to reach settlement.<br><br>
+            <strong>Research clusters:</strong><br>
+            Claimants — Cluster 1: housing (deposit disputes, disrepair, service charges). Cluster 2: consumer/marketplace (fraud, mis-selling, platform liability). Cluster 3: employment/workplace (wage deductions, unlawful deductions).<br>
+            Defendants — Cluster 1: SME/corporate (institutionalised motivated reasoning; legal team absorbs dispute as overhead). Cluster 2: micro/sole trader (personal, concentrated; suppressed guilt alongside motivated disengagement).<br><br>
+            <strong>DO:</strong> Claimant — attempts direct resolution; defendant stonewalls or offers inadequate settlement; claimant seeks advice (Citizens Advice, online, friends); advised the claim is too small to pursue at acceptable cost; claim abandoned or settled below EV. Defendant — becomes aware of dispute; responds defensively; waits, correctly assessing that most claimants cannot afford court; either the claimant gives up, or rarely, actually issues.<br><br>
+            <strong>THINK:</strong> Claimant — "Is this worth pursuing? I don't know what I'm actually owed or how to make a credible demand." Defendant — "They won't go to court. And even if they do, I don't know what I actually owe, so my best move is to wait."<br><br>
+            <strong>FEEL:</strong> Claimant — fear of not recovering money; stress of not knowing the right number to ask for. Defendant — Cluster 1: institutional indifference. Cluster 2: suppressed guilt; motivated reasoning suppresses it. Both — stressed by continued back-and-forth without resolution.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Key Monetizable Cost</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The single greatest monetizable cost — in money, fear, or stress — that the solution eliminates. One cost per customer, but here the same underlying gap drives both.</div></td>
+          <td class="req-answer">
+            The cost of not knowing expected settlement value — for both parties.<br><br>
+            Neither party can independently assess what the claim is worth. Every valuation each party holds is self-serving. No independent, outside-view assessment exists.<br><br>
+            <strong>For the claimant:</strong> without a credible, quantified expected value, the claimant cannot make a demand the defendant must take seriously. They settle below EV or incur avoidable escalation costs pursuing a claim without a factual anchor.<br><br>
+            <strong>For the defendant:</strong> without an independent assessment, the defendant faces an open-ended, unknown liability. They cannot distinguish a fair claim from an inflated one. This drives two equally costly responses: over-settling (paying more than owed to escape unknown exposure) or stonewalling (delaying until forced to pay more, with accumulated costs added).
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Efficacy Theory of Change</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The class of problem the key cost represents, and the theory most effective in explaining how to solve it.</div></td>
+          <td class="req-answer">
+            <strong>Class:</strong> Information asymmetry about expected settlement value, compounded by self-serving assessment. Neither party has access to an independent, outside-view assessment of what the claim is worth. Both form internally consistent but self-serving views. The gap between the two assessments is the direct predictor of failure to settle — not the underlying facts of the dispute.<br><br>
+            <strong>Theory:</strong><br>
+            Babcock, L. &amp; Loewenstein, G. (1997). Explaining bargaining impasse: The role of self-serving biases. <em>Journal of Economic Perspectives</em>, 11(1), 109–126. Self-serving assessment of legal merit is the single strongest predictor of litigation rates. The gap between each party's self-assessed win probability directly determines whether settlement occurs.<br><br>
+            Kahneman, D. &amp; Lovallo, D. (1993). Timid choices and bold forecasts: A cognitive perspective on risk taking. <em>Management Science</em>, 39(1), 17–31. Inside-view reasoning systematically overestimates individual success probability. Outside-view reference class data — what actually happens in cases like this — corrects it.<br><br>
+            Kahneman, D. &amp; Tversky, A. (1979). Prospect Theory: An Analysis of Decision under Risk. <em>Econometrica</em>, 47(2), 263–291. A quantified, escalating settlement ask frames delay as active loss accrual rather than a neutral deferral. Losses loom approximately twice as large as equivalent gains — making the cost of delay salient in a way a static settlement demand does not.<br><br>
+            <strong>Context:</strong> Both parties have formed self-serving assessments of case value. Claimant overestimates their position; defendant underestimates their liability. Each assessment is internally consistent given the information each party holds. No independent arbiter exists. Settlement is blocked by the assessment gap, not by the facts of the dispute.<br><br>
+            <strong>Mechanism:</strong> A quantitative expected value report provides both parties with the same outside-view assessment simultaneously — collapsing the self-serving assessment gap with reference class data. The report also calculates an escalation schedule: what the total settlement ask becomes at each stage of legal escalation as claimant costs (court fees, time, legal support) accumulate. The defendant can see precisely what early settlement costs versus what each subsequent stage costs. The cost of delay is no longer abstract — it is quantified and dated.<br><br>
+            <strong>Outcome:</strong> Both parties hold the same factual basis for settlement. The self-serving assessment gap narrows because neither party can rationally dismiss a number produced by an outside-view methodology. The escalation schedule makes delay visibly and quantifiably irrational for the defendant. Early settlement becomes the rational response for claims with genuine merit.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Efficacy Strategy</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The best way to operationalise the Efficacy Theory of Change to achieve a meaningful reduction in the key cost.</div></td>
+          <td class="req-answer">
+            Produce an expected value settlement report for each claim. The report has two components:<br><br>
+            <strong>1. Expected settlement value.</strong> An outside-view, reference-class-based assessment of what the claim is worth at trial — stated as a single number with a methodology the defendant can scrutinise. This gives the claimant a factual basis for their demand and gives the defendant the independent assessment they need to make a rational decision about what they legitimately owe.<br><br>
+            <strong>2. Escalation schedule.</strong> A quantified table showing what the settlement ask becomes at each stage of legal escalation — pre-court, post-issue, post-allocation, day of trial — as claimant costs (court fees, legal support, time) accumulate at each stage. The schedule makes the cost of delay explicit, dated, and arithmetic. The defendant is not told to settle — they are shown what each stage costs them relative to settling now.<br><br>
+            The same report is disclosed to both parties simultaneously. The claimant sees what they are legitimately owed and what their ask becomes at each stage. The defendant sees exactly what early settlement costs compared to each subsequent stage. Without-prejudice framing applies: the settlement offer cannot be used as evidence of admission in other proceedings.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1–C2)</strong></td>
+          <td class="req-answer">A mediation platform that pools claimants' claims to create a credible litigation threat, and produces a quantitative expected value settlement report for each claim — stating what fair settlement looks like and showing how the settlement ask escalates at each stage of legal escalation as claimant costs accumulate. The same report is disclosed to both parties: giving the claimant a factual basis for their demand, and giving the defendant a precise, quantified case for settling early.
+            <div class="updated-note"><strong>v2.0 update:</strong> Replaces earlier two-customer split (C2a/C2b). The EV report with escalation schedule is the unified mechanism for both parties. C3 (independence of the EV source) adds the credibility layer — see C3 BFF for the cumulative statement.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C3 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C3</div>
+      <div class="challenge-header-text">
+        <h3>Circumvent the working capital bottleneck during scaling</h3>
+        <div class="challenge-def">Circumvent the operational procedure in the interim core operating system that commands the greatest amount of working capital as the venture scales.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Critical Limiting Operation II</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The operational procedure that commands the greatest amount of working capital as the venture scales — commands significant upfront investment and time before it starts to pay for itself.</div></td>
+          <td class="req-answer">
+            Paying the independent assessment organisation to produce settlement reports before revenues are generated from disputants. For every claim processed, Calmly pays £16.28 to the assessment org at the point of report production. Recovery is contingent on defendant settlement behaviour: settling claims recover in ~45 days; court-bound claims in ~365 days. This makes assessment org payments the only working capital line whose size is determined by an external variable — the defendant settlement rate — that Calmly can structurally influence through architectural design.<br><br>
+            At Y5 scale (350,000 claims/year, 70% settling pre-trial), assessment org payments create a peak WC of £2.2M outstanding — second largest of all platform operations by absolute amount, and the only one with contingent rather than fixed-cycle recovery. Every other WC line (payroll, technology, facilities) resolves on a fixed contractual schedule. Assessment org payments do not. Drop the settlement rate from 70% to 50% and the WC rises from £2.2M to £3.2M — a £1M swing from a single architectural variable.<br><br>
+            The working capital requirement is preceded by a one-time capital investment of ~£80k to stand up the independent assessment org before any claims flow: recruiting law students from university law programmes, developing and publishing the EV methodology, and establishing university partnerships. This investment must be made before the org has any track record — and therefore before its outputs have any effect on defendant settlement behaviour.
+            <div class="updated-note"><strong>v2.0:</strong> Replaces v1.0 CLO II (13-month claim financing lag). In v2.0, Calmly does not hold claims — investors do. The working capital constraint shifts from claim financing to assessment org credibility-building.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Scaling Theory of Change</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The class of problem the CLO II represents, and the theory most effective in explaining how to solve it. Uses CMO structure (Pawson &amp; Tilley, 1997): class of problem, theory, context, mechanism, outcome.</div></td>
+          <td class="req-answer">
+            <strong>Class of problem:</strong> Recovery timing — a maturity mismatch between a fixed cost commitment (report production, £16.28/claim) and a variable recovery period whose length is determined by defendant behaviour within mediation. The WC outstanding is not a function of whether defendants settle but of how quickly they do: settling claims recover in ~45 days; court-bound claims in ~365 days. An 8× difference in cycle length from a single architectural variable.<br><br>
+            <strong>Theory:</strong> Spence (1973) — signalling theory, applied specifically to the speed dimension of recipient response. A signal from a party with no financial stake eliminates the credibility objection that defendants use to extend mediation timelines. A defendant who cannot dispute the report's independence on structural grounds has no tactical basis for delay — the stalling strategy loses its factual justification.<br><br>
+            <strong>Context:</strong> Coming out of C2, the mediation process begins. Even defendants who accept that settlement is inevitable can extend the timeline by disputing the report's objectivity — "Calmly has a financial interest in the settlement amount." This is a legitimate observation, not motivated reasoning (C2's problem). It extends recovery periods unnecessarily, inflating the WC float.<br><br>
+            <strong>Mechanism:</strong> The report source switches from Calmly to an independent organisation with no financial stake. The defendant's credibility objection — the primary tactical basis for delay within mediation — loses its structural foundation. Defendants cannot extend mediation on source-credibility grounds. The cash cycle shortens.<br><br>
+            <strong>Outcome:</strong> Average recovery time on assessment org payments shortens → WC outstanding on the CLO II contracts.
+            <div class="updated-note"><strong>v2.0 update:</strong> Class of problem corrected — C3 is a recovery timing problem, not a source credibility problem. Source credibility is the mechanism that solves it. "Settlement rate rises" removed from outcome — that is C2's metric. C3's metric is recovery time (how quickly defendants settle within mediation, not whether they settle).</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Scaling Strategy</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The best way to operationalise the Scaling ToC to circumvent or eliminate the CLO II. Must transform the working capital constraint — not transfer it to a third party. Cost-shifting is not a Scaling Strategy.</div></td>
+          <td class="req-answer">
+            Establish an independent assessment organisation — structurally separate from Calmly, staffed by law students sourced from university law programmes, operating under no financial stake in any claim outcome — to generate every EV settlement report. The independence is the mechanism: because the org cannot benefit from inflating case EV, defendants have no structural basis to apply a motivated-source discount. The Scaling Strategy is not a financing arrangement. It is an architectural decision about report authorship that converts defendant scepticism — the root cause of the WC constraint — into a design variable Calmly controls.<br><br>
+            <strong>Cost-shifting test:</strong> this is not cost-shifting. The working capital does not move to the assessment org or to a third party. It shrinks — because the mechanism that creates it (low settlement rate from defendant scepticism) is structurally reduced by the independence of the source.
+            <div class="updated-note"><strong>v2.0:</strong> Replaces v1.0 SR3 (rating organisation + investor vehicle + double-signal mechanism). The investor vehicle is removed — in v2.0 Calmly does not need investors to create a credibility signal. Source independence alone is sufficient.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"></td>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Business Form Factor (C1–C3)</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The cumulative Business Form Factor after C1, C2, and C3 are resolved. Incorporates the Workaround Strategy (C1), Efficacy Strategy (C2), and Scaling Strategy (C3) into a single integrated statement of how the venture creates, delivers, and sustains value.</div></td>
+          <td class="req-answer">A dispute resolution platform that pools consumer claims to create a credible litigation threat (C1); produces a quantitative EV settlement report for each claim — stating fair settlement value and showing how the settlement ask escalates at each stage of legal escalation — disclosed simultaneously to both parties (C2); with that report generated by an independent assessment organisation staffed by university law students with no financial stake in any claim outcome, so that defendants cannot dismiss it as self-interested (C3). The platform earns fees from its customers. Fee structure is determined at C6.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ================================================================ -->
+  <!-- F2 -->
+  <!-- ================================================================ -->
+
+  <div class="function-header">
+    <div class="fn-label">F2 — Challenges 4–7</div>
+    <h2>Normalise the Customer Routine</h2>
+  </div>
+  <p class="function-intro">Solves the inescapable problem that neither customers nor partners will have the routines or mindsets needed to value, use, and buy the new product. C4 addresses the cognitive barrier to understanding value. C5 targets the biggest learning disruption. C6 addresses the cash flow constraint. C7 addresses the gateway partner blockage.</p>
+
+  <!-- C4 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C4</div>
+      <div class="challenge-header-text">
+        <h3>Circumvent customer doubt about the product's value</h3>
+        <div class="challenge-def">Circumvent the main reason why target customers would either be unaware of the big cost the product eliminates from their routine, or would doubt that the product works.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Target Customer's Implicit Efficacy Theory of Change</strong></td>
+          <td class="req-answer">Claimants believe that a strongly worded letter from a lawyer will convince the other party that they're serious about court, thereby inducing a settlement.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Key Efficacy Doubt</strong></td>
+          <td class="req-answer">Claimants will doubt the need for the offering, questioning why Calmly needs to buy the claim rather than just supporting them through the litigation process.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Attraction Theory of Change</strong></td>
+          <td class="req-answer">Context: Claimants do not believe that their best option to resolve their claim is to sell it to Calmly — at a discount to the amount they lost — rather than attempting to recoup the full amount.<br><br>Nature of the challenge: Claimants experience an anchoring bias — they rely heavily on the first piece of information they have been given to analyse future information. In our instance, they anchor on the money that was lost rather than the event of going to court, which is a future event holding risk.<br><br>Theory: Framing Theory — by changing the context of the conversation, you can change the frame within which the anchor value was set.<br><br>Outcome: Claimants believe that selling their claim to an investor via the Calmly exchange makes sense given the options available to them to resolve their case.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Attraction Strategy</strong></td>
+          <td class="req-answer">Claimants will take stock of the future risk they face if we frame Calmly's offer to take control of their claim as After the Event insurance. By framing around insurance, we highlight that court is full of uncertainty and risk, and get them to anchor around the risk-weighted value of the claim (i.e. there is a chance of 0 and a chance of full payment) rather than the money that has been lost.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1–C4)</strong></td>
+          <td class="req-answer">A market in litigation risk. C4 introduces a new financial instrument for the claimant actor: the ATE mutual structure converts the claimant from a one-time distressed seller into a shareholder in the pooled portfolio, aligning their interests with the market's long-run performance and reframing the sale of their claim as participation in the market rather than exit from it.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C5 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C5</div>
+      <div class="challenge-header-text">
+        <h3>Circumvent the learning difficulty in adopting the product routine</h3>
+        <div class="challenge-def">Circumvent the main reason why target customers would find learning the product routine to be difficult or disruptive of their current life/work routines and mindsets.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Required Product Use Routine</strong></td>
+          <td class="req-answer">
+            <ol style="margin: 4px 0 0 18px; line-height: 2.1; font-size: 14px;">
+              <li>Claimant who believes Calmly can help them and becomes a customer</li>
+              <li>Claimant who is willing to gather and submit comprehensive evidence that allows a good risk-based assessment of the case</li>
+              <li>Claimant who understands why they should purchase ATE insurance and hand over control of their claim</li>
+              <li>Claimant who has handed over control of their claim and purchased ATE insurance</li>
+              <li>Claimant who has resolved their issue</li>
+            </ol>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Key Learning Block</strong></td>
+          <td class="req-answer">The claimant has no independent reference point from which to assess whether Calmly's offer represents fair value for their claim. Without this, they cannot meaningfully evaluate what they are committing to before the point of no return.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Adoption Theory of Change</strong></td>
+          <td class="req-answer">
+            <strong>Class of problem:</strong> Valuation asymmetry in asset markets. The claimant is selling an asset — their legal claim — to a counterparty with significantly greater information about its market value. Without an independent reference point, the claimant cannot distinguish a fair offer from an exploitative one. Informed consent is structurally impossible under these conditions.<br><br>
+            <strong>Theory:</strong> Akerlof (1970) establishes that information asymmetry between buyer and seller produces market failure: the less-informed party either withholds the asset or transacts at a systematic disadvantage. Spence (1973) establishes the resolution mechanism: credible signals that proxy for value — independently verifiable and costly to fake — restore the conditions for efficient trade where direct information transfer is unavailable.<br><br>
+            <strong>Context:</strong> The claimant has experienced a financial injustice and is being offered a purchase price for their claim. They hold private information about the facts of their case, but have no expertise in legal outcome probabilities, no access to comparable settlement data, and no independent mechanism for valuing what they are selling. Calmly has all three. The claimant must decide whether to accept before they can verify whether the offer reflects fair expected value.<br><br>
+            <strong>Outcome:</strong> Claimants who have access to a credible, independently verifiable signal of their claim's expected value prior to the point of commitment are able to evaluate the offer against a reference point and make an informed decision.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Adoption Strategy</strong></td>
+          <td class="req-answer">Before the claimant commits to selling their claim, the rating organisation runs a pre-sale indicative valuation — a lighter-touch version of its investor-facing assessment — and gives the claimant an independent expected value estimate. The signal is credible (the rating organisation has no financial stake in whether the claimant sells), independently verifiable (methodology published), and case-specific. The claimant can evaluate the exchange's offer against an independent reference point before the point of no return. This directly implements Spence's signalling mechanism: a costly-to-fake, independently produced proxy for value that restores the conditions for informed consent. Side effect: the pre-sale assessment pre-qualifies claims for the investor-facing rating, reducing the cost of the full rating process. One mechanism, two functions.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1–C5)</strong></td>
+          <td class="req-answer">A market in litigation risk. C5 introduces a pre-transaction information mechanism: before committing to sell, the claimant receives an independent indicative valuation from the rating organisation, giving them a reference point to evaluate the offer and restoring the conditions for informed consent.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C6 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C6</div>
+      <div class="challenge-header-text">
+        <h3>Circumvent the customer's absence of a budget line item</h3>
+        <div class="challenge-def">Circumvent target customers' absence of an existing budget line item from which to pay for the offering.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Interim Product Value Lifecycle</strong></td>
+          <td class="req-answer">Punctuated. The claimant receives zero value during the resolution process — there is no progressive delivery of benefit across the 13-month timeline. All value arrives as a lump sum at the moment of settlement or judgment: the purchase price already received, plus any share of excess returns from the mutual pool.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Critical Value Threshold</strong></td>
+          <td class="req-answer">The moment of settlement or judgment — when the claimant receives their payment. Before this point, value delivered is zero. At this point, value delivered equals the purchase price (and any mutual distribution). The threshold is a single, clearly defined event rather than a progressive accumulation.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Amortisation Theory of Change</strong></td>
+          <td class="req-answer">The threshold is punctuated and probabilistic: value arrives at a single future event whose timing and amount are uncertain until resolution. The class of problem is contingent payment alignment — matching the payment obligation to the value-creating event eliminates the budget line problem structurally rather than solving it through credit or deferral mechanisms. When payment is contingent on the event that produces the value, no budget line is required: the customer pays from money they did not previously have. Theory: contingency fee structures in legal markets (standard practice in US litigation finance; adapted for the UK small claims context via ATE insurance).</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Amortisation Strategy</strong></td>
+          <td class="req-answer">Payment is contingent on settlement or judgment outcome — the claimant pays from recovered money, not existing funds. No upfront cost, no instalment plan, no credit facility required. The budget line problem dissolves: because value and payment arrive at the same moment, there is no gap between value received and price paid to bridge.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1–C6)</strong></td>
+          <td class="req-answer">A market in litigation risk. C6 confirms that no amortisation mechanism is required: the contingent payment structure inherent in the ATE mutual model aligns payment with the value-creating event, dissolving the budget line problem structurally.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C6 — Anti-customer (defendant) analysis -->
+  <details class="challenge-ac">
+    <summary>
+      <div class="challenge-ac-number">C6</div>
+      <div class="challenge-header-text">
+        <div class="challenge-ac-label">Anti-customer analysis</div>
+        <h4>Defendant — can someone buy the liability off them?</h4>
+        <div class="challenge-def">The defendant's cash flow constraint and the liability purchase mechanism. Explores a defendant-side market that mirrors the exchange's claimant-side purchase model.</div>
+      </div>
+      <div class="challenge-ac-toggle"></div>
+    </summary>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Buy Block (defendant)</strong></td>
+          <td class="req-answer">
+            <strong>Cash flow:</strong> the settlement demand arrives without warning. For Cluster 2 (micro/sole trader), a £2,000–£5,000 demand against thin margins is a genuine liquidity crisis. The defendant may want to resolve it and genuinely not have the cash today.<br><br>
+            <strong>Uncertainty:</strong> the defendant doesn't know what the final number will be. Could settle for £800. Could go to court and cost £4,000. Impossible to budget for a liability with no known ceiling. The uncertainty compounds the cash flow problem — you cannot plan around a number you don't have.<br><br>
+            Both blockers are present in the current routine without Calmly. Together they make rational settlement structurally difficult even for defendants who want to resolve.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Amortization Theory of Change (defendant)</strong></td>
+          <td class="req-answer">
+            <strong>Parameter:</strong> differential risk-bearing capacity. The defendant — a single SME or sole trader — faces concentrated exposure. A £3,000 liability represents a significant proportion of their monthly cash flow. A professional buyer holding a portfolio of 500 similar liabilities faces the same expected loss at negligible concentration. The same risk is genuinely more expensive for the defendant to bear than for the buyer.<br><br>
+            <strong>Theory — Arrow (1963), risk transfer and the foundations of insurance markets.</strong> Gains from trade in risk transfer arise when parties have differential risk-bearing capacity. The party for whom the risk is more expensive to hold sells it to the party for whom it is cheaper. Both are better off. The market clears when there is a credible price — which requires an independent EV assessment.<br><br>
+            <strong>The enabling technology:</strong> Calmly's EV rating. Without an independent, credible assessment of the liability's expected value, no buyer can price the risk and no market can form. With it, the trade becomes possible. The same rating that prices the asset for exchange investors prices the liability for defendant-side buyers simultaneously. One infrastructure, both sides of the market.<br><br>
+            <strong>Context:</strong> a defendant facing concentrated, uncertain liability they cannot meet from current cash flow, confronting a buyer with a diversified portfolio and a credible independent EV assessment of the liability.<br><br>
+            <strong>Mechanism:</strong> risk transfer at actuarially fair price — the defendant pays a certain fixed fee (at a premium to EV) and exits the exposure; the buyer holds a diversified book of such liabilities and earns the spread between the fee charged and actual settlement cost.<br><br>
+            <strong>Outcome:</strong> the defendant's cash flow problem is resolved; uncertainty is eliminated; the liability transfers cleanly. The defendant can now make a rational decision with a known, bounded cost rather than stonewalling against an unknown exposure.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Amortization Strategy (defendant)</strong></td>
+          <td class="req-answer">
+            <strong>Defendant liability purchase.</strong> Calmly (or an affiliated buyer using the same EV infrastructure) offers defendants the option to purchase their liability at a certain fixed fee — set at a premium to EV, reflecting the certainty value transferred. The defendant pays a known amount, on payment terms if needed (monthly instalments rather than a lump sum). The liability transfers. Calmly manages the settlement with the claimant directly.<br><br>
+            <strong>What the defendant gets:</strong> certainty, immediate resolution, cash flow spread over time, no ongoing exposure, and no court risk.<br><br>
+            <strong>What the buyer gets:</strong> the spread between the fee charged and the actual settlement cost, across a diversified portfolio. Profitable when the EV rating is accurate and the portfolio is diversified.<br><br>
+            <div style="background:var(--accent-light);border-left:4px solid var(--accent);padding:12px 16px;margin-top:4px;font-size:14px;line-height:1.7;">
+              <strong>Architectural implication — two-sided exchange.</strong> The exchange infrastructure — rating organisation, investor vehicle, settlement mechanism — serves both sides of the market simultaneously. The same EV rating prices the asset for claimant-side investors and the liability for defendant-side buyers. One infrastructure, two markets. The EV rating must remain genuinely independent for this to hold — a conflict of interest question that C9 will need to address.
+            </div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- C7 — FULLY REWRITTEN v2.0 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C7</div>
+      <div class="challenge-header-text">
+        <h3>Position the product centrally in the customer's existing routines</h3>
+        <div class="challenge-def">Position the product and product information centrally in target customers' current routines for the high-import outcome.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Key Customer Segments &amp; Current Routines</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">Groups within the total addressable market of target customers that share common characteristics, along with their unique routines for achieving the High-import Outcome.</div></td>
+          <td class="req-answer">
+            Three primary claimant segments, unified by the same underlying dispute structure: small civil claim, costs not recoverable in county court, defendant has structural power advantage.<br><br>
+            <strong>Housing claimants</strong> — tenants with deposit deductions, disrepair claims, service charge disputes against landlords or managing agents.<br><br>
+            <strong>Employment claimants</strong> — workers with wage underpayment, wrongful deduction, unpaid holiday, informal dismissal.<br><br>
+            <strong>Consumer/marketplace claimants</strong> — buyers defrauded by marketplace sellers, financial services mis-selling, subscription traps, platform liability disputes.<br><br>
+            <strong>Current routine (consistent across all segments):</strong> dispute arises → claimant attempts direct resolution with defendant → defendant stonewalls or offers inadequate settlement → claimant seeks advice from an authoritative, impartial body to understand their options and what the claim is worth → told the claim is too small to pursue through formal legal channels at acceptable cost → claim is abandoned.<br><br>
+            The category entry point is the moment the claimant decides to pursue seriously and seeks authoritative advice. In the exchange architecture, the relevant intermediary at this decision point is already present in the claimant's ecosystem before the dispute escalates — the neutral third party (NTP) that administered the original transaction or relationship. The NTP sees the dispute at onset, not after escalation.
+            <div class="updated-note"><strong>v2.0:</strong> Segments and routine unchanged. Category entry point analysis updated to reflect exchange architecture — NTP is present at dispute onset, not only after escalation to professional advice.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Gateway Partner</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">An organization or entity common to all customer segment routines that occupies a central location in the ecosystem of information, expertise, and solutions currently consumed by target customers to achieve the High-import Outcome.</div></td>
+          <td class="req-answer">
+            <strong>Neutral Third Parties (NTPs)</strong> — housing associations (tenant disputes), HR departments (employment disputes), online marketplaces (consumer/seller disputes), and community organisations and Citizens Advice Bureaux (neighbourhood and financial disputes).<br><br>
+            In the exchange architecture, NTPs perform a <strong>two-sided function</strong> that distinguishes them from both solicitors (claimant-side only) and from their role in the earlier disintermediation architecture (where they were needed to compel both parties to a facilitated process):<br><br>
+            <strong>1. Claimant-side origination (supply).</strong> NTPs encounter disputes within their ecosystems — the tenant who reports a deposit dispute, the employee who flags a wage deduction, the marketplace buyer who reports fraud. The NTP is present at the moment of dispute onset, before the claimant has sought professional advice. Routing the claimant to the exchange at this point delivers higher motivation and lower prior commitment than solicitor referral, at lower acquisition cost per claim.<br><br>
+            <strong>2. Defendant-side notification (pressure).</strong> Once a claim enters the exchange, the NTP receives a structured notification to forward to the defendant. A communication from the housing association, HR department, or marketplace platform carries the weight of the NTP's ongoing institutional relationship with the defendant — a landlord who manages properties through the association, an employer who is an HR platform member, a seller subject to marketplace policy. This is materially more effective than a cold notification from an unknown party. The NTP's institutional relationship converts the settlement notification from a legal letter into a relational obligation.<br><br>
+            <strong>Why NTPs, not solicitors, in the exchange architecture:</strong> Solicitors see claimants after escalation — motivated and legally validated, but at higher acquisition cost, and with no defendant-side relationship. The exchange model's two-sided value — higher defendant early settlement rates driving lower litigation cost in the portfolio — is only accessible through NTPs. Defendant settlement rates are a higher-variance, harder-to-control portfolio variable than claimant conviction; NTPs are the only partner type that can influence both simultaneously.<br><br>
+            <em>Note: Solicitors remain a secondary warm-referral channel for claimants who arrive outside NTP ecosystems. They do not perform the two-sided function.</em>
+            <div class="updated-note"><strong>v2.0:</strong> Fully rewritten. v1.0 named NTPs as gateway partner but explained the function in terms of the earlier facilitation architecture. v2.0 grounds the NTP selection in the exchange model's two-sided structure and explicitly resolves the NTP vs solicitor question.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Integration Theory of Change</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The unifying mission across all organizations and entities that comprise the Gateway Partner, and the theory/theories for securing each organization's commitment to champion the venture's solution under that unifying mission.</div></td>
+          <td class="req-answer">
+            <strong>Unifying mission:</strong> The NTP's core obligation is the welfare of the parties within its ecosystem — member welfare (housing association), employee wellbeing (HR department), community health (community organisation), seller and buyer trust (marketplace platform). Disputes that arise within the NTP's ecosystem represent an unmet welfare obligation whether or not the NTP has a resolution pathway. The exchange offers the first structured pathway that resolves the obligation without consuming the NTP's operational capacity.<br><br>
+            <strong>Partner adoption barriers:</strong><br>
+            <em>Want Block:</em> The NTP is not confident the exchange will handle its members or employees fairly. Association with CMC-adjacent businesses creates conduct risk. The Want Block is a trust problem, not a goal problem — the NTP's mission is aligned; its uncertainty is about conduct.<br>
+            <em>Use Block:</em> Referral to the exchange must require under five minutes of NTP staff time — a documented protocol, a notification template, and outcomes reporting that goes into the NTP's own welfare records.<br>
+            <em>Buy Block:</em> Attention cost and professional risk tolerance. The NTP will not invest institutional attention in a new relationship unless confident it will not damage member or employee trust.<br><br>
+            <strong>Primary theory — Morgan &amp; Hunt (1994), commitment-trust theory of relationship marketing.</strong> Trust is the antecedent of commitment in channel relationships. Partners tolerate when uncertain about the venture's conduct with shared clients; they commit when uncertainty is removed. When conduct transparency is established — through visible client terms, SRA-compliant referral documentation, outcomes reporting — trust forms. With trust in place, the NTP's institutional identity (welfare provider, dispute resolution champion) provides the conviction to commit actively rather than merely tolerate.<br><br>
+            <strong>Secondary theory — goal congruence (Stern, El-Ansary &amp; Coughlan, 2006).</strong> Once trust clears the Want Block, perceived goal congruence accelerates from passive tolerance to active promotion. The NTP's mission is directly advanced by the exchange; the referral is not a commercial arrangement but a mission-consistent act.<br><br>
+            <strong>Context:</strong> An NTP — a housing association, HR department, or online marketplace — regularly encounters disputes it cannot resolve. Each encounter currently ends in one of three ways: informal staff mediation (NTP time consumed), signposting to Citizens Advice (NTP loses visibility of outcome), or inaction (welfare obligation unmet). Critically, the NTP also has ongoing relationships with defendants within its ecosystem — relationships currently unused in dispute resolution.<br><br>
+            <strong>Mechanism (two-sided activation):</strong> When the exchange provides visible, fair client terms that the NTP can inspect before recommending, and a structured notification channel back through the NTP to defendants — the NTP's conduct uncertainty is removed on both sides simultaneously. The NTP can now see that (a) its members are treated fairly, and (b) it plays a visible role in surfacing the defendant's obligation within its own ecosystem. Both are mission-consistent. The NTP is not a passive conduit; it is an active participant in the exchange's two-sided function.<br><br>
+            <strong>Outcome:</strong> NTPs incorporate the exchange as the standard resolution pathway for qualifying disputes. Integration deepens over time as outcome data accumulates, defendant notification rates improve early settlement, and the NTP's institutional identity becomes associated with demonstrated dispute resolution capacity. The NTP becomes a two-sided exchange originator — active on claimant supply and defendant notification — not a passive referral gateway.
+            <div class="updated-note"><strong>v2.0:</strong> Fully rewritten. v1.0 used channel intermediary commitment theory (Stern et al.) as primary theory. v2.0 leads with Morgan &amp; Hunt (1994) commitment-trust theory (trust as antecedent of commitment) and grounds the two-sided activation explicitly in the exchange architecture.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Integration Strategy</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The best way to operationalize the Integration TOC for securing the commitment of the Gateway Partner to champion the venture's solution.</div></td>
+          <td class="req-answer">
+            The ToC establishes that trust is the antecedent of commitment, and that institutional identity accelerates from tolerance to active promotion once trust is in place. The strategy builds trust first, then gives the NTP the conditions to act on it through a three-stage sequence.<br><br>
+            <strong>Stage 1 — Remove conduct uncertainty (Want Block).</strong> Before any referral relationship is proposed, the exchange makes its client-facing terms fully transparent and SRA-compliant: written disclosure to claimants of the sale price and the exchange's interest, no exclusivity clauses binding the claimant, clear explanation of what the claimant is transferring. This is provided to NTPs as a due diligence pack — not a pitch. The NTP can satisfy itself that routing a member to the exchange is in that member's best interest. Conduct uncertainty is removed before any ask is made.<br><br>
+            <strong>Stage 2 — Make referral effortless (Use Block).</strong> A documented referral protocol requiring under five minutes of NTP staff time: a standard file note template, a one-page member explainer, and a digital referral form. Outcomes reporting is automatic — the NTP receives a brief update when the claim is purchased and when it resolves. The notification template for defendant-side communications is pre-drafted; the NTP reviews and sends. The protocol is designed to sit alongside existing NTP welfare documentation requirements, not create new ones.<br><br>
+            <strong>Stage 3 — Build active promotion through outcomes (goal congruence accelerant).</strong> As referral outcomes accumulate, the exchange provides each NTP with an aggregated welfare impact report: number of members referred, aggregate value recovered, average claimant profile, defendant early settlement rate within the NTP's ecosystem. This gives the NTP credible, citable evidence for its welfare mandate — usable in board reporting, regulatory returns, funder applications, and member communications. The two-sided function becomes visible: the NTP can see both the claimant outcomes and the defendant notification settlement rates it is generating within its own ecosystem. This is the mechanism that converts tolerance into active championing — the NTP's institutional identity is now associated with demonstrated dispute resolution outcomes on both sides.<br><br>
+            <strong>On financial incentives:</strong> A placement fee per referred claimant who enters the exchange (structure TBC) compensates for NTP staff time and demonstrates the exchange's commercial respect for the NTP's role. The fee is not the activation mechanism — it does not create professional conviction. Sequencing matters: financial incentive is introduced after trust is established and the NTP has seen outcome data. Introducing it first produces volume incentive misalignment (Anderson &amp; Weitz, 1992) and signals that the exchange regards the NTP as a commercial channel rather than a mission partner.
+            <div class="open-note"><strong>⚠ Open — NTP activation pack not yet designed.</strong> The three-stage sequence is directional. Stage 1 requires the due diligence pack (client terms, SRA compliance documentation). Stage 2 requires the referral protocol, notification template, and outcomes reporting format. Stage 3 requires the welfare impact report template and the defendant notification settlement rate metric. These are the outstanding design tasks for C7.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1–C7)</strong></td>
+          <td class="req-answer">A litigation risk exchange. C7 introduces NTPs — housing associations, HR departments, online marketplaces, and community organisations — as the exchange's two-sided origination infrastructure. NTPs perform a two-sided function: routing claimants to the exchange at the moment of dispute onset (supply-side origination) and forwarding structured settlement notifications to defendants within their ecosystems (demand-side pressure). The NTP's institutional relationship with both parties is the mechanism by which the exchange achieves higher defendant early settlement rates than a standard claim purchase model. Calmly's role is to build and operate the exchange infrastructure — origination platform, rating organisation, investor matching, settlement mechanism — with NTPs as the distribution and notification layer on both sides of the market. Two explicit customers: claimants (who receive immediate liquidity on their claim) and defendants (who receive a structured, bounded settlement opportunity through an institution they have an ongoing relationship with).
+            <div class="updated-note"><strong>v2.0:</strong> Fully rewritten. Replaces the v1.0 BFF which described NTPs as "the primary distribution channel." NTPs are now part of the exchange's operating infrastructure on both sides, not a distribution channel on one.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ================================================================ -->
+  <!-- F3 -->
+  <!-- ================================================================ -->
+
+  <div class="function-header">
+    <div class="fn-label">F3 — Challenges 8–10</div>
+    <h2>Dictate the Competitive Landscape</h2>
+  </div>
+  <p class="function-intro">Shapes future market dynamics on terms Calmly is poised to win. C8 manufactures switching costs that make it costly for competitors to lure customers away. C9 builds a resource moat that makes it hard for competitors to enter. C10 makes the key supplier input replaceable so suppliers cannot extract value.</p>
+
+  <!-- C8 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C8</div>
+      <div class="challenge-header-text">
+        <h3>Manufacture a switching cost for customers</h3>
+        <div class="challenge-def">Manufacture a store of value for the customer that is lost or put at risk upon switching to a future competitor's offering.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Extended Product Use Routine / Key Store of Value</strong></td>
+          <td class="req-answer">
+            Customer for lock-in: the NTP (the repeating institutional partner), not the end claimant. The claimant is a one-time customer; the NTP is the relationship that generates volume over time. Three categories of asset accumulate in the NTP relationship and are forfeit on switching:<br><br>
+            <strong>1. Outcome data.</strong> Every dispute referred by the NTP generates a case record in the exchange — claim type, defendant category, settlement amount, timeframe, resolution pathway, defendant notification outcome. Over time this becomes a welfare impact dataset specific to that NTP's population: what disputes arise among their tenants, employees, or members, and what outcomes they achieve — on both sides of the market. The NTP uses this data in its own board reporting, regulatory returns, and funder applications. No competitor can provide this historical record; it exists only because of the NTP's ongoing relationship with the exchange.<br><br>
+            <strong>2. Integration depth.</strong> The exchange's referral and notification pathways become embedded in the NTP's own procedures — staff training materials, member welcome packs, grievance policy documentation, defendant notification templates, website signposting. The procedural switching cost accumulates with each document updated, each staff cohort trained, each member communication sent.<br><br>
+            <strong>3. Community reputation.</strong> Within the NTP's member or employee population, the exchange acquires a track record. Members who resolved disputes through the exchange tell other members. The defendant notification function builds a reputation within the NTP's ecosystem for fair, structured resolution — defendants in the ecosystem know what to expect. A new provider starts with no reputation in that population and cannot acquire it quickly.
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Lock-In Theory of Change</strong></td>
+          <td class="req-answer">
+            <strong>Class of problem:</strong> Relational and informational assets that are specific to the partnership, generated by the relationship over time, and non-transferable to a new provider.<br><br>
+            <strong>Theory:</strong> Burnham, Frels &amp; Mahajan (2003) switching cost taxonomy. Three categories of switching cost accumulate simultaneously: <em>procedural</em> (retraining staff, updating materials, revising policy documentation — manageable but real and time-consuming); <em>financial</em> (loss of the accumulated outcome data that underpins the NTP's welfare reporting — moderate, growing over time); <em>relational</em> (loss of community-level reputation and member trust built around the exchange within that NTP's specific population — the most durable of the three; cannot be purchased or replicated quickly).<br><br>
+            <strong>Context:</strong> An NTP that has worked with the exchange for two years has produced two annual impact reports showing welfare outcomes for its members on both sides of the market, trained its frontline staff to refer disputes as standard practice, and built a reputation among its members as "the organisation that can actually help with disputes — and holds defendants to account." Each of these assets took time to build and is specific to the exchange relationship.<br><br>
+            <strong>Mechanism:</strong> Switching to a competitor requires rebuilding all three categories simultaneously. The procedural cost is quantifiable and can in theory be funded. The financial cost — losing historical outcome data — grows with each year of the relationship and is never portable in a form a new provider can immediately use. The relational cost is the most structural: the community reputation within the NTP's population is a function of demonstrated outcomes over time in that community specifically, and a new provider starts unknown. The combined switching cost rises nonlinearly with tenure.<br><br>
+            <strong>Outcome:</strong> NTPs do not switch to a competitor even when a marginally better offer arrives, because the total switching cost — procedural, financial, and relational — exceeds the marginal benefit of switching for most plausible competitive offers.
+            <div class="open-note"><strong>⚠ Open:</strong> Theory is drafted but not formally validated against the IVE CMO structure. The mechanism field — how NTPs reason through the switching cost when a competitor approaches — needs tightening. Outcome needs quantification: what switching cost magnitude is sufficient?</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Lock-In Strategy</strong></td>
+          <td class="req-answer">
+            Four active mechanisms, in order of structural importance:<br><br>
+            <strong>1. Outcome reporting.</strong> Produce regular impact reports per NTP — quarterly summary, annual deep report — formatted for the NTP's own board and funder communications. Use the NTP's mission language and stakeholder framing. Include both claimant outcomes and defendant notification settlement rates within the NTP's ecosystem. The more embedded the exchange's data is in the NTP's institutional narrative, the higher the financial switching cost. The goal is for the NTP's board to cite exchange outcomes in its own annual report — at which point the relationship is load-bearing in the NTP's institutional identity.<br><br>
+            <strong>2. Integration depth.</strong> Embed referral and notification pathways in the NTP's own materials and procedures at onboarding — staff training script, member welcome pack paragraph, grievance policy reference, defendant notification template, website link. Offer to draft these materials for the NTP. The deeper the integration at the start, the higher the procedural switching cost from day one.<br><br>
+            <strong>3. Exclusivity agreements.</strong> Preferred or exclusive provider agreements with key NTPs before competitors enter the segment. The contractual complement to the relational switching cost — it makes switching require active contract breach, not just a decision. What the exchange offers in exchange: dedicated account management, co-branded member communications, enhanced impact reporting, joint welfare credentialing, and defendant notification analytics. The execution architecture — what specifically goes in the exclusivity agreement and what the exchange provides in exchange — is the outstanding design task.<br><br>
+            <strong>4. Community reputation building.</strong> Use outcome data (with consent) to produce member-facing case studies within each NTP's own communications channels. Members who see demonstrated outcomes in their own community become active advocates — they ask for the exchange by name when disputes arise, creating a demand-pull that sits outside the NTP's institutional decision. This is the most durable layer of lock-in.
+            <div class="open-note"><strong>⚠ Open:</strong> Exclusivity agreement architecture not yet designed. Sequencing unclear: at what point in the NTP relationship is exclusivity proposed — at onboarding, after first year, after outcome data exists?</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C9 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C9</div>
+      <div class="challenge-header-text">
+        <h3>Manufacture a resource moat</h3>
+        <div class="challenge-def">Manufacture a state of scarcity or inimitability for a resource or asset needed for delivering on the customer value proposition.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Required Core Competency / Key Resource</strong></td>
+          <td class="req-answer">Expected value assessment capability and the proprietary pipeline of trained law students who have worked through Calmly's process.
+            <div class="open-note"><strong>⚠ Open:</strong> Two competencies named (EV assessment; student pipeline) — primary one not identified.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Lock-Out Strategy</strong></td>
+          <td class="req-answer">Integrate with law firms looking to hire — the resource moat is built through Calmly becoming the preferred training ground for future lawyers. Analogy: The Forage (https://www.theforage.com/), which creates institutional lock-out by embedding its virtual work experience in law firm hiring pipelines. Running this as a separate entity is flagged as worth exploring.
+            <div class="open-note"><strong>⚠ Open:</strong> "Probably include running this as a separate entity somewhere here."</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Lock-Out Theory of Change</strong></td>
+          <td class="req-answer">Not formally stated in workspace. Forage analogy cited but no named theory and no context/outcome structure.
+            <div class="open-note"><strong>⚠ Open:</strong> Forage analogy cited but no named theory and no context/outcome structure.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C10 -->
+  <div class="challenge">
+    <div class="challenge-header">
+      <div class="challenge-number">C10</div>
+      <div class="challenge-header-text">
+        <h3>Manufacture replaceability of the key supplier input</h3>
+        <div class="challenge-def">Manufacture a state of replaceability for the supplier input or service with the highest cost or volume.</div>
+      </div>
+      <div class="challenge-status"><span class="tag tag-green">Complete</span></div>
+    </div>
+    <table class="subreqs">
+      <thead>
+        <tr>
+          <th>Sub-requirement</th>
+          <th>Current answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Interim Value Chain / Key Input</strong></td>
+          <td class="req-answer">The key supplier input is law students. They are the primary operational resource and potential source of supplier leverage as the venture scales.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Leverage Strategy</strong></td>
+          <td class="req-answer">Offer a course through universities that trains students in how to use Calmly's platform. This creates a constant bench of trained talent available to the venture, making the student supply independent of any single university relationship and eliminating supplier leverage. The training programme is the replaceability mechanism.</td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+        <tr>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Leverage Theory of Change</strong></td>
+          <td class="req-answer">Not formally stated in IVE structure. Logic: if Calmly depends on a small number of universities for its student pipeline, those providers gain leverage over the venture's operational capacity. Making the supply independent of any single provider removes that leverage.
+            <div class="open-note"><strong>⚠ Open:</strong> Logic sound but no formally named theory and no explicit context/outcome structure. Minor — needs to be put into IVE format.</div>
+          </td>
+          <td class="req-status"><span class="tag tag-green">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

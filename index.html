@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Architecture Outputs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #0f1923;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #dde1e7;
+      --accent: #1f4fa8;
+      --accent-light: #e8eef8;
+      --panel-bg: #0f2744;
+      --panel-text: #ffffff;
+      --tag-radius: 3px;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+      --font-body: 'Lora', Georgia, serif;
+      --green-bg: #e6f4ec; --green-text: #166534; --green-border: #a7d4b8;
+      --yellow-bg: #fef9e6; --yellow-text: #854d0e; --yellow-border: #f0d98a;
+      --grey-bg: #f1f3f5; --grey-text: #4a5568; --grey-border: #d0d5dd;
+      --purple-bg: #f0ebfb; --purple-text: #5b21b6; --purple-border: #c4aff0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; }
+    .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* Header panel */
+    .header { background: var(--panel-bg); color: var(--panel-text); padding: 32px 36px; margin-bottom: 40px; }
+    .header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .header p { font-size: 15px; opacity: 0.75; font-family: var(--font-body); font-style: italic; }
+    .header-meta { display: flex; gap: 24px; margin-top: 20px; font-size: 13px; opacity: 0.65; }
+
+    /* Status row */
+    .status-row { display: flex; align-items: center; gap: 12px; margin-bottom: 36px; flex-wrap: wrap; }
+    .status-row .label { font-size: 13px; letter-spacing: 0.04em; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
+    .tag { display: inline-block; font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: var(--tag-radius); border: 1px solid; font-family: var(--font-ui); }
+    .tag.green { background: var(--green-bg); color: var(--green-text); border-color: var(--green-border); }
+    .tag.yellow { background: var(--yellow-bg); color: var(--yellow-text); border-color: var(--yellow-border); }
+    .tag.grey { background: var(--grey-bg); color: var(--grey-text); border-color: var(--grey-border); }
+    .tag.purple { background: var(--purple-bg); color: var(--purple-text); border-color: var(--purple-border); }
+    .tag.blue { background: var(--accent-light); color: var(--accent); border-color: #b8c8e8; }
+
+    /* Section */
+    h2 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+    /* Card grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 36px; }
+    .card { background: var(--surface); border: 1px solid var(--border); padding: 20px; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s, box-shadow 0.15s; }
+    .card:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(31,79,168,0.08); }
+    .card-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px; }
+    .card-footer { display: flex; align-items: center; gap: 8px; }
+
+    /* Gate table */
+    .gate-table { width: 100%; border-collapse: collapse; background: var(--surface); margin-bottom: 36px; font-size: 14px; }
+    .gate-table th { background: var(--panel-bg); color: white; text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+    .gate-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .gate-table tr:last-child td { border-bottom: none; }
+    .gate-table a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .gate-table a:hover { text-decoration: underline; }
+    .gate-table .req-name { font-weight: 600; }
+    .gate-table .fmos { font-family: 'DM Sans', monospace; font-weight: 600; }
+    .gate-table .fmos.pass { color: var(--green-text); }
+
+    .updated { font-size: 12px; color: var(--text-muted); margin-top: 40px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>Calmly</h1>
+      <p>IVE architecture outputs — Full Phase I design complete</p>
+      <div class="header-meta">
+        <span>Generated 19 May 2026</span>
+        <span>·</span>
+        <span>Cornell IVE framework</span>
+        <span>·</span>
+        <span>tmth-studio / Tough Minds Tender Hearts</span>
+      </div>
+    </div>
+
+    <div class="status-row">
+      <span class="label">Architecture status</span>
+      <span class="tag green">F1 complete ✓</span>
+      <span class="tag green">F2 complete ✓</span>
+      <span class="tag green">F3 complete ✓</span>
+      <span class="tag green">Consistency audit PASS</span>
+      <span class="tag blue">FMOS at-scale 69%</span>
+      <span class="tag purple">R1–R10 all PASS</span>
+    </div>
+
+    <!-- Design & Strategy -->
+    <h2>Design &amp; Strategy</h2>
+    <div class="grid">
+      <a class="card" href="design-memo.html">
+        <div class="card-title">Design memo</div>
+        <div class="card-desc">Full BALM design memo — all 10 requirements, BFF cumulative statements, strategy decisions.</div>
+        <div class="card-footer"><span class="tag green">All 10 complete</span></div>
+      </a>
+      <a class="card" href="pursuit-memo.html">
+        <div class="card-title">Pursuit memo</div>
+        <div class="card-desc">Investment case and wealth scenario analysis — central, bear, and all-pessimistic exit values.</div>
+        <div class="card-footer"><span class="tag blue">£189M central exit</span></div>
+      </a>
+      <a class="card" href="consistency-audit.html">
+        <div class="card-title">Consistency audit</div>
+        <div class="card-desc">Cross-requirement dependency check — all 10 requirements audited for conflicts and gaps.</div>
+        <div class="card-footer"><span class="tag green">CONSISTENT ✓</span></div>
+      </a>
+    </div>
+
+    <!-- Operating Models -->
+    <h2>Operating models</h2>
+    <div class="grid">
+      <a class="card" href="ctm.html">
+        <div class="card-title">Customer Transformation Model</div>
+        <div class="card-desc">CTM v2 — full customer journey across Becoming, Consuming, Paying, and Repeating phases.</div>
+        <div class="card-footer"><span class="tag grey">v2 · 19 May 2026</span></div>
+      </a>
+      <a class="card" href="aom.html">
+        <div class="card-title">At-Scale Operational Model</div>
+        <div class="card-desc">AOM v2 — LMU specialist model. Making, Selling, Marketing, Using streams at LMU, Territory, and HQ levels.</div>
+        <div class="card-footer"><span class="tag grey">v2 · 19 May 2026</span></div>
+      </a>
+    </div>
+
+    <!-- Financial Models -->
+    <h2>Financial models</h2>
+    <div class="grid">
+      <a class="card" href="fin-sim.html">
+        <div class="card-title">Financial simulation</div>
+        <div class="card-desc">Fin-sim v3 — at-scale and scaling architecture separated. Securitised cost of capital 8%. FMOS 69%.</div>
+        <div class="card-footer"><span class="tag green">69% FMOS</span></div>
+      </a>
+      <a class="card" href="unit-economics-c3.html">
+        <div class="card-title">Unit economics — C3 gate</div>
+        <div class="card-desc">Per-claim cost structure at Pilot (40/mo), Ramp (450/mo), and At-scale (1,500/mo). Drillable by cost driver.</div>
+        <div class="card-footer"><span class="tag blue">£199 cost floor</span></div>
+      </a>
+    </div>
+
+    <!-- FIT Verifier Gates -->
+    <h2>FIT Verifier gates — all 10 requirements</h2>
+    <table class="gate-table">
+      <thead>
+        <tr>
+          <th>Requirement</th>
+          <th>Function</th>
+          <th>FMOS</th>
+          <th>Verdict</th>
+          <th>Unit economics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="fit-verifier-c3.html"><span class="req-name">C3 — Scaling</span></a></td>
+          <td>F1</td>
+          <td><span class="fmos pass">69%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-c3.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r4.html"><span class="req-name">R4 — Attraction</span></a></td>
+          <td>F2</td>
+          <td><span class="fmos pass">64%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r4.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r5.html"><span class="req-name">R5 — Adoption</span></a></td>
+          <td>F2</td>
+          <td><span class="fmos pass">62%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r5.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r6.html"><span class="req-name">R6 — Amortization</span></a></td>
+          <td>F2</td>
+          <td><span class="fmos pass">62%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r6.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r7.html"><span class="req-name">R7 — Gateway Partners</span></a></td>
+          <td>F2</td>
+          <td><span class="fmos pass">66%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r7.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r8.html"><span class="req-name">R8 — Lock-in</span></a></td>
+          <td>F3</td>
+          <td><span class="fmos pass">64%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r8.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r9.html"><span class="req-name">R9 — Lock-out</span></a></td>
+          <td>F3</td>
+          <td><span class="fmos pass">65%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r9.html">View →</a></td>
+        </tr>
+        <tr>
+          <td><a href="fit-verifier-r10.html"><span class="req-name">R10 — Leverage</span></a></td>
+          <td>F3</td>
+          <td><span class="fmos pass">66%</span></td>
+          <td><span class="tag green">PASS</span></td>
+          <td><a href="unit-economics-r10.html">View →</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="updated">Calmly architecture · Phase I complete · 19 May 2026 · tmth-studio</p>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Unit Economics (C3 gate)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1; --surface: #ffffff; --text: #0f1923; --text-secondary: #4a5568;
+      --text-muted: #718096; --border: #dde1e7; --accent: #1f4fa8; --accent-light: #e8eef8;
+      --panel-bg: #0f2744; --panel-text: #ffffff;
+      --green-bg: #e6f4ec; --green-text: #166534;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --amber-bg: #fff8e6; --amber-text: #854d0e;
+      --yellow-hl: #fef3c7;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px; }
+    .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; background: var(--surface); }
+
+    .header { background: var(--panel-bg); color: var(--panel-text); padding: 24px 28px; margin-bottom: 32px; }
+    .header h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+    .header p { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+    table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+    th { background: #f1f3f5; font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+         text-transform: uppercase; color: var(--text-muted); padding: 10px 14px;
+         text-align: right; border: 1px solid var(--border); }
+    th:first-child { text-align: left; width: 42%; }
+    td { padding: 9px 14px; border: 1px solid var(--border); text-align: right; font-size: 13px; }
+    td:first-child { text-align: left; color: var(--text-secondary); }
+
+    .section-row td { background: #f1f3f5; font-weight: 600; color: var(--text); font-size: 11px;
+                      letter-spacing: 0.05em; text-transform: uppercase; padding: 7px 14px; }
+    .total-row td { font-weight: 600; color: var(--text); border-top: 2px solid var(--text); }
+    .subtotal-row td { font-weight: 600; color: var(--text); border-top: 1px solid #b0b8c4; background: #fafaf9; }
+    .highlight-row td { background: var(--yellow-hl); font-weight: 700; font-size: 14px; border-top: 2px solid #d97706; }
+    .green-row td { background: var(--green-bg); color: var(--green-text); font-weight: 600; }
+    .red-row td { color: var(--red-text); font-weight: 600; }
+    .indent td:first-child { padding-left: 26px; font-size: 12px; color: var(--text-secondary); }
+    .dim td { color: var(--text-muted); font-size: 12px; }
+
+    .tag { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 11px; font-weight: 600; }
+    .tag-green { background: var(--green-bg); color: var(--green-text); }
+    .tag-red { background: var(--red-bg); color: var(--red-text); }
+    .tag-amber { background: var(--amber-bg); color: var(--amber-text); }
+
+    .note { font-family: 'Lora', serif; font-size: 12.5px; color: var(--text-secondary);
+            border-left: 3px solid var(--border); padding-left: 14px; line-height: 1.75; margin-top: 20px; }
+    .label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+             color: var(--text-muted); margin-bottom: 10px; }
+
+    /* Drilldown */
+    .drillable { cursor: pointer; }
+    .drillable:hover td { background: #f7f8fc; }
+    .drillable td:first-child { position: relative; }
+    .expand-icon { display: inline-block; margin-left: 6px; font-size: 10px; color: var(--accent);
+                   transition: transform 0.15s ease; vertical-align: middle; }
+    .drillable.open .expand-icon { transform: rotate(90deg); }
+    .driver-row { display: none; }
+    .driver-row.visible { display: table-row; }
+    .driver-row td { background: var(--accent-light); border-top: none; padding: 8px 14px 10px 38px;
+                     font-size: 12px; color: var(--text-secondary); text-align: left;
+                     border-left: 3px solid var(--accent); font-family: 'Lora', serif;
+                     line-height: 1.7; }
+
+    .toggle-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+                  color: var(--accent); background: var(--accent-light); border: 1px solid #b8c8e8;
+                  border-radius: 3px; padding: 4px 10px; cursor: pointer; float: right;
+                  margin-bottom: 8px; letter-spacing: 0.02em; }
+    .toggle-btn:hover { background: #d4e1f5; }
+    .clearfix::after { content: ''; display: table; clear: both; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Calmly — Unit Economics · C3 gate</h1>
+    <p>One claim resolved · AOM v2 exchange model · NTP excluded (R7 not yet designed) · 19 May 2026</p>
+  </div>
+
+  <div class="label clearfix">
+    Cost and price — per resolved claim (£)
+    <button class="toggle-btn" onclick="toggleAll(this)">Show all drivers</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Pilot<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">40 claims/mo</span></th>
+        <th>Ramp<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">450 claims/mo</span></th>
+        <th>At-scale<br><span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">1,500 claims/mo</span></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- PVC -->
+      <tr class="section-row"><td colspan="4">Variable cost (PVC) — per claim</td></tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-assessment-pvc')">
+        <td>Assessment org payment (C3) <span class="expand-icon">▶</span></td>
+        <td>16</td><td>16</td><td>16</td>
+      </tr>
+      <tr class="driver-row" id="d-assessment-pvc">
+        <td colspan="4">Flat fee per EV report produced by independent assessment org · fixed per claim regardless of volume · Tier 4 (C3 architecture design)</td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-platform-pvc')">
+        <td>Platform variable (compute, comms, storage) <span class="expand-icon">▶</span></td>
+        <td>8</td><td>8</td><td>8</td>
+      </tr>
+      <tr class="driver-row" id="d-platform-pvc">
+        <td colspan="4">Compute (claim intake, document processing, case management API calls) + comms (claimant and defendant notifications) + document storage per resolved claim · fixed per claim regardless of volume · Tier 4</td>
+      </tr>
+
+      <tr class="subtotal-row"><td>Total VC per unit</td>
+        <td>24</td><td>24</td><td>24</td>
+      </tr>
+
+      <!-- Whole costs -->
+      <tr class="section-row"><td colspan="4">Whole costs / unit product</td></tr>
+      <tr class="dim"><td style="padding-left:14px;">Unit sales per month</td>
+        <td>40</td><td>450</td><td>1,500</td>
+      </tr>
+      <tr class="dim"><td style="padding-left:14px;font-weight:600;color:var(--text-secondary);">Cost categories</td>
+        <td colspan="3"></td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-lmu')">
+        <td>LMU specialist labour (variable) <span class="expand-icon">▶</span></td>
+        <td>108</td><td>108</td><td>108</td>
+      </tr>
+      <tr class="driver-row" id="d-lmu">
+        <td colspan="4">265 min/confirmed claim total · intake assessor 69 min + EV specialist 73 min + defendant engagement specialist 109 min + team lead 15 min · blended ~£20/hr including employer on-costs · consistent across volumes (variable cost) · Tier 4 — see AOM v2</td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-compliance')">
+        <td>Territory compliance (semi-fixed) <span class="expand-icon">▶</span></td>
+        <td>4</td><td>4</td><td>4</td>
+      </tr>
+      <tr class="driver-row" id="d-compliance">
+        <td colspan="4">Regulatory monitoring, professional indemnity insurance allocation, compliance officer time per claim · treated as semi-fixed (scales slowly with volume) · Tier 4</td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-hq')">
+        <td>HQ central team (fixed, allocated) <span class="expand-icon">▶</span></td>
+        <td>313</td><td>93</td><td>50</td>
+      </tr>
+      <tr class="driver-row" id="d-hq">
+        <td colspan="4">CEO, Head of Operations, Head of Partnerships, finance and admin · stepped fixed cost that grows with org scale · allocated per unit: fixed monthly HQ cost ÷ monthly claim volume · falls from £313/claim (pilot, 40/mo) to £50/claim (at-scale, 1,500/mo) as the same headcount serves more claims · Tier 4</td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-platform-fixed')">
+        <td>Platform technology (fixed, allocated) <span class="expand-icon">▶</span></td>
+        <td>417</td><td>37</td><td>11</td>
+      </tr>
+      <tr class="driver-row" id="d-platform-fixed">
+        <td colspan="4">Infrastructure, software licences, security, monitoring · ~£17k/month fixed cost regardless of volume · allocated per unit: fixed monthly cost ÷ monthly volume · falls from £417/claim (pilot) to £11/claim (at-scale) · the steepest dilution curve in the model — dominant driver of pilot-to-at-scale improvement · Tier 4</td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-sc')">
+        <td>Assessment org setup (allocated) <span class="expand-icon">▶</span></td>
+        <td>1</td><td>1</td><td>1</td>
+      </tr>
+      <tr class="driver-row" id="d-sc">
+        <td colspan="4">£80k one-time setup cost to onboard independent assessment org (C3) · amortised over ~75 months (6.25-year investment period) ÷ monthly claim volume · rounds to £1/claim at all volume levels · Tier 4 (C3)</td>
+      </tr>
+
+      <tr class="indent drillable" onclick="toggle(this, 'd-wc')">
+        <td>Working capital — assessment org float <span class="expand-icon">▶</span></td>
+        <td>1</td><td>1</td><td>1</td>
+      </tr>
+      <tr class="driver-row" id="d-wc">
+        <td colspan="4">Cost of financing the assessment org payment before claim revenue arrives · formula: £16 assessment fee × 4.65 months weighted avg recovery time (70% settle in 1.5 months + 30% reach court at 12 months) × 15% cost of capital ÷ 12 months = £0.95/claim · rounds to £1 · Tier 4</td>
+      </tr>
+
+      <tr class="dim" style="font-style:italic;"><td style="padding-left:14px;">Allocated whole costs / unit (%)</td>
+        <td>355%</td><td>37%</td><td>28%</td>
+      </tr>
+      <tr class="subtotal-row"><td>Total allocated whole costs / unit</td>
+        <td>843</td><td>243</td><td>175</td>
+      </tr>
+
+      <!-- Price -->
+      <tr class="section-row"><td colspan="4">Required price vs ceiling</td></tr>
+      <tr class="total-row"><td>Total cost per unit</td>
+        <td>867</td><td>267</td><td>199</td>
+      </tr>
+      <tr><td>Required price to customer (30% FMOS)</td>
+        <td>1,238</td><td>382</td><td>284</td>
+      </tr>
+      <tr style="background:#f8f9fb;font-weight:600;"><td>Price ceiling (C2 — bilateral KMC × 50%)</td>
+        <td>650</td><td>650</td><td>650</td>
+      </tr>
+      <tr class="dim"><td style="padding-left:14px;font-style:italic;">Fee structure not yet designed (C6)</td>
+        <td colspan="3" style="text-align:center;font-style:italic;">NTP fee excluded · defendant fee excluded · claimant fee structure TBD</td>
+      </tr>
+
+      <!-- Surplus -->
+      <tr class="section-row"><td colspan="4">Surplus / (deficit) vs price ceiling</td></tr>
+      <tr class="red-row"><td>Difference per unit</td>
+        <td>(217) <span class="tag tag-red">Deficit</span></td>
+        <td>383 <span class="tag tag-green">Surplus</span></td>
+        <td>451 <span class="tag tag-green">Surplus</span></td>
+      </tr>
+      <tr class="highlight-row"><td>Total difference per month</td>
+        <td style="color:#991b1b;">(8,668)</td>
+        <td>172,274</td>
+        <td>677,025</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="label">Summary</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Total (at-scale / month)</th>
+        <th>% of price ceiling</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="green-row"><td>Cost increase possible (headroom to ceiling)</td><td>677,025</td><td>69%</td></tr>
+      <tr><td>Cost cut required</td><td>—</td><td>0%</td></tr>
+      <tr><td>FMOS at price ceiling</td>
+        <td colspan="2">
+          <span class="tag tag-red">Pilot: −33%</span> &nbsp;
+          <span class="tag tag-amber">Ramp: 59%</span> &nbsp;
+          <span class="tag tag-green">At-scale: 69%</span>
+        </td>
+      </tr>
+      <tr><td>Breakeven volume (cost = price ceiling)</td>
+        <td colspan="2">~179 claims/month · ~4–5 LMUs</td></tr>
+      <tr><td>Breakeven volume (required price = price ceiling)</td>
+        <td colspan="2">~289 claims/month · ~7 LMUs · achieves 30% FMOS at ceiling</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    <strong>What's excluded at C3:</strong> NTP placement fee (R7 not designed), defendant fee (C6 not designed), claimant fee structure (C6). Price ceiling is from C2: bilateral KMC (legal escalation cost on a £3,000 avg claim) × 50% customer surplus = £650/claim. HQ and platform costs are fixed and dilute as volume scales — the dominant driver of the pilot-to-at-scale improvement. All figures Tier 4 except assessment org payment (C3 design logic) and court win rate (Tier 3, SCS Law). Source: calmly-fit-verifier-c3-2026-05-19.html.
+  </p>
+
+</div>
+
+<script>
+  function toggle(row, driverId) {
+    const driver = document.getElementById(driverId);
+    const isOpen = row.classList.contains('open');
+    if (isOpen) {
+      row.classList.remove('open');
+      driver.classList.remove('visible');
+    } else {
+      row.classList.add('open');
+      driver.classList.add('visible');
+    }
+  }
+
+  function toggleAll(btn) {
+    const drivers = document.querySelectorAll('.driver-row');
+    const rows = document.querySelectorAll('.drillable');
+    const anyHidden = Array.from(drivers).some(d => !d.classList.contains('visible'));
+
+    if (anyHidden) {
+      drivers.forEach(d => d.classList.add('visible'));
+      rows.forEach(r => r.classList.add('open'));
+      btn.textContent = 'Hide all drivers';
+    } else {
+      drivers.forEach(d => d.classList.remove('visible'));
+      rows.forEach(r => r.classList.remove('open'));
+      btn.textContent = 'Show all drivers';
+    }
+  }
+</script>
+
+</body>
+</html>
