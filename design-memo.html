@@ -576,27 +576,143 @@
       <tbody>
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR1</div><strong>Interim Product Value Lifecycle</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">A description of when and how the product creates value for the customer across the full consumption period — specifically whether value delivery is continuous, progressive, or punctuated.</div></td>
-          <td class="req-answer">The consumer is not paying cash — in Calmly's exchange model, the "payment" is the discount accepted relative to face value of the claim. Calmly offers a purchase price lower than full face value in exchange for immediate, certain recovery. The buy block is not a cash flow problem — it is a reference point problem: the consumer anchors on face value and perceives Calmly's offer as "less than I deserve," even when the expected value of the alternative (court, 12+ months, uncertain) is lower than Calmly's offer.</td>
+          <td class="req-answer">
+            <div style="margin-bottom:16px;font-size:14px;color:#4a5568;line-height:1.6;">Value delivery is <strong>punctuated</strong> for both parties — a single event at resolution, not a gradual accumulation. No partial recovery, no interim benefit. The buy block is therefore not a cash flow problem for either party: the claimant never pays upfront; the defendant's constraint is liquidity at the moment of demand, not inability to pay in aggregate.</div>
+
+            <!-- CLAIMANT LIFECYCLE -->
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#718096;border-bottom:2px solid #dde1e7;padding-bottom:6px;margin-bottom:14px;">Claimant — consumer with disputed small claim</div>
+            <div style="display:grid;grid-template-columns:1fr 2.5fr 1fr 1.5fr 1.5fr;gap:0;margin-bottom:12px;">
+              <div style="padding:12px 10px;border-top:3px solid #1f4fa8;background:#e8eef8;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">Step 1</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Submission</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Guided evidence intake — one active step, ~20–30 min.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#e8eef8;color:#1f4fa8;border:1px solid #b8c8e8;border-radius:3px;">Active</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #b0b8c4;background:#f5f4f1;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">Steps 2–4</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Pool active — passive wait</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">EV assessment produced. Pool operator files, engages defendant, manages all CPR proceedings. Consumer receives updates only.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#f1f3f5;color:#4a5568;border:1px solid #d0d5dd;border-radius:3px;">Passive</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #b0b8c4;background:#f5f4f1;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">Step 5</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Settlement negotiated</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Pool operator negotiates. No consumer action.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#f1f3f5;color:#4a5568;border:1px solid #d0d5dd;border-radius:3px;">Passive</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #166534;background:#e6f4ec;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">Step 6</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Proceeds received</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Platform fee deducted from settlement proceeds. Net recovery paid to claimant.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#e6f4ec;color:#166534;border:1px solid #a7d4b8;border-radius:3px;">Value delivered</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #166534;background:#e6f4ec;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">Post</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Resolution complete</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Claimant holds net recovery. Dispute closed.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#e6f4ec;color:#166534;border:1px solid #a7d4b8;border-radius:3px;">Retained</div>
+              </div>
+            </div>
+            <!-- Claimant value curve -->
+            <div style="margin-bottom:20px;">
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#718096;margin-bottom:4px;">Perceived value through time</div>
+              <svg viewBox="0 0 900 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+                <line x1="0" y1="54" x2="900" y2="54" stroke="#dde1e7" stroke-width="1"/>
+                <polyline points="0,52 140,50 180,49 400,47 500,45 600,43 660,38 700,12 760,8 900,8" fill="none" stroke="#166534" stroke-width="2.5" stroke-linejoin="round"/>
+                <line x1="660" y1="8" x2="660" y2="54" stroke="#a7d4b8" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="70" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#718096" text-anchor="middle">Step 1</text>
+                <text x="310" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#718096" text-anchor="middle">Steps 2–4 (passive)</text>
+                <text x="560" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#718096" text-anchor="middle">Step 5</text>
+                <text x="725" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#166534" font-weight="600" text-anchor="middle">Step 6 ↑ value</text>
+                <text x="4" y="14" font-family="DM Sans, sans-serif" font-size="9" fill="#718096">High</text>
+                <text x="4" y="52" font-family="DM Sans, sans-serif" font-size="9" fill="#718096">Low</text>
+              </svg>
+            </div>
+
+            <!-- DEFENDANT LIFECYCLE -->
+            <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#718096;border-bottom:2px solid #dde1e7;padding-bottom:6px;margin-bottom:14px;">Defendant — business that owes disputed sum</div>
+            <div style="display:grid;grid-template-columns:1.5fr 1fr 1.5fr 1fr 1.5fr;gap:0;margin-bottom:12px;">
+              <div style="padding:12px 10px;border-top:3px solid #b0b8c4;background:#f5f4f1;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">D0</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Pre-engagement</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Dispute exists. Defendant ignores or denies. Unquantified exposure — no known ceiling.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#f1f3f5;color:#4a5568;border:1px solid #d0d5dd;border-radius:3px;">Deferred cost</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #1f4fa8;background:#e8eef8;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">D1</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Pool demand received</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Pool demand + independent EV report. Credible threat. Liability now quantified.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#e8eef8;color:#1f4fa8;border:1px solid #b8c8e8;border-radius:3px;">Forced engagement</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #d4820a;background:#fff8e6;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">D2</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Settlement decision</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Settle now (certain, bounded) vs defend (solicitor costs + court + judgment risk).</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#fff8e6;color:#854d0e;border:1px solid #f0d98a;border-radius:3px;">Decision point</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #166534;background:#e6f4ec;border-right:1px solid #dde1e7;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">D3</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Settlement paid</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Liability extinguished. No court, no solicitor costs, no judgment on record.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#e6f4ec;color:#166534;border:1px solid #a7d4b8;border-radius:3px;">Value delivered</div>
+              </div>
+              <div style="padding:12px 10px;border-top:3px solid #166534;background:#e6f4ec;">
+                <div style="font-size:10px;font-weight:600;text-transform:uppercase;color:#718096;margin-bottom:3px;">Post</div>
+                <div style="font-size:13px;font-weight:600;color:#0f1923;margin-bottom:4px;">Liability resolved</div>
+                <div style="font-size:11px;color:#4a5568;line-height:1.4;">Certainty achieved. Known cost incurred. All ongoing exposure eliminated.</div>
+                <div style="margin-top:6px;display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;background:#e6f4ec;color:#166534;border:1px solid #a7d4b8;border-radius:3px;">Retained</div>
+              </div>
+            </div>
+            <!-- Defendant value curve -->
+            <div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#718096;margin-bottom:4px;">Perceived value through time</div>
+              <svg viewBox="0 0 900 72" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+                <line x1="0" y1="54" x2="900" y2="54" stroke="#dde1e7" stroke-width="1"/>
+                <polyline points="0,56 180,59 340,62" fill="none" stroke="#991b1b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="5,3"/>
+                <polyline points="340,62 420,59 520,56" fill="none" stroke="#854d0e" stroke-width="2" stroke-linejoin="round"/>
+                <polyline points="520,56 610,48 670,18 740,8 900,8" fill="none" stroke="#166534" stroke-width="2.5" stroke-linejoin="round"/>
+                <line x1="610" y1="8" x2="610" y2="54" stroke="#a7d4b8" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="170" y="42" font-family="DM Sans, sans-serif" font-size="9" fill="#991b1b" font-style="italic">unquantified exposure</text>
+                <text x="90" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#718096" text-anchor="middle">D0</text>
+                <text x="380" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#718096" text-anchor="middle">D1</text>
+                <text x="520" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#854d0e" text-anchor="middle">D2</text>
+                <text x="695" y="67" font-family="DM Sans, sans-serif" font-size="10" fill="#166534" font-weight="600" text-anchor="middle">D3 ↑ value</text>
+                <text x="4" y="14" font-family="DM Sans, sans-serif" font-size="9" fill="#718096">High</text>
+                <text x="4" y="52" font-family="DM Sans, sans-serif" font-size="9" fill="#718096">Low/neg</text>
+              </svg>
+            </div>
+          </td>
           <td class="req-status"><span class="tag tag-green">✓</span></td>
         </tr>
         <tr>
-          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Critical Value Threshold</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The specific point in the value lifecycle at which value delivered materially exceeds the customer's payment, creating the conditions for willingness to pay.</div></td>
-          <td class="req-answer">The moment the consumer compares Calmly's offer to face value (what they are owed) rather than to expected value (what court is actually worth after time, uncertainty, and stress costs). Both alternatives — independent pursuit and abandonment — have lower expected value than Calmly's offer. The buy block is not rational; it is a framing artefact.</td>
+          <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR2</div><strong>Critical Value Threshold</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The specific point in the value lifecycle at which value delivered materially exceeds the customer's payment, creating the conditions for willingness to proceed.</div></td>
+          <td class="req-answer">
+            <strong>Claimant — threshold crossed at EV assessment review (pre-sign-up).</strong> The claimant compares three options with a specific number in front of them: net recovery through Calmly (share of settlement after platform fee) vs abandonment (£0) vs independent court pursuit (uncertain, 12+ months, costs accumulating). The comparison is concrete, quantified, and lopsided. Threshold is crossed before any value is delivered — conviction that the future payoff will materialise is sufficient. Buy block type: <em>delayed contingent payoff, not cash flow</em> — no upfront payment means no liquidity constraint. Commitment cost is effort only (one submission session).<br><br>
+            <strong>Defendant — threshold crossed at receipt of pool demand + EV report (D1).</strong> Two conditions are simultaneously present: (a) credible threat — the pool has the collective legal weight to follow through to judgment; (b) bounded liability — the EV report gives a specific independent number, eliminating the open-ended uncertainty that makes rational settlement structurally difficult. Defendant compares: settle now (known, bounded amount, EV-anchored) vs defend (solicitor costs + court hearings + judgment risk + enforcement exposure). For £500–£5,000 small claims, early settlement is materially cheaper than defence alone. Buy block type: <em>liquidity shock + certainty premium</em> — defendant can afford the total amount but may face a lump-sum timing constraint; resolved at SR4.
+          </td>
           <td class="req-status"><span class="tag tag-green">✓</span></td>
         </tr>
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR3</div><strong>Amortisation Theory of Change</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The class of problem the cash flow constraint represents and the theory/ies most effective in explaining how to solve it.</div></td>
-          <td class="req-answer"><strong>Class of problem:</strong> Temporal discounting + loss aversion. The consumer weights a certain small loss (accepting discount vs face value) more heavily than an uncertain larger gain (court outcome).<br><br><strong>Theory:</strong> Kahneman &amp; Tversky (1979) Prospect Theory — value is assessed relative to a reference point, and losses loom larger than equivalent gains. Reframing shifts the reference point from face value to expected value, changing the perceived loss. Thaler (1980) mental accounting — the correct comparison is not face value vs Calmly offer, but expected value of alternatives vs Calmly offer.<br><br><strong>Context:</strong> Consumer who has received Calmly's specific offer and is mentally comparing it to what they are owed (face value).<br><br><strong>Mechanism:</strong> Presenting the offer relative to the claim's independently-assessed EV (not its face value) shifts the reference point. The independent EV assessment (already produced at R4) arrives before Calmly's offer, establishing EV as the frame. Calmly's offer is then presented as "Y% of your claim's expected value" — a gain framing — rather than "Y% less than what you're owed" — a loss framing.<br><br><strong>Outcome:</strong> Consumer accepts the offer because the comparison is EV (independent assessment) vs Calmly offer, not face value vs Calmly offer.</td>
+          <td class="req-answer">
+            <strong>Claimant — class of problem: contingent payoff commitment.</strong> No cash is required at any stage, so there is no timing mismatch or lumpiness to amortise. The relevant mechanism is contingent fee contracting: when payment is deducted from recovery proceeds, the supplier bears litigation risk and the client bears zero liquidity cost. Theory: Rubinfeld &amp; Scotchmer (1993) on contingent fee arrangements — contingent payment aligns supplier incentives with client outcomes and eliminates client-side adverse selection and liquidity barriers simultaneously. Dana &amp; Spier (1993) confirm that contingent contracts are efficient when the client is liquidity-constrained and the supplier can bear risk. Current state: no cash payment event exists in the claimant's use routine — the buy block is architecturally dissolved, not strategically resolved. Desired state: claimant receives net recovery (settlement proceeds minus platform fee) with no prior cash obligation at any stage.<br><br>
+            <strong>Defendant — class of problem: concentrated liquidity shock + certainty premium resistance.</strong> A bounded demand lands on a firm with thin margins at an unpredictable moment. Constraint is twofold: (a) lump sum requirement may exceed available cash; (b) uncertainty about the ceiling prevents rational budgeting. Theory: Arrow (1963) differential risk-bearing capacity — the same expected loss is genuinely less costly for a diversified pool to hold than for a concentrated defendant. Risk transfer at actuarially fair price is mutually beneficial: the pool accepts a settlement at or above EV; the defendant eliminates an exposure that costs them more than EV to carry. Current state: defendant faces concentrated uncertain liability with no ceiling, no payment terms, no certainty. Desired state: liability is bounded (EV-assessed), certain (settlement extinguishes all exposure), and payable on terms where genuine liquidity constraints exist.
+          </td>
           <td class="req-status"><span class="tag tag-green">✓</span></td>
         </tr>
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR4</div><strong>Amortisation Strategy</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">The best way to operationalize the Amortisation Theory of Change to eliminate the cash flow constraint.</div></td>
-          <td class="req-answer">The EV assessment frame is the amortisation mechanism. The independent assessment org's report establishes expected value — not face value — as the reference point before Calmly makes its offer. Calmly's offer is presented as a percentage of independently-assessed EV. The framing is architecturally sequenced: EV report arrives first, then offer. This is not a communication trick — the EV assessment is a genuine independent calculation, making the reference point credible and resistant to motivated reasoning.<br><br><strong>Cross-requirement elegance:</strong> The C3 independent assessment org serves three requirements (C3, R4, R6) from a single mechanism. One EV report per claim, three problems solved at no incremental cost.</td>
+          <td class="req-answer">
+            <strong>Claimant: contingent fee deducted from recovery proceeds.</strong> No payment is due at sign-up, during the pool period, or at any pre-recovery stage. Calmly charges a platform fee defined as a percentage of the gross settlement amount received from the defendant, deducted at the point of settlement before proceeds are distributed to the claimant. The payment event is architecturally inseparable from the value delivery event — they are the same transaction. This is not a cash flow accommodation: it is an architecture where no cash flow constraint can exist. The required fee rate is determined by the financial model (cost floor ÷ (1 − FMOS target) ÷ average settlement); see FIT Verifier R6.<br><br>
+            <strong>Defendant: structured payment terms as a platform standard.</strong> Pool operators must offer defendants structured payment terms (up to 6 monthly instalments) on settlements ≤ £5,000 as a Calmly platform requirement. The EV assessment bounds total liability — both parties share the same number — so the pool operator can offer instalments without uncertainty about the total obligation. The certainty premium paid by the defendant (settling at or slightly above EV) eliminates all solicitor costs, court hearings, and judgment risk.<br><br>
+            <strong>Cross-requirement elegance (C3 × C6):</strong> the EV assessment that collapses defendant motivated reasoning (C3) also enables structured payment terms — the shared liability number removes the uncertainty that would otherwise prevent instalment offers. One mechanism, two functions.<br><br>
+            <strong>R3 interaction:</strong> no change to Calmly's working capital model. Claimant payment arrives at recovery (already modelled). Defendant instalment option affects pool operator P&L timing only — Calmly's platform fee is earned at claim resolution, not at each instalment payment.
+          </td>
           <td class="req-status"><span class="tag tag-green">✓</span></td>
         </tr>
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">SR5</div><strong>Business Form Factor (C1–C6)</strong><div style="color:#718096;font-size:13px;margin-top:4px;font-weight:400;">A cumulative statement of the venture's form factor incorporating all solutions from C1 through C6.</div></td>
-          <td class="req-answer">Calmly is a claims origination and litigation risk market infrastructure business. R6 confirms that no payment mechanism is required — the exchange model eliminates the cash flow constraint structurally. The amortisation mechanism is the EV assessment frame: by establishing EV as the reference point before the offer, the consumer evaluates the offer against expected value rather than face value. The buy block dissolves because the frame changes, not because the price does.</td>
+          <td class="req-answer">A verified dispute resolution marketplace that pools claimants' claims to create a credible collective threat of legal action (C1); produces a quantitative EV settlement report for each claim — stating fair settlement value and showing how the settlement ask escalates at each stage of legal escalation — disclosed simultaneously to both parties (C2); with that report generated by an independent assessment organisation staffed by university law students with no financial stake in any claim outcome, so defendants cannot dismiss it as self-interested (C3); with pool membership including pool loss insurance as a standard feature, protecting member contributions against early losses and eliminating individual incentive to exit before expected value materialises (C4); all post-submission litigation activity assigned to the pool operator as professional litigant, bounding the claimant's active role to a single guided submission session and passive outcome receipt (C5). No upfront payment for claimants — Calmly charges a platform fee as a percentage of gross settlement, deducted from recovery proceeds at the point of settlement, with the payment event architecturally inseparable from value delivery. For defendants, pool operators must offer structured payment terms (up to 6 monthly instalments on settlements ≤ £5,000) as a platform standard — converting the liquidity shock into a manageable cost stream without changing total liability. The required fee rate is determined by the financial model (C6).</td>
           <td class="req-status"><span class="tag tag-green">✓</span></td>
         </tr>
       </tbody>
