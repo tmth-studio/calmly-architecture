@@ -972,10 +972,10 @@
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">FIT</div><strong>FIT Verifier</strong></td>
           <td class="req-answer">
-            <strong>Cost floor:</strong> £221 / claim &nbsp;|&nbsp; <strong>Required price (25% FMOS):</strong> £295 / claim &nbsp;|&nbsp; <strong>Price ceiling:</strong> £650 / claim<br>
-            <strong>FMOS: 66%</strong> &nbsp;|&nbsp; <strong>Headroom: £355 / claim</strong><br><br>
-            C8 adds no new per-unit cost. The switching cost mechanism — EV accuracy calibration data, ITP-specific outcomes dataset, integration depth — accumulates as a structural byproduct of normal referral operations. No additional spend is required. Cost floor held at £221. FMOS held at 66%. Note: the per-claim model understates C8's value; repeat-use segments (tenants, small businesses) generate CLV uplift through zero CAC on return claims — not visible in the single-claim floor.
-            <div class="updated-note"><strong>Verdict: PASS</strong> — FMOS 66%, unchanged from C7. Switching cost is architecturally embedded at zero per-claim cost.</div>
+            <strong>Cost floor:</strong> £225 / claim &nbsp;|&nbsp; <strong>Required price (25% FMOS):</strong> £300 / claim &nbsp;|&nbsp; <strong>Price ceiling:</strong> £650 / claim<br>
+            <strong>FMOS: 65.4%</strong> &nbsp;|&nbsp; <strong>Headroom: £350 / claim</strong><br><br>
+            C8 adds one new HQ cost: ITP outcomes reporting (~£4/claim amortised across claim volume — ~1.5 days/ITP/quarter + 3 days/ITP/year, account management function). The accumulation mechanism itself — EV accuracy calibration data, ITP-specific outcomes dataset — is a structural byproduct of normal referral operations at zero additional per-claim cost. Cost floor rises from £221 to £225. Note: the per-claim model understates C8's value; the CLV uplift from repeat-use segments (tenants, small businesses) at zero CAC is not captured in the static floor.
+            <div class="updated-note"><strong>Verdict: PASS</strong> — FMOS 65.4%, clears 25% gate with 40pp headroom.</div>
           </td>
           <td class="req-status"><span class="tag tag-green">✓ PASS</span></td>
         </tr>
@@ -1025,10 +1025,10 @@
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">FIT</div><strong>FIT Verifier</strong></td>
           <td class="req-answer">
-            <strong>Cost floor:</strong> £221 / claim &nbsp;|&nbsp; <strong>Required price (25% FMOS):</strong> £295 / claim &nbsp;|&nbsp; <strong>Price ceiling:</strong> £650 / claim<br>
-            <strong>FMOS: 66%</strong> &nbsp;|&nbsp; <strong>Headroom: £355 / claim</strong><br><br>
-            C9 adds no new per-unit cost. Methodology ownership is a structural design property — achieved through the assessment org onboarding playbook and QA framework, not through additional spend. Assessment org fees (£16/claim) are already in the cost floor from C3. Multi-org competition creates a potential upside: if fees compete down to £10–12/claim at scale, FMOS improves to ~67–68%. This upside is not assumed in the central case.
-            <div class="updated-note"><strong>Verdict: PASS</strong> — FMOS 66%, unchanged from C7–C8. Supplier leverage eliminated at zero per-claim cost; upside scenario available if multi-org competition materialises.</div>
+            <strong>Cost floor:</strong> £235 / claim &nbsp;|&nbsp; <strong>Required price (25% FMOS):</strong> £313 / claim &nbsp;|&nbsp; <strong>Price ceiling:</strong> £650 / claim<br>
+            <strong>FMOS: 63.8%</strong> &nbsp;|&nbsp; <strong>Headroom: £337 / claim</strong><br><br>
+            C9 adds one new HQ cost: assessment org pool QA management (~£10/claim amortised — HQ QA team allocating volume across orgs on quality metrics, onboarding new university departments as geographic coverage expands). Assessment org fees themselves (£16/claim) are already in the cost floor from C3 and do not change. Multi-org competition creates a potential upside: if fees compete down to £10–12/claim at scale, FMOS recovers toward 65–66%. Not assumed in central case.
+            <div class="updated-note"><strong>Verdict: PASS</strong> — FMOS 63.8%, clears 25% gate with 38pp headroom. Upside scenario available if multi-org competition reduces assessment org fees.</div>
           </td>
           <td class="req-status"><span class="tag tag-green">✓ PASS</span></td>
         </tr>
@@ -1078,10 +1078,10 @@
         <tr>
           <td class="req-name"><div style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1f4fa8;margin-bottom:4px;">FIT</div><strong>FIT Verifier</strong></td>
           <td class="req-answer">
-            <strong>Cost floor:</strong> £221 / claim &nbsp;|&nbsp; <strong>Required price (25% FMOS):</strong> £295 / claim &nbsp;|&nbsp; <strong>Price ceiling:</strong> £650 / claim<br>
-            <strong>FMOS: 66%</strong> &nbsp;|&nbsp; <strong>Headroom: £355 / claim</strong><br><br>
-            C10 adds no new per-unit cost. The data flywheel is a volume benefit — EV accuracy and pool operator pricing improve as claims accumulate, with no additional cost line. Final cost floor: £221/claim across all 10 requirements. FMOS: 66%, clears the 60% final F2 gate with 6pp headroom. The per-claim model conservatively understates C10's value: the data flywheel effect on pool operator pricing (Year 3 vs Year 1 economics) is not captured in the static floor and is flagged for fin-sim sensitivity development.
-            <div class="updated-note"><strong>Verdict: PASS</strong> — FMOS 66%, final F2 gate cleared. Architecture confirmed across all 10 requirements. Cost floor: £221/claim. Price ceiling: £650/claim.</div>
+            <strong>Cost floor:</strong> £245 / claim &nbsp;|&nbsp; <strong>Required price (25% FMOS):</strong> £327 / claim &nbsp;|&nbsp; <strong>Price ceiling:</strong> £650 / claim<br>
+            <strong>FMOS: 62.3%</strong> &nbsp;|&nbsp; <strong>Headroom: £323 / claim</strong><br><br>
+            C10 adds one new HQ cost: claim data management and EV accuracy tracking (~£10/claim amortised — data infrastructure, model calibration updates fed back to assessment orgs). The data flywheel itself is a volume benefit with no per-claim cost: EV accuracy improves with cumulative claims, pool operator pricing improves as confidence intervals tighten. This benefit compounds over time and is not captured in the static cost floor. Final cost floor across all 10 requirements: £245/claim. FMOS 62.3%, clears the 60% final gate with 2.3pp headroom.
+            <div class="updated-note"><strong>Verdict: PASS — final gate cleared.</strong> FMOS 62.3% across all 10 requirements. Cost floor: £245/claim. Price ceiling: £650/claim. Architecture confirmed. Note: C7 blended acquisition saving (−£18/claim) offset by C8–C10 HQ additions (+£24/claim). Net vs C6 baseline: +£6/claim. Upside available if multi-org competition reduces assessment fees or data flywheel improves pool operator pricing — both excluded from central case.</div>
           </td>
           <td class="req-status"><span class="tag tag-green">✓ PASS</span></td>
         </tr>
