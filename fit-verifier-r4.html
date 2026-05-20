@@ -104,7 +104,7 @@
       <div class="header-meta-item"><div class="key">Date</div><div class="val">19 May 2026</div></div>
       <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — consumer small claims exchange (E&amp;W)</div></div>
       <div class="header-meta-item"><div class="key">Unit</div><div class="val">One claim resolved</div></div>
-      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R4 adds CAC · C3 base £199 → R4 cost floor £237</div></div>
+      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R4 adds CAC + insurance curation · C3 base £199 → R4 cost floor £239</div></div>
     </div>
   </div>
 
@@ -112,57 +112,65 @@
     <div class="fit-check pass">
       <div class="check-letter">F</div>
       <div class="check-label">Financial margin of safety</div>
-      <div class="check-result">Pass — 63.5% FMOS</div>
+      <div class="check-result">Pass — 63.2% FMOS</div>
     </div>
     <div class="fit-check pass">
       <div class="check-letter">I</div>
       <div class="check-label">Intrinsic performance capability</div>
-      <div class="check-result">Pass — CAC dilutes at scale</div>
+      <div class="check-result">Pass — actuarially priced at scale</div>
     </div>
     <div class="fit-check pass">
       <div class="check-letter">T</div>
       <div class="check-label">Theorem-driven design</div>
-      <div class="check-result">Pass — Spence (1973)</div>
+      <div class="check-result">Pass — Olson (1965) + Arrow (1963)</div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">Section 1 — Strategic design: R4 Want Block</div>
 
-    <h3>Implicit Theory of Change (claimant)</h3>
+    <h3>SR1 — Implicit Theory of Change (claimant)</h3>
     <div class="inset-block">
-      <p><strong>Consumer's implicit ToC:</strong> "Success in recovering my money depends on professional legal representation that I cannot afford relative to the claim value." The system appears designed for businesses. The market structure itself — no affordable options exist — signals the problem is unsolvable cheaply.</p>
-      <p><strong>Key efficacy doubt:</strong> Credibility gap — "If affordable small claims resolution were possible, established legal firms would already offer it at scale." The absence of visible alternatives is taken as evidence of impossibility.</p>
-      <p><strong>Secondary:</strong> Inertia — the claim is weeks old, acute frustration has faded, adaptation has set in.</p>
+      <p><strong>Consumer's implicit ToC:</strong> "The main determinant of success is perceived ability to convert a theoretically strong case into an enforced judgment." C3 already established that the legal argument is sound via independent assessment. What neither party is certain about at R4 is whether the claimants can follow through: to court, to a judgment, through enforcement.</p>
+      <p><strong>The question is not "is my case good?" but "can this group of people actually see it through?"</strong></p>
     </div>
 
-    <h3>Theory of Change — Attraction (CMO format)</h3>
+    <h3>SR2 — Key Efficacy Doubt: pool financial survivability</h3>
     <div class="inset-block">
-      <p><strong>Class of problem:</strong> Credibility asymmetry + market structure signalling.</p>
-      <p><strong>Theory:</strong> Spence (1973) — independent signal resolves quality uncertainty. The independent assessment org (designed in C3 for defendant/investor credibility) simultaneously resolves claimant credibility doubt. Same mechanism, two audiences.</p>
-      <p><strong>Context:</strong> Consumers who have received a company's final refusal and are searching for options. Peak receptivity — injustice fresh, not yet adapted.</p>
-      <p><strong>Mechanism:</strong> A free independent EV assessment of the consumer's specific claim from a named university law department (48-hour turnaround) challenges the prior belief that resolution cannot be affordable. The assessment demonstrates the model by doing real work before any commitment is required.</p>
-      <p><strong>Outcome:</strong> Consumer has independent, credible assessment of their specific claim's value and a specific Calmly offer, and forms sufficient conviction to decide whether to proceed.</p>
+      <p><strong>The doubt:</strong> War of attrition / coordination failure under sequential losses. Claimants pool upfront costs and share revenues. Early in the portfolio, losses are drawn down before the expected value materialises. Each claimant watches their contribution being consumed by early losses and faces a rational temptation to exit.</p>
+      <p><strong>The structural problem:</strong> Even if the expected value is real, individually rational early exit destroys collective value. Will the pool survive long enough — financially and psychologically — for the expected value to materialise?</p>
     </div>
 
-    <h3>Attraction Strategy</h3>
-    <p>Free independent EV assessment as conviction mechanism. Consumer submits dispute details → assessment org produces free EV report within 48hrs → Calmly makes specific offer. The same institutional actor that makes the model credible to investors makes it credible to claimants. One mechanism, two audiences. Reach: organic SEO + word of mouth at the category entry point (consumers searching for help after receiving a final refusal).</p>
-
-    <h3>Cross-requirement elegance</h3>
+    <h3>SR3 — Theory of Change (Attraction)</h3>
     <div class="inset-block">
-      <p>The C3 independent assessment org is the R4 attraction mechanism. No additional institutional actor needed. The free EV assessment also pre-frames the R6 amortisation strategy — it establishes expected value as the reference point before Calmly's offer arrives. C3 architecture generates three downstream benefits: investor credibility (C3), claimant conviction (R4), offer framing (R6).</p>
+      <p><strong>Class of problem:</strong> War of attrition / coordination failure under sequential losses.</p>
+      <p><strong>Theory 1 — Olson (1965):</strong> Collective action fails when individually rational behaviour undermines collective benefit. Each claimant has an individual incentive to exit early (protect their contribution) that, if acted on, destroys the pool's expected value for everyone.</p>
+      <p><strong>Theory 2 — Arrow (1963):</strong> Insurance resolves the individual incentive to defect by transferring idiosyncratic downside risk to a risk-pooling mechanism. If pool losses are insured, individual claimants' contributions are protected against early losses. No individual faces the financial incentive to exit early because their downside is covered.</p>
+      <p><strong>Mechanism:</strong> Pool loss insurance eliminates the rational basis for early exit. The pool can persist through the natural loss distribution because no member bears the cost of early losses individually.</p>
     </div>
 
-    <h3>Cumulative BFF (C1–R4)</h3>
-    <p>Calmly is a claims origination and litigation risk market infrastructure business. When consumers experience a financial dispute and receive a final refusal, organic discovery (SEO at point of peak receptivity) brings them to Calmly. The independent assessment org provides a free EV assessment within 48 hours — simultaneously resolving claimant credibility doubt and generating investor-grade portfolio data. Consumers who accept transfer their claim to the platform. Pool operators acquire pools of assessed claims; LMU specialists execute the pre-trial bundle strategy. Claims settle early (majority) or proceed to court under pool operator risk. Calmly earns platform fees per resolved claim.</p>
+    <h3>SR4 — Attraction Strategy</h3>
+    <p>Offer pool loss insurance as a structural feature of pool membership — not an add-on, but the mechanism that makes collective persistence individually rational from the moment of joining.</p>
+    <div class="inset-block">
+      <p><strong>Decision sequence:</strong> Consumer decides to join the pool → pool membership includes insurance as standard → claimant contributions are protected regardless of early claim outcomes → pool persists through the natural loss distribution → expected value materialises for all members.</p>
+      <p><strong>Channel:</strong> Organic SEO + word of mouth at the category entry point — consumers searching for help after receiving a company's final refusal. Peak receptivity. Mechanism unchanged from prior architecture; insurance is what makes joining individually rational, not how they find Calmly.</p>
+    </div>
+
+    <h3>SR5 — Cumulative BFF (C1–C4)</h3>
+    <div class="inset-block">
+      <p><strong>A verified dispute resolution marketplace.</strong> The marketplace provides the infrastructure: claims pooling that creates a credible collective threat of legal action, a settlement mechanism through which disputants reach an optimal agreement, and payment rails from which Calmly earns fees per resolved claim (C1).</p>
+      <p>By C4, two verified apps run on the marketplace: an EV assessment app — the quantitative settlement report produced by an independent assessment organisation staffed by university law students with no financial stake in the outcome, disclosed simultaneously to both parties (C3); and a pool insurance app — protecting members' upfront contributions against early losses, eliminating individual incentive to exit before the expected value materialises (C4).</p>
+    </div>
   </div>
 
   <div class="section">
     <div class="section-title">Section 2 — F: Financial margin of safety (FMOS)</div>
 
-    <h3>New cost at R4: Customer Acquisition Cost (CAC)</h3>
+    <h3>New costs at R4: CAC + insurance curation</h3>
     <div class="warning-block">
-      <p>⚠ <strong>CAC enters the cost floor at R4.</strong> Excluded from C3 gate by design — the architecture was not yet built. CAC is now designed: organic SEO/content (amortised fixed cost) + word of mouth (zero marginal cost at scale). Tier 4 estimate: <strong>£38/claim</strong> — midpoint of £25–50 range. Basis: analogous consumer fintech organic acquisition at scale (no paid performance marketing in the model).</p>
+      <p>⚠ <strong>Two costs enter the cost floor at R4.</strong></p>
+      <p><strong>CAC (£38/claim):</strong> Organic SEO/content + word of mouth. Amortised fixed cost at scale. Tier 4 estimate — midpoint of £25–50 range, consistent with analogous consumer fintech organic acquisition.</p>
+      <p><strong>Insurance curation (£2/claim):</strong> The insurance premium is paid by the pool member as part of membership — it is not a Calmly cost. Calmly earns a marketplace fee from the insurer. Calmly's only insurance cost is HQ oversight and insurer relationship management: ~0.5 FTE at £60k/yr = £30k/yr ÷ 18,000 claims/yr ≈ £1.67/claim, rounded to £2/claim. Tier 4.</p>
     </div>
 
     <table>
@@ -171,46 +179,49 @@
       </thead>
       <tbody>
         <tr><td><span class="tag tag-grey">C3 base</span></td><td>All C3 costs (PVC £24, RC £175, SC £1, IC £1)</td><td class="amount">£199</td><td class="note-col">Carried forward from C3 gate. See calmly-fit-verifier-c3-2026-05-19.html for full breakdown.</td></tr>
-        <tr><td><span class="tag tag-blue">R4 new</span></td><td>Customer acquisition cost (CAC)</td><td class="amount">£38</td><td class="note-col">Organic SEO/content + word of mouth. £38/claim = amortised content production cost at 1,500 claims/month. Tier 4.</td></tr>
-        <tr class="total-row"><td colspan="2"><strong>Cost floor — R4 cumulative</strong></td><td class="amount"><strong>£237</strong></td><td class="note-col">C3 base + R4 CAC</td></tr>
+        <tr><td><span class="tag tag-blue">R4 new</span></td><td>Customer acquisition cost (CAC)</td><td class="amount">£38</td><td class="note-col">Organic SEO/content + word of mouth. Amortised at 1,500 claims/month. Tier 4.</td></tr>
+        <tr><td><span class="tag tag-blue">R4 new</span></td><td>Insurance curation overhead</td><td class="amount">£2</td><td class="note-col">HQ oversight of insurer relationship. ~0.5 FTE £60k/yr ÷ 18k claims/yr. Tier 4.</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Cost floor — R4 cumulative</strong></td><td class="amount"><strong>£239</strong></td><td class="note-col">C3 base + CAC + insurance curation</td></tr>
       </tbody>
     </table>
 
     <h3>FMOS calculation</h3>
     <div class="fmos-grid">
       <div class="fmos-card"><div class="card-label">Price ceiling</div><div class="card-value">£650</div><div class="card-sub">Bilateral KMC £1,300 × 50% surplus (C2)</div></div>
-      <div class="fmos-card"><div class="card-label">Cost floor (R4)</div><div class="card-value">£237</div><div class="card-sub">C3 £199 + CAC £38</div></div>
-      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.5%</div><div class="card-sub">Clears 25% F1 gate and 60% final gate</div></div>
+      <div class="fmos-card"><div class="card-label">Cost floor (R4)</div><div class="card-value">£239</div><div class="card-sub">C3 £199 + CAC £38 + insurance curation £2</div></div>
+      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.2%</div><div class="card-sub">Clears 25% F1 gate and 60% final gate</div></div>
     </div>
 
     <table>
       <thead><tr><th>Item</th><th class="amount">£/claim</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td>Price ceiling</td><td class="amount">£650</td><td class="note-col">Bilateral KMC × 50% surplus. C2.</td></tr>
-        <tr><td>Cost floor (R4 cumulative)</td><td class="amount">£237</td><td class="note-col">PVC + RC + SC + IC + CAC</td></tr>
-        <tr><td>Net contribution</td><td class="amount">£413</td><td class="note-col">£650 − £237</td></tr>
-        <tr class="highlight-row"><td><strong>FMOS</strong></td><td class="amount"><strong>63.5%</strong></td><td class="note-col">£413 ÷ £650</td></tr>
-        <tr><td>vs C3 FMOS</td><td class="amount">−0.1pp</td><td class="note-col">CAC reduces FMOS by 0.1 percentage points from 63.6%. Immaterial.</td></tr>
+        <tr><td>Cost floor (R4 cumulative)</td><td class="amount">£239</td><td class="note-col">PVC + RC + SC + IC + CAC + insurance curation</td></tr>
+        <tr><td>Net contribution</td><td class="amount">£411</td><td class="note-col">£650 − £239</td></tr>
+        <tr class="highlight-row"><td><strong>FMOS</strong></td><td class="amount"><strong>63.2%</strong></td><td class="note-col">£411 ÷ £650</td></tr>
+        <tr><td>vs C3 FMOS</td><td class="amount">−0.4pp</td><td class="note-col">R4 additions reduce FMOS by 0.4 percentage points from 63.6%. Immaterial.</td></tr>
       </tbody>
     </table>
 
-    <h3>Sensitivity — CAC range</h3>
+    <h3>Sensitivity — CAC range (insurance curation held at £2)</h3>
     <table>
       <thead><tr><th>CAC scenario</th><th class="amount">CAC £/claim</th><th class="amount">Cost floor</th><th class="amount">FMOS</th></tr></thead>
       <tbody>
-        <tr class="optimistic"><td>Low (strong organic, high WOM)</td><td class="amount">£25</td><td class="amount">£224</td><td class="amount">65.5%</td></tr>
-        <tr class="central"><td><strong>Central (Tier 4)</strong></td><td class="amount"><strong>£38</strong></td><td class="amount"><strong>£237</strong></td><td class="amount"><strong>63.5%</strong></td></tr>
-        <tr class="pessimistic"><td>High (slower organic growth)</td><td class="amount">£50</td><td class="amount">£249</td><td class="amount">61.7%</td></tr>
+        <tr class="optimistic"><td>Low (strong organic, high WOM)</td><td class="amount">£25</td><td class="amount">£226</td><td class="amount">65.2%</td></tr>
+        <tr class="central"><td><strong>Central (Tier 4)</strong></td><td class="amount"><strong>£38</strong></td><td class="amount"><strong>£239</strong></td><td class="amount"><strong>63.2%</strong></td></tr>
+        <tr class="pessimistic"><td>High (slower organic growth)</td><td class="amount">£50</td><td class="amount">£251</td><td class="amount">61.4%</td></tr>
       </tbody>
     </table>
-    <p style="font-size:13px;color:var(--text-muted);margin-top:-12px;">Even at £50 CAC pessimistic, FMOS remains above 60% final gate. R7 gateway partner channel is expected to reduce blended CAC — modelled at R7.</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:-12px;">Even at £50 CAC pessimistic, FMOS remains above 60% final gate. Insurance curation cost (£2) is immaterial to all scenarios.</p>
   </div>
 
   <div class="section">
     <div class="section-title">Section 3 — I: Intrinsic performance capability</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
     <div class="inset-block">
-      <p>CAC has an intrinsic dilution mechanism. Organic SEO amortisation is a fixed content investment — as claims volume grows, the per-claim CAC falls without additional spend. Word of mouth is zero marginal cost and grows with satisfied claimants. The architecture's free EV assessment also functions as a product-led growth loop (consumers share their outcome, driving organic referral). At 1,500 claims/month, word of mouth is expected to account for 40–50% of inflow — further reducing effective CAC below £38. This is a structural property, not an operational target. <strong>Pass.</strong></p>
+      <p><strong>Insurance intrinsic property:</strong> At scale, pool loss insurance is actuarially priced. The insurer absorbs volatility across a large portfolio of claims; individual pool members pay a premium calibrated to the expected loss distribution. This is a structural property of insurance markets — it does not depend on any individual claimant's psychology or persistence. Pool survival becomes mechanically guaranteed at scale, not contingent on human behaviour.</p>
+      <p><strong>CAC dilution:</strong> Organic SEO amortisation is a fixed content investment — per-claim CAC falls as claims volume grows without additional spend. Word of mouth is zero marginal cost and grows with satisfied claimants. At 1,500 claims/month, WOM is expected to account for 40–50% of inflow, further reducing effective CAC below £38. Structural property, not operational target.</p>
+      <p><strong>Pass.</strong></p>
     </div>
   </div>
 
@@ -218,14 +229,16 @@
     <div class="section-title">Section 4 — T: Theorem-driven design</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
 
-    <h4>Attraction — Spence (1973) quality signalling</h4>
+    <h4>Attraction — Olson (1965) + Arrow (1963)</h4>
     <div class="inset-block">
-      <p>The free independent EV assessment resolves credibility doubt by providing direct personal evidence — the assessment org does real work before commitment. This is Spence (1973) applied to the consumer adoption context: an independent, costly-to-fake signal eliminates the consumer's quality uncertainty. Well-replicated theory; the specific application to consumer services (not just labour markets) has extensive precedent in the credence goods literature. <strong>Pass.</strong></p>
+      <p><strong>Olson (1965) — The Logic of Collective Action:</strong> Collective action fails when individually rational behaviour undermines collective benefit. The free-rider / early-exit problem in the claims pool is a direct instance of Olson's core claim. Well-established in political economy, public goods theory, and organisational behaviour. No novel application required — the problem is canonical.</p>
+      <p><strong>Arrow (1963) — Uncertainty and the Welfare Economics of Medical Care:</strong> Insurance resolves the individual incentive to defect by transferring idiosyncratic downside risk to a risk-pooling mechanism. Arrow's foundational insight — that insurance markets exist precisely because individuals cannot bear idiosyncratic risk efficiently — underpins the structural fix. Applied here to pool loss insurance: individual claimants transfer the risk of early portfolio losses to an insurer; no individual bears the cost of the natural loss distribution; the rational basis for early exit disappears.</p>
+      <p><strong>Both theorems are among the most replicated in economics.</strong> The application here is direct and non-exotic. Pass.</p>
     </div>
 
-    <h4>Reach — category entry point SEO</h4>
+    <h4>Reach — category entry point SEO (pass note)</h4>
     <div class="inset-block">
-      <p>Consumers searching after receiving a company's final refusal are at peak receptivity — the job-to-be-done is salient, urgency is high, and search intent is transactional. Organic SEO at this specific query set (e.g. "company won't refund what to do", "small claims court worth it") is a documented content marketing strategy in consumer fintech and legal tech (MoneySavingExpert, Resolver, Which? all follow this model). No novel theory required — empirically grounded in established category practice. <strong>Pass.</strong></p>
+      <p>The channel to find Calmly is unchanged from prior architecture: organic SEO at the category entry point — consumers searching after receiving a company's final refusal. Peak receptivity, transactional intent, well-documented in consumer fintech and legal tech (MoneySavingExpert, Resolver, Which?). No novel theory required — empirically grounded in established category practice. Pass.</p>
     </div>
   </div>
 
@@ -234,9 +247,9 @@
     <div class="verdict-panel">
       <div class="verdict-label">Verdict — R4 gate · 19 May 2026</div>
       <div class="verdict-headline">PASS</div>
-      <p><strong>FMOS: 63.5%</strong> — clears 25% F1 gate and 60% final gate. CAC of £38/claim adds £38 to cost floor (C3 base £199 → R4 £237). Impact on FMOS: −0.1pp from C3. Immaterial.</p>
-      <p>The Attraction Strategy uses the C3 independent assessment org as its primary conviction mechanism — no additional institutional actor required. One mechanism serves investor credibility (C3), claimant conviction (R4), and offer framing (R6). Architectural elegance confirmed.</p>
-      <p>CAC is expected to fall further at R7 when gateway partners take on part of the inflow — blended acquisition cost modelled at R7.</p>
+      <p><strong>FMOS: 63.2%</strong> — clears 25% F1 gate and 60% final gate. R4 adds two costs: CAC £38 + insurance curation £2 = £40 total addition. Cost floor moves from C3 £199 to R4 £239. Impact on FMOS: −0.4pp from C3. Immaterial.</p>
+      <p>The Attraction Strategy resolves the pool financial survivability doubt (SR2) using Olson (1965) and Arrow (1963). Pool loss insurance, offered as standard membership, eliminates the rational basis for early exit. Individual claimants' contributions are protected regardless of early claim outcomes. Pool persistence becomes structurally guaranteed at scale, not dependent on psychology or coordination. War of attrition is solved by design.</p>
+      <p>Insurance premium is paid by pool members, not by Calmly. Calmly earns a marketplace fee from the insurer. Calmly's only cost is oversight and curation of the insurer relationship (~£2/claim). The insurance mechanism is therefore revenue-generating for Calmly, not a cost sink.</p>
       <p><strong>Proceed to R5 — Circumvent the Use Block (Adoption).</strong></p>
     </div>
   </div>
@@ -244,20 +257,20 @@
   <div class="section">
     <div class="section-title">Section 6 — Conditions before capital commitment</div>
     <ol class="conditions-list">
-      <li><span class="cond-number">Condition 1</span><strong>Validate organic CAC assumption (£38/claim).</strong> Tier 4 — analogous to consumer fintech organic-first models. Validate through pilot data: track cost per content piece, monthly organic search traffic, claim conversion rate, and word of mouth share. At pilot scale (40 claims/month), CAC will be much higher. The £38 is an at-scale projection.</li>
-      <li><span class="cond-number">Condition 2</span><strong>Confirm category entry point queries.</strong> Validate the specific search queries at which consumers are most receptive (post-final-refusal). Competitor content audit (Resolver, Which?, Citizens Advice) should inform SEO keyword strategy before content investment begins.</li>
-      <li><span class="cond-number">Condition 3</span><strong>Measure free EV assessment conversion rate.</strong> The core R4 assumption is that a free independent EV assessment converts uncertain prospects into accepted claimants. Target conversion: ≥40% of submitted disputes proceed to Calmly offer acceptance. Pilot must measure and report this before at-scale content investment is committed.</li>
+      <li><span class="cond-number">Condition 1</span><strong>Validate insurance pricing.</strong> Tier 4 assumption: a specialist insurer can price pool loss insurance actuarially at premiums affordable to pool members. This has not been tested with an actual underwriter. Validate through: approach specialist legal expenses insurers (e.g. ARAG, DAS) before pool launch to confirm underwriting appetite, confirm that pool loss is a recognised insurable event, and obtain indicative premium range. If premium is unaffordable to pool members, the SR4 mechanism fails regardless of its theoretical elegance.</li>
+      <li><span class="cond-number">Condition 2</span><strong>Validate insurance curation overhead (£2/claim).</strong> Tier 4 assumption. Actual cost depends on the complexity of managing the insurer relationship, claims processing, and policy administration. £2/claim is a reasonable starting estimate at 18,000 claims/yr but has not been grounded in operational experience. Refine during pilot using actual FTE time tracking on insurer relationship management.</li>
+      <li><span class="cond-number">Condition 3</span><strong>Measure pool persistence under insurance.</strong> The core SR4 assumption is that insured pools have materially lower early-exit rates than uninsured pools. This is theoretically well-grounded (Arrow 1963) but empirically untested in this specific context. Pilot must measure: early-exit rate in insured pools (target &lt;10%) against working hypothesis of ~30% without insurance. If insured early-exit rate does not materially outperform uninsured, the mechanism is not working as designed and the architecture requires revision before scale.</li>
     </ol>
   </div>
 
   <div class="routing-block">
     <div class="routing-title">Next step — R5</div>
-    <p><strong>Proceed to R5</strong> — Circumvent the Use Block (Adoption). The key question: what stops consumers who have decided to try from completing claim submission? Evidence assembly anxiety is the working hypothesis.</p>
-    <p>Note: R7 will recalculate blended CAC when gateway partner model is designed. The R4 CAC figure (£38) is a temporary ceiling — R7 is expected to reduce it.</p>
+    <p><strong>Proceed to R5</strong> — Circumvent the Use Block (Adoption). Key question: what stops consumers who have decided to try from completing claim submission and activating use of the marketplace?</p>
+    <p>Evidence assembly anxiety is the working hypothesis for the use block — the perceived effort of gathering documentation, understanding eligibility, and completing submission may cause abandonment after initial intent to proceed.</p>
   </div>
 
   <div class="doc-footer">
-    <div class="footer-left">FIT Verifier — R4 gate · 19 May 2026<br>Cumulative cost floor: £237/claim · FMOS: 63.5%</div>
+    <div class="footer-left">FIT Verifier — R4 gate · 19 May 2026<br>Cumulative cost floor: £239/claim · FMOS: 63.2%</div>
     <div class="footer-right">Builds on: calmly-fit-verifier-c3-2026-05-19.html (PASS, 63.6%)</div>
   </div>
 

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calmly — Customer Transformation Model v2 (C1+C2+C3)</title>
+  <title>Calmly — Customer Transformation Model v2 (C1+C2+C3+C4)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -230,13 +230,13 @@
        ARCHITECTURE DISCIPLINE NOTICE
   ══════════════════════════════════════════════════════════════════ -->
   <div class="arch-discipline">
-    <div class="ad-label">Architecture discipline — C1+C2+C3 scope</div>
-    <h3>This CTM reflects C1, C2, and C3. Elements requiring C4+ are excluded.</h3>
-    <p>Only challenges with formally completed sub-requirements are represented. C1, C2, and C3 sub-requirements are complete; C4 through C10 are not yet formally complete for CTM purposes.</p>
+    <div class="ad-label">Architecture discipline — C1+C2+C3+C4 scope</div>
+    <h3>This CTM reflects C1, C2, C3, and C4. Elements requiring C5+ are excluded.</h3>
+    <p>Only challenges with formally completed sub-requirements are represented. C1, C2, C3, and C4 sub-requirements are complete; C5 through C10 are not yet formally complete for CTM purposes.</p>
     <ul>
-      <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1+C2+C3, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation (structurally separate from Calmly, law students, no financial stake) — generates every EV settlement report (C3).</li>
-      <li><strong>Excluded:</strong> ATE insurance reframe (C4), pre-sale indicative valuation (C5), payment contingency detail (C6), NTP referral architecture (C7), lock-in (C8), lock-out (C9, C10). These appear as <strong>[REQUIRES C3+]</strong> placeholders where they would otherwise be required.</li>
-      <li><strong>Platform architecture:</strong> Calmly is a platform — it does not own claims, does not bear litigation risk, does not employ solicitors. Those belong to the pool operator. Calmly earns platform fees from both parties per claim resolved. No CTM element implies otherwise.</li>
+      <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1+C2+C3+C4, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation (structurally separate from Calmly, law students, no financial stake) — generates every EV settlement report (C3), pool loss insurance as standard pool membership feature — protects member contributions against early losses, resolves pool financial survivability doubt (C4).</li>
+      <li><strong>Excluded:</strong> pre-sale indicative valuation (C5), payment contingency detail (C6), NTP referral architecture (C7), lock-in (C8), lock-out (C9, C10). These appear as <strong>[REQUIRES C5+]</strong> placeholders where they would otherwise be required.</li>
+      <li><strong>Marketplace architecture:</strong> Calmly is a verified dispute resolution marketplace. The EV assessment app and pool insurance app are verified apps on the marketplace. The marketplace infrastructure (pooling, settlement mechanism, payment rails) is Calmly's. Calmly does not own claims, bear litigation risk, or employ solicitors — those belong to the pool operator.</li>
     </ul>
   </div>
 
@@ -298,7 +298,7 @@
 
   <!-- Phase 1 — Becoming a customer (Claimant) -->
   <h2 class="section-h2">Phase 1 — Becoming a customer (claimant)</h2>
-  <p class="section-intro">Start state: claimant has an unresolved dispute, no workable path, and correctly believes the defendant has no reason to engage. End state: claimant has joined the pool, understands their claim will be pursued, and has an independent reference point for its value. Note: awareness and channel (how the claimant finds Calmly) are C7 mechanisms. The C1+C2 architecture provides the premise; the conversion mechanism is flagged [REQUIRES C3+] where applicable.</p>
+  <p class="section-intro">Start state: claimant has an unresolved dispute, no workable path, and correctly believes the defendant has no reason to engage. End state: claimant has joined the pool, understands their claim will be pursued, has an independent reference point for its value, and knows their contribution is insured against early losses. Note: awareness and channel (how the claimant finds Calmly) are C7 mechanisms. The C1–C4 architecture provides the mechanism; elements requiring C5+ are flagged [REQUIRES C5+] where applicable.</p>
 
   <!-- 1A Awareness -->
   <div class="phase-header">
@@ -361,8 +361,8 @@
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Reads or asks enough to understand pool economics — why the pool pursues, not just that it does. Begins comparing the pool path against self-directed pursuit or abandonment.
-          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> The framing intervention that shifts the claimant's anchor from "the amount I lost" to "what I can realistically recover given the risk" is the C4 Attraction Strategy (ATE insurance reframe). C1+C2 provides the logical premise that makes this reframe coherent — but the reframe itself requires C4. A claimant who understands the pool logic but anchors emotionally on their loss amount will not convert without C4.</div>
+        <div class="dim-content">Reads or asks enough to understand pool economics — why the pool pursues, not just that it does. Begins comparing the pool path against self-directed pursuit or abandonment. The main residual doubt at this stage: "Will the pool survive long enough financially? Early claims may lose — what happens to my contribution if the pool's cash is drawn down before the expected value materialises?"
+          <div class="c4-flag" style="background:#e6f4ec;border-left:3px solid #166534;padding:10px 14px;margin-top:10px;font-size:13px;color:#166534;font-family:var(--font-ui);line-height:1.55;"><strong>[C4 mechanism]</strong> Pool financial survivability doubt is resolved by pool loss insurance — a standard feature of pool membership (not an add-on). Individual claimant contributions are protected against early losses. No individual faces the financial incentive to exit early because their downside is insured. The pool persists through the natural loss distribution. Olson (1965): collective action failures under sequential losses are resolved when individual exposure is transferred to a risk-pooling mechanism. Arrow (1963): insurance resolves the individual incentive to defect by converting idiosyncratic downside risk into a shared actuarial pool.</div>
         </div>
       </div>
       <div class="dim-mechanism">
@@ -421,26 +421,28 @@
   <div class="state-card">
     <div class="state-card-header">
       <span class="tag tag-c1">C1 mechanism</span>
+      <span class="tag tag-c4" style="margin-left:4px;background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C4 — insurance</span>
       <span class="state-card-title" style="margin-left:4px;">Claimant — 1D Sign-up</span>
     </div>
     <div class="state-card-body">
       <div class="state-dim">
         <div class="dim-label">Cognitive — must think</div>
-        <div class="dim-content">"I am pooling my claim with others. The costs of pursuing it are shared. The revenues from resolution are shared. I am not doing this alone."</div>
+        <div class="dim-content">"I am pooling my claim with others. Costs and revenues are shared. My contribution is insured — if early claims lose, my upfront input is protected. The pool will persist long enough for the expected value to materialise. I am not doing this alone, and I am not exposed to early variance."</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">Relief at having a path. Residual uncertainty about the specific payment amount — because C6 (amortisation detail) is not yet fully in scope. The budget constraint is removed in principle (no upfront payment); the exact share structure is a C6 design question.</div>
+        <div class="dim-content">Relief at having a path and structural confidence that the path will hold. Insurance removes the residual anxiety that "even if the pool concept works, it might fall apart before my claim is resolved." The budget constraint is removed in principle (no upfront payment); the contribution is also protected in practice (insurance). Residual uncertainty about the specific payment amount — the exact share structure is a C6 design question.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Submits claim and evidence. Agrees to pool participation terms (costs and revenues shared across the pool). Does not pay anything upfront.
-          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> The onboarding flow, evidence submission process, and the specific terms of the payment instrument are product design questions not yet specified at C1+C2 scope. The principle (payment contingent on recovery from the pool) is the C6 amortisation strategy — but the detailed mechanism is a C6 design output.</div>
+        <div class="dim-content">Submits claim and evidence. Agrees to pool participation terms (costs and revenues shared across the pool, contributions insured as standard). Does not pay anything upfront.
+          <div class="c4-flag" style="background:#e6f4ec;border-left:3px solid #166534;padding:10px 14px;margin-top:10px;font-size:13px;color:#166534;font-family:var(--font-ui);line-height:1.55;"><strong>[C4 mechanism]</strong> Pool membership includes pool loss insurance as a standard feature — not an add-on. The insurance app is a verified app on the Calmly marketplace, curated by Calmly and underwritten by a specialist legal expenses insurer. The claimant's contribution is protected from the moment of joining.</div>
+          <div class="c3plus-flag" style="margin-top:8px;"><strong>[REQUIRES C5+]</strong> The onboarding flow, evidence submission process, and specific terms of the payment instrument are product design questions not yet fully specified. The principle (payment contingent on recovery from the pool) is the C6 amortisation strategy — but the detailed mechanism is a C6 design output. Pre-sale indicative valuation (claim-specific EV before commitment) is C5.</div>
         </div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Working Product — pool participation mechanism. Payment Product — contingency structure in principle: payment from recovered money, not existing funds. No upfront cost.
+        Working Product — pool participation mechanism (C1). Communications Product — pool loss insurance (C4): pool membership includes insurance as standard, protecting individual contributions regardless of early claim outcomes. Payment Product — contingency structure in principle: payment from recovered money, not existing funds. No upfront cost.
       </div>
     </div>
   </div>
@@ -857,11 +859,11 @@
         </tr>
         <tr class="row-comms">
           <td class="col-subphase">1B Consideration</td>
-          <td class="col-state">The pool pursues because its payoff makes following through rational — not me</td>
-          <td class="col-state">Intellectually engaged; doubt about mechanism</td>
-          <td class="col-state">Reads pool economics; compares against self-directed pursuit</td>
-          <td class="col-product"><span class="tag tag-green">Comms</span> Pool economics explanation</td>
-          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+          <td class="col-state">The pool pursues rationally; my contribution is insured against early losses so the pool will survive long enough to deliver</td>
+          <td class="col-state">Intellectually engaged; pool financial survivability doubt resolved by insurance</td>
+          <td class="col-state">Reads pool economics; understands insurance protects contribution regardless of early outcomes</td>
+          <td class="col-product"><span class="tag tag-green">Comms</span> Pool economics + pool loss insurance (C4)</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C4</span></td>
         </tr>
         <tr class="row-comms">
           <td class="col-subphase">1C Conviction</td>
@@ -873,11 +875,11 @@
         </tr>
         <tr class="row-comms">
           <td class="col-subphase">1D Sign-up</td>
-          <td class="col-state">I am pooling my claim; costs and revenues shared; I am not doing this alone</td>
-          <td class="col-state">Relief; residual uncertainty about payment amount</td>
-          <td class="col-state">Submits claim and evidence; agrees to pool participation; no upfront cost</td>
-          <td class="col-product"><span class="tag tag-blue">Working</span> Pool participation + <span class="tag tag-amber">Payment</span> Contingency in principle</td>
-          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+          <td class="col-state">I am pooling my claim; costs and revenues shared; contribution insured; not doing this alone and not exposed to early variance</td>
+          <td class="col-state">Relief; structural confidence pool will persist; residual uncertainty about payment amount (C6)</td>
+          <td class="col-state">Submits claim and evidence; agrees to pool participation with insurance as standard; no upfront cost</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Pool participation + <span class="tag tag-green">Comms</span> Insurance (C4) + <span class="tag tag-amber">Payment</span> Contingency in principle</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C4</span></td>
         </tr>
 
         <!-- Claimant Phase 2 -->
@@ -1064,17 +1066,17 @@
   <div class="finding">
     <div class="finding-header">
       <span class="tag tag-amber">Realistic progressions</span>
-      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--yellow-text);">Phase 1 for the claimant is logically coherent but practically incomplete without C4 and C5</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--yellow-text);">Phase 1 for the claimant is logically coherent but practically incomplete without C5+ (origination, claim qualification, payment instrument)</span>
     </div>
     <div class="finding-body">
-      <p>Every Phase 1 claimant sub-phase is achievable in principle at C1+C2 — the logical premises are sound. But the conversion mechanisms that move real claimants through those phases are not yet specified:</p>
+      <p>C4 closes the pool financial survivability doubt at 1B and 1D. Every Phase 1 sub-phase now has a mechanism — but several conversion-critical mechanisms are still pending:</p>
       <ul>
-        <li><strong>1A (awareness)</strong> depends on an origination channel. C1+C2 is silent on this. That is a C7 problem.</li>
-        <li><strong>1B (consideration)</strong> depends on a psychological framing shift that C4 (Attraction Strategy, ATE insurance reframe) delivers. C1+C2 provides the rational basis; C4 provides the mechanism.</li>
-        <li><strong>1C (conviction)</strong> is strengthened by claim-specific qualification — which requires the pre-sale indicative valuation (C5). Without it, conviction rests on the pool concept alone.</li>
-        <li><strong>1D (sign-up)</strong> requires the specific payment structure — which is C6 detail.</li>
+        <li><strong>1A (awareness)</strong> depends on an origination channel. That is a C7 (NTP gateway partner) problem. Organic SEO is in the architecture but not yet operationally specified.</li>
+        <li><strong>1B (consideration)</strong> — pool financial survivability doubt is now resolved by C4 insurance. <span style="color:var(--green-text);font-weight:600;">C4 complete.</span></li>
+        <li><strong>1C (conviction)</strong> is strengthened by claim-specific qualification — which requires the pre-sale indicative valuation (C5). Without it, conviction rests on the pool concept and C2a loss framing alone.</li>
+        <li><strong>1D (sign-up)</strong> — pool membership with insurance is now specified (C4). The specific payment instrument and distribution mechanism remain C6 detail.</li>
       </ul>
-      <p>This is not an architecture weakness. It is what the challenge sequence was designed to address progressively. Claimants who encounter Calmly at C1+C2 scope will understand the concept — they will not reliably convert. The CTM accurately represents where the architecture is now.</p>
+      <p>The architecture is becoming operationally complete at Phase 1. The remaining gaps (origination channel, claim-specific EV before commitment, payment instrument) are sequencing problems, not architecture failures.</p>
     </div>
   </div>
 
@@ -1092,20 +1094,19 @@
   <div class="finding">
     <div class="finding-header">
       <span class="tag tag-green">Architecture discipline check</span>
-      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--green-text);">C1+C2+C3 complete — no C4+ mechanisms present</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--green-text);">C1+C2+C3+C4 complete — no C5+ mechanisms present</span>
     </div>
     <div class="finding-body">
-      <p>C3 is now complete: independent assessment organisation (law students, no financial stake) is reflected in D1B and D1A.</p>
-      <p>The following mechanisms are explicitly excluded and flagged [REQUIRES C3+] where they would otherwise appear:</p>
+      <p>C4 is now complete: pool loss insurance (Olson 1965 + Arrow 1963) is reflected in Phase 1B (consideration) and Phase 1D (sign-up). Pool membership includes insurance as a standard feature — not an add-on. Individual contributions are protected regardless of early claim outcomes.</p>
+      <p>The following mechanisms are explicitly excluded and flagged [REQUIRES C5+] where they would otherwise appear:</p>
       <ul>
-        <li>ATE insurance reframe (anchor shift from loss-amount to risk-weighted EV) — C4</li>
         <li>Pre-sale indicative valuation (claim-specific independent EV before commitment) — C5</li>
-        <li>Payment instrument detail (ATE mutual, specific distribution mechanism) — C6</li>
-        <li>NTP referral architecture and defendant notification mechanism — C7</li>
+        <li>Payment instrument detail (specific distribution mechanism, amortisation) — C6</li>
+        <li>NTP referral architecture and origination channel — C7</li>
         <li>Lock-in (case history, switching costs) — C8</li>
         <li>Lock-out (scarce resource strategy) — C9, C10</li>
       </ul>
-      <p>The EV assessment at D1B is now fully resolved by C3: generated by the independent assessment org (law students, no financial stake). The Spence signalling principle is operationally grounded — not a theoretical promise.</p>
+      <p>The EV assessment at D1B remains fully resolved by C3. The pool insurance at 1B and 1D is now resolved by C4. The marketplace structure — with the EV assessment app (C3) and pool insurance app (C4) as verified apps — is reflected throughout.</p>
     </div>
   </div>
 
@@ -1115,10 +1116,10 @@
   ══════════════════════════════════════════════════════════════════ -->
   <div class="routing-panel">
     <div class="rp-label">Next steps</div>
-    <p><strong>CTM v2 now reflects C1, C2, and C3.</strong> C3 resolves the D1B independent assessment placeholder and forecloses the defendant's mediation delay tactic. Every sub-phase is grounded in a confirmed mechanism; every remaining gap is flagged with the challenge that closes it.</p>
-    <p><strong>What C1+C2+C3 delivers:</strong> C1 makes mediation structurally operative — the defendant's BATNA changes so that non-participation leads somewhere costly. C2a inverts the time pressure — delay becomes active loss accrual for the defendant, not the claimant. C2b collapses the defendant's information asymmetry — an independent EV signal removes the factual basis for motivated disengagement. C3 grounds that signal operationally: the assessment is generated by law students with no financial stake, removing the defendant's source-credibility objection and shortening mediation timelines. Together, these three challenges define a settlement that reflects the merits of the case as the rational outcome for both parties.</p>
-    <p><strong>What the CTM cannot yet map (requires C4+):</strong> origination channel (C7), ATE insurance reframe and anchor shift (C4), pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6), lock-in (C8).</p>
-    <p><strong>AOM implication:</strong> Each state change implies a product component. Each product component implies a role and activity in the AOM. The EV assessment is a platform service (analytical, not legal) — produced by the independent assessment org (law students, no financial stake). The mediation operation belongs to the pool operator, not Calmly. Calmly's AOM footprint is exchange infrastructure — origination (via NTPs, C7), assessment facilitation, matching, and fee collection. Run <code>/ive-aom-custom</code> to begin. Run <code>/ive-ctm-custom</code> again after each subsequent challenge is designed to extend this CTM incrementally.</p>
+    <p><strong>CTM v2 now reflects C1, C2, C3, and C4.</strong> C4 resolves pool financial survivability doubt at Phase 1B and 1D via pool loss insurance as a standard pool membership feature. Every sub-phase is grounded in a confirmed mechanism; remaining gaps are flagged with the challenge that closes them.</p>
+    <p><strong>What C1+C2+C3+C4 delivers:</strong> C1 makes mediation structurally operative — the defendant's BATNA changes so that non-participation leads somewhere costly. C2a inverts the time pressure — delay becomes active loss accrual for the defendant. C2b collapses the defendant's information asymmetry — an independent EV signal removes the factual basis for motivated disengagement. C3 grounds that signal operationally via the independent assessment org. C4 resolves the claimant's pool financial survivability doubt — insurance makes collective persistence individually rational from the moment of joining. Together, the four challenges define a settlement that reflects the merits of the case as the rational outcome for both parties, and make joining the pool individually rational even knowing early claims may lose.</p>
+    <p><strong>What the CTM cannot yet map (requires C5+):</strong> origination channel (C7), pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6), lock-in (C8).</p>
+    <p><strong>AOM implication:</strong> C4 adds one new HQ activity: insurance app curation — accrediting the pool insurer, setting pool insurance standards, monitoring claims handling. This is a small HQ overhead (~0.5 FTE). The insurance premium is paid by pool members (built into membership); Calmly earns a marketplace fee from the insurer. Run <code>/ive-ctm-custom</code> again after C5 is designed to extend this CTM incrementally.</p>
   </div>
 
 </div>

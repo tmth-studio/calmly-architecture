@@ -174,12 +174,12 @@
 
   <!-- ─── Architecture Discipline Notice ─── -->
   <div class="arch-notice">
-    <div class="arch-label">Architecture discipline — C1+C2+C3</div>
+    <div class="arch-label">Architecture discipline — C1+C2+C3+C4</div>
     <p>This AOM reflects Calmly platform costs only. Pool operator costs (solicitors, litigation, court filing, working capital for claims in flight) are excluded — they belong to the pool operator's P&L, not Calmly's.</p>
-    <p>Calmly is a platform. It does not own claims, bear litigation risk, employ solicitors, or fund court proceedings. The pool operator does those things. Calmly earns platform fees from both parties (claimant and defendant) per claim resolved through the exchange.</p>
+    <p>Calmly is a verified dispute resolution marketplace. It does not own claims, bear litigation risk, employ solicitors, or fund court proceedings. The EV assessment app and pool insurance app are verified apps on the marketplace — curated by Calmly, delivered by independent third parties. Calmly earns platform fees from both parties per claim resolved, and marketplace fees from verified app providers.</p>
     <ul>
-      <li><strong>Excluded:</strong> solicitor salaries, law student supervision, N1 court filing fees, ATE insurance, working capital for claims in litigation, SRA compliance costs at the operating unit level.</li>
-      <li><strong>Included:</strong> technology infrastructure, claim intake and eligibility assessment, independent EV assessment delivery (routed via independent assessment org under C3), defendant onboarding and settlement facilitation, pool operator relationship management. Independent assessment organisation as external enabler — generates every EV settlement report (C3). Calmly pays £16.28/claim per report. WP2 specialist activity changes from generation to routing and review.</li>
+      <li><strong>Excluded:</strong> solicitor salaries, law student supervision, N1 court filing fees, pool insurance premiums (paid by pool members — Calmly earns marketplace fee from insurer, not the premium itself), working capital for claims in litigation, SRA compliance costs at the operating unit level.</li>
+      <li><strong>Included:</strong> technology infrastructure, claim intake and eligibility assessment, independent EV assessment delivery (routed via independent assessment org under C3 — £16.28/claim), defendant onboarding and settlement facilitation, pool operator relationship management, <strong>pool insurance app curation (C4) — accrediting the insurer, setting pool insurance standards, monitoring claims handling (~0.5 FTE HQ, ~£2/claim amortised)</strong>.</li>
       <li><strong>Not modelled (requires later architecture):</strong> securitisation vehicle management, SPV operations, investor relations infrastructure at institutional scale, AML compliance for investor onboarding. These are flagged <code>[REQUIRES later architecture]</code> and excluded from cost lines.</li>
     </ul>
   </div>
@@ -1398,10 +1398,10 @@
 
   <div class="routing">
     <div class="routing-label">Routing instruction</div>
-    <p>AOM updated for C3. Independent assessment org added as external enabler. WP2 time reduced 90→20 min. PVC (£16.28/claim), SC (£80k setup), and WC for customer financing (£2.2M peak at Y5) added. Take the updated Activity detail table (Section 7) and fin-sim feed (below) into <code>/ive-fin-sim-custom</code> with updated Group 2, 4, 5, and 6 inputs.</p>
-    <p>Key inputs: Group 2 cost of goods = NTP placement fee (~£25–50, TIER 4) + platform variable cost (~£5–10) + assessment org payment (£16.28/claim PVC, C3). Group 3 resolution waterfall: Calmly revenue at settlement facilitation (months 1–4), not court judgment. Group 5: add £80k SC for assessment org setup (amortised). Group 6: C3 mechanism — £16.28/claim PVC, peak WC ~£2.2M at Y5. Group 7: at-scale volume ~18,000 claims/year.</p>
-    <p>Next: run <code>/ive-fin-sim-custom</code> with updated Group 2, 4, 5, 6 inputs, then <code>/ive-fit-verifier-custom</code> (four-layer FMOS: PVC + RC + SC + IC).</p>
-    <p><strong>Architecture discipline reminder:</strong> do not re-introduce solicitor costs, student supervision, or court filing fees in the fin-sim. If a cost line requires later architecture (securitisation, SPV, investor relations at institutional scale), flag it as [REQUIRES later architecture] and exclude it from the FMOS calculation.</p>
+    <p>AOM updated for C4. Pool insurance app curation added as HQ activity: accrediting the insurer, setting pool insurance standards, monitoring claims handling (~0.5 FTE HQ, ~£2/claim amortised at 18,000 claims/year). Insurance premium is paid by pool members — not a Calmly cost. Calmly earns a marketplace fee from the insurer. Architecture discipline notice updated: pool insurance is no longer excluded as "ATE insurance (pool operator cost)" — instead, insurance curation is now a Calmly HQ function.</p>
+    <p>Key updated inputs: Group 4 adds insurance curation activity (0.5 FTE HQ, ~£2/claim). Group 5 adds insurance compliance role (0.5 FTE £30k amortised). R4 FIT Verifier gate: cost floor £239 (C3 £199 + CAC £38 + insurance curation £2), FMOS 63.2% — PASS.</p>
+    <p>Next: proceed to R5 design (Use Block). Run <code>/ive-fit-verifier-custom</code> R5 gate after R5 is designed. Fin-sim update can be deferred until after R5+R6 to capture full F2 cost floor in one pass.</p>
+    <p><strong>Architecture discipline reminder:</strong> pool insurance premium is a pool member cost, not Calmly's. Do not include it in the cost floor. Calmly's insurance-related cost is oversight only (~£2/claim). Insurance is a marketplace revenue stream (Calmly earns a fee per insured pool member from the verified insurer).</p>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -1409,9 +1409,9 @@
   <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <div class="finsim" style="margin-top: 36px;">
-    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C3 updated)</div>
+    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C4 updated)</div>
     <pre>
-FIN-SIM INPUTS FROM AOM v2 (Calmly — platform only — C1+C2+C3)
+FIN-SIM INPUTS FROM AOM v2 (Calmly — marketplace — C1+C2+C3+C4)
 ===============================================================
 
 GROUP 1 — Venture and unit
@@ -1436,7 +1436,7 @@ Month 1–4: Defendant settlement facilitation (CP3) — 70% settle here. Revenu
 Month 4+: Claims that proceed to court — Calmly revenue: £0 defendant fee, claimant fee paid at eventual resolution (~12 months). WC for assessment org payment held for full period on these claims.
 Note: Calmly's cash flow position is materially better than v1 — revenue arrives at settlement facilitation (months 1–4), not at court judgment (months 13+). Higher C3 settlement rate (mechanism effect) contracts the WC position.
 
-GROUP 4 — Direct labor activities (all Calmly platform only — pool operator excluded) [C3 updated]
+GROUP 4 — Direct labor activities (all Calmly platform only — pool operator excluded) [C4 updated]
 Activity: CP1/WP1 Claim intake and eligibility assessment | Product: CP/WP | Role: Intake and eligibility assessor | Driver: per inquiry at 65% pass rate (gross up ÷ 0.65) | Time: 45 min
 Activity: WP2 Route claim to assessment org, receive report, quality review [C3: was 90 min generation] | Product: WP | Role: EV assessment specialist | Driver: per unit purchased | Time: 20 min
 Activity: WP2 QA and dataset entry | Product: WP | Role: EV assessment specialist | Driver: per unit purchased | Time: 15 min
@@ -1448,8 +1448,9 @@ Activity: Platform team lead overhead | Product: Enabler | Role: Senior platform
 Activity: Territory compliance | Product: Enabler | Role: Territory compliance officer | Driver: fixed per territory per month (÷ LMUs × volume) | Time: shared FTE, amortise
 Activity: NTP partnership activation | Product: Enabler | Role: Commercial team HQ | Driver: fixed per NTP, amortise over lifetime claims | Time: TBC
 Activity: Pool operator relationship management | Product: Enabler | Role: Pool operator relations HQ | Driver: fixed per operator, amortise over lifetime claims | Time: TBC
+Activity: Pool insurance app curation [C4 new] | Product: Enabler | Role: Insurance compliance / curation (HQ) | Driver: fixed HQ function, ~0.5 FTE at £60k/yr = £30k/yr ÷ 18,000 claims/yr ≈ £1.67/claim | Time: ~£2/claim amortised
 
-GROUP 5 — Other costs (fixed and semi-fixed) [C3 updated]
+GROUP 5 — Other costs (fixed and semi-fixed) [C4 updated]
 Platform technology (build and maintenance): HQ fixed — amortise across annual volume
 EV methodology team: HQ fixed — 2–3 FTE
 Pool operator relations: HQ fixed — 2 FTE
@@ -1457,6 +1458,7 @@ Commercial / NTP partnerships: HQ fixed — 2–3 FTE
 Finance and compliance: HQ fixed — 2 FTE
 CEO / leadership: HQ fixed — 2 FTE
 Assessment org setup [C3]: £80,000 one-time startup cost (SC) — legal structure, law school partnerships, methodology development, assessment tooling. Amortise over at-scale claim volume.
+Insurance curation [C4]: ~0.5 FTE HQ insurance compliance/curation role (~£30k/year). Amortise at ~£2/claim at scale. Calmly earns marketplace fee from insurer — insurance curation generates net-positive revenue at scale.
 
 GROUP 6 — Mechanisms [C3 addition]
 C3 mechanism — independent assessment org: cost £16.28/claim PVC; effect: defendant settlement lag falls, peak WC contracts from ~£4.3M baseline to ~£2.2M with mechanism at Y5. Mechanism improves the weighted average recovery period by increasing the proportion of claims in the 1.5-month settlement bucket.
@@ -1471,7 +1473,7 @@ Excluded from this fin-sim:
 ✗ Law student supervision (pool operator cost)
 ✗ Court filing fees (pool operator cost)
 ✗ Working capital for claims in litigation (pool operator cost)
-✗ ATE insurance (pool operator or investor cost)
+✗ Pool insurance premium (pool member cost — Calmly earns marketplace fee from insurer, not the premium)
 ✗ Securitisation vehicle administration [REQUIRES later architecture]
 ✗ Institutional investor KYC/onboarding [REQUIRES later architecture]
     </pre>
