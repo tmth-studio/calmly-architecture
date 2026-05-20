@@ -205,6 +205,10 @@
 
     /* ── Divider between claimant/defendant sections ── */
     .journey-divider { border: none; border-top: 2px dashed var(--border); margin: 48px 0; }
+
+    /* ── Updated note ── */
+    .updated-note { border-left: 4px solid var(--inset-border); background: var(--accent-light); padding: 10px 14px; margin: 10px 0; font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+    .updated-note strong { font-family: var(--font-ui); color: var(--accent); }
   </style>
 </head>
 <body>
@@ -235,7 +239,7 @@
     <p>All ten challenges are formally complete. C8 (switching cost / lock-in), C9 (supplier leverage / lock-out), and C10 (competitive moat / data flywheel) are reflected in Phase 2 (Consuming), Phase 4 (Repeating), and the relevant ITP and supply-side sections.</p>
     <ul>
       <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1–C4, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation — law students, no financial stake — generates every EV settlement report (C3), pool loss insurance as standard pool membership feature (C4), ITP referral architecture and origination channel (C7), guided submission flow as EV calibration generator (R5/C8 dual function), ITP-specific outcomes dataset and integration depth as switching cost stores of value (C8), multi-org methodology ownership eliminating single-source supplier dependency (C9), EV accuracy as self-reinforcing data flywheel (C10).</li>
-      <li><strong>Elements requiring later design (flagged [REQUIRES C5+]):</strong> pre-sale indicative valuation (C5), payment contingency detail (C6). These placeholders remain where the prior version left them. C7, C8, C9, and C10 are now resolved throughout.</li>
+      <li><strong>Elements requiring later design (flagged [REQUIRES C5+]):</strong> pre-sale indicative valuation (C5). C6 defendant-side mechanism is now partially resolved — the defendant liability buyout app replaces the earlier financing app concept (see C6 update note in defendant Phase 3 below). Claimant-side payment instrument detail remains a C6 design output. C7, C8, C9, and C10 are now resolved throughout.</li>
       <li><strong>Marketplace architecture:</strong> Calmly is a verified dispute resolution marketplace. The EV assessment app and pool insurance app are verified apps on the marketplace. The marketplace infrastructure (pooling, settlement mechanism, payment rails) is Calmly's. Calmly does not own claims, bear litigation risk, or employ solicitors — those belong to the pool operator.</li>
     </ul>
   </div>
@@ -652,57 +656,61 @@
   <div class="journey-heading">
     <span class="jh-icon">→</span>
     <h2>Defendant journey</h2>
-    <span class="jh-subtitle">From "I have received a claim" → independent EV signal → settlement decision</span>
+    <span class="jh-subtitle">From "I have received a claim" → independent EV signal + buyout offer → legal closure → repayment</span>
   </div>
 
-  <p class="section-intro" style="margin-top:20px;">The defendant is a paying customer. Their key monetizable cost is the cost of not knowing what they legitimately owe. C2b resolves this through Spence signalling — an independent EV assessment from a party with no financial stake. C1 is the precondition: it changes the defendant's rational calculus so that engagement is necessary. C2b makes settlement at fair value the rational response.</p>
+  <p class="section-intro" style="margin-top:20px;">The defendant is a paying customer. Their key monetizable cost is the cost of not knowing what they legitimately owe. C2b resolves this through Spence signalling — an independent EV assessment from a party with no financial stake. C1 is the precondition: it changes the defendant's rational calculus so that engagement is necessary. C2b makes settlement at fair value the rational response. C6 (defendant-side) now provides a defendant liability buyout — a proactive risk transfer instrument (Arrow, 1963) presented simultaneously with the pool demand and EV report at D1. The defendant's lifecycle: D0 (pre-engagement) → D1 (demand + buyout offer) → D2 (buyout decision) → D3 (buyout signed, legal closure) → D4 (repayment to buyout operator only, no further legal exposure).</p>
+  <div class="updated-note"><strong>v2.0 C6 update:</strong> C6 defendant-side mechanism redesigned. Old: reactive consumer credit instrument (Stiglitz &amp; Weiss, 1981) — defendant applied to a financing app after deciding to settle at D2; legal dispute remained open during repayment. New: proactive risk transfer instrument (Arrow, 1963) — a litigation finance firm presents a conditional buyout offer at D1, simultaneously with the pool demand and EV report. At D3 the defendant signs and legal obligation is extinguished. D4 onward: defendant repays the buyout operator only (financial obligation; no legal exposure). This changes the defendant's phase structure throughout the sections below.</div>
 
   <!-- Phase 1 — Becoming a customer (Defendant) -->
   <h2 class="section-h2">Phase 1 — Awareness and engagement (defendant)</h2>
   <p class="section-intro">The defendant does not voluntarily seek Calmly. They receive a notification. Their journey begins at the point of contact — and their first state change is the recognition that the adversary they face is not the individual claimant they could previously ignore.</p>
 
-  <!-- D1A — Receipt of demand -->
+  <!-- D1A — Receipt of demand + buyout offer -->
   <div class="phase-header">
     <div class="phase-number comms">D1A</div>
     <div class="phase-title">
-      <h3>Receipt of demand</h3>
-      <div class="phase-arc">Unaware → receives pool demand, assesses position</div>
+      <h3>Receipt of demand and buyout offer</h3>
+      <div class="phase-arc">Unaware (D0) → receives pool demand + EV report + buyout offer simultaneously (D1)</div>
     </div>
   </div>
 
   <div class="state-card">
     <div class="state-card-header">
       <span class="tag tag-c1">C1 mechanism — core</span>
-      <span class="state-card-title" style="margin-left:4px;">Defendant — D1A Receipt</span>
+      <span class="tag tag-c2" style="margin-left:4px;">C2b — EV signal</span>
+      <span class="tag tag-c3plus" style="margin-left:4px;background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6 — buyout offer</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D1A Receipt (D1 in lifecycle)</span>
     </div>
     <div class="state-card-body">
       <div class="state-dim">
         <div class="dim-label">Cognitive — must think</div>
-        <div class="dim-content">"I have received a demand from an entity that has pooled multiple claims and will pursue them. This is not an individual claimant I can wait out. The party now threatening me does not have the same payoff problem I have always relied on."</div>
+        <div class="dim-content">"I have received three things simultaneously: a demand from an entity that has pooled multiple claims and will pursue them; an independent EV assessment of what I legitimately owe; and a conditional buyout offer from a litigation finance firm — a defined, calculable path to extinguishing my legal exposure entirely."</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">Unease — the defendant's standard calculation (the claimant will give up) no longer holds. The pool operator is not emotionally invested in this specific case. They are making an EV decision across a portfolio. That is a qualitatively different adversary. Cluster 1 (SME/corporate): institutional recognition of a changed threat environment. Cluster 2 (micro/sole trader): personal unease, suppressed guilt surfacing.</div>
+        <div class="dim-content">Unease about the threat (the claimant-will-give-up calculation no longer holds) combined with a structured, immediately available exit path. The buyout offer converts open-ended legal anxiety into a bounded financial decision. Cluster 1 (SME/corporate): institutional recognition of a changed threat environment alongside a structured risk transfer option. Cluster 2 (micro/sole trader): personal unease and suppressed guilt surfacing — but with a clear, dignified route to resolution.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Receives the pool's demand. Assesses their position. For the first time, non-engagement carries a genuine consequence: court, pursued by a party whose payoff structure makes following through the dominant strategy.
-          <div class="inset" style="margin-top:8px;"><p><strong>[C3 UPDATE]</strong> The defendant's capacity to extend mediation on source-credibility grounds is foreclosed by the independent assessment org (C3). The report is generated by law students with no financial stake — the objection "Calmly has an interest in the settlement amount" loses its structural basis. Without this objection, the primary delay tactic within mediation is unavailable.</p></div>
+        <div class="dim-content">Receives the pool's demand and the buyout offer. Assesses their position. The defendant faces three choices: accept the buyout offer, negotiate its terms, or reject it and defend. For the first time, non-engagement carries a genuine consequence — but the buyout provides a proactive off-ramp that the old financing app did not.
+          <div class="inset" style="margin-top:8px;"><p><strong>[C3 UPDATE]</strong> The defendant's capacity to extend mediation on source-credibility grounds is foreclosed by the independent assessment org (C3). The EV report is generated by law students with no financial stake — the objection "Calmly has an interest in the settlement amount" loses its structural basis. Without this objection, the primary delay tactic within mediation is unavailable. <strong>C3 dual function (C6 update):</strong> the EV report now also serves as the underwriting basis for the buyout operator. The same independent assessment that removes the defendant's delay tactic simultaneously allows the buyout firm to price its risk. One output; two functions.</p></div>
+          <div class="updated-note"><strong>v2.0 C6 update:</strong> D1 is now the moment three simultaneous elements arrive: pool demand + EV report + buyout offer. The old financing app arrived at D2 (after the defendant decided to settle). The buyout offer arrives at D1 — before the defendant has made any decision. This is the Arrow (1963) proactive risk transfer structure: the offer is conditional and immediate, not reactive.</div>
         </div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Working Product — pool credibility mechanism. The pool's payoff structure makes litigating every qualifying claim the dominant strategy (Schelling 1960). Non-participation is no longer rational. Mediation becomes operative.
+        Working Product — pool credibility mechanism (C1). The pool's payoff structure makes litigating every qualifying claim the dominant strategy (Schelling 1960). Non-participation is no longer rational. Working Product — independent EV assessment (C2b / C3). Payment Product — defendant liability buyout offer (C6): conditional offer from a litigation finance firm, presented at D1, extinguishing legal obligation if accepted.
       </div>
     </div>
   </div>
 
-  <!-- D1B — EV signal received -->
+  <!-- D1B — EV signal received (now part of D1 simultaneous package) -->
   <div class="phase-header" style="margin-top:28px;">
     <div class="phase-number comms">D1B</div>
     <div class="phase-title">
-      <h3>Independent EV signal received</h3>
-      <div class="phase-arc">Threat received → defendant receives credible signal of what they legitimately owe</div>
+      <h3>Independent EV signal received — and underwriting basis for buyout</h3>
+      <div class="phase-arc">D1 package received → EV signal collapses uncertainty; same report underwrites buyout offer</div>
     </div>
   </div>
 
@@ -710,38 +718,40 @@
     <div class="state-card-header">
       <span class="tag tag-c2">C2b — Spence signalling</span>
       <span class="tag tag-blue" style="margin-left:4px;">C3</span>
-      <span class="state-card-title" style="margin-left:4px;">Defendant — D1B EV signal</span>
+      <span class="tag tag-c3plus" style="margin-left:4px;background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6 — buyout underwriting</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D1B EV signal (D1 in lifecycle)</span>
     </div>
     <div class="state-card-body">
       <div class="state-dim">
         <div class="dim-label">Cognitive — must think</div>
-        <div class="dim-content">"I have received an independent assessment of what I legitimately owe from a party that has no financial stake in whether I settle or not. This is not the claimant's valuation. It is not Calmly's valuation. It is a signal I cannot dismiss on the grounds that it is motivated."</div>
+        <div class="dim-content">"I have received an independent assessment of what I legitimately owe from a party that has no financial stake in whether I settle or not. This is not the claimant's valuation. It is not Calmly's valuation. It is a signal I cannot dismiss on the grounds that it is motivated. And the same report has been used by the buyout operator to price a conditional offer — meaning a third party has already made a financial judgment about what I owe."</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">The open-ended uncertainty — "how much do I actually owe?" — collapses to a bounded, calculable liability. The emotional relief of knowing the number is real, even if the number is uncomfortable. For Cluster 2 (sole trader): the guilt that was suppressed through motivated reasoning now has a specific addressable target. Acknowledgment becomes possible.</div>
+        <div class="dim-content">The open-ended uncertainty — "how much do I actually owe?" — collapses to a bounded, calculable liability. The emotional relief of knowing the number is real, even if the number is uncomfortable. The buyout offer adds a further dimension: the defendant can see that an independent financial actor has already priced their liability. Motivated self-undervaluation becomes harder to sustain. For Cluster 2 (sole trader): the guilt that was suppressed through motivated reasoning now has a specific addressable target. Acknowledgment becomes possible.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Evaluates the independent EV assessment. Compares it against their own self-serving estimate. The gap between the two is now publicly visible to both parties — which changes the settlement negotiation dynamics.</div>
+        <div class="dim-content">Evaluates the independent EV assessment and the conditional buyout offer together. The EV report informs both the defendant's own liability estimate and the buyout operator's pricing. The gap between the defendant's self-serving estimate and the independent assessment is now visible — and validated by a third party with money on the table.</div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Working Product — independent EV assessment. Spence, M. (1973): a signal from a party with no financial stake in the outcome is credible by design. The information asymmetry that made motivated disengagement rational collapses. Defendant can now act rationally: settle at fair value rather than over-settle or stonewall. <strong>C3 update:</strong> assessment generated by independent assessment org — law students, no financial stake. Spence (1973): signal credible because structural conditions for motivated bias are absent.
+        Working Product — independent EV assessment. Spence, M. (1973): a signal from a party with no financial stake in the outcome is credible by design. The information asymmetry that made motivated disengagement rational collapses. C3 update: assessment generated by independent assessment org — law students, no financial stake. <strong>C6 dual function of the EV report (v2.0 update):</strong> (a) defendant scepticism defeat — Spence signal credible by structural design; (b) underwriting basis for the buyout operator — Arrow (1963), the buyout operator prices risk against the same independent assessment. The EV report is both the credibility mechanism (C3) and the commercial basis for the buyout instrument (C6). One output; two functions.
       </div>
     </div>
   </div>
 
   <!-- Phase 2 — Consuming (Defendant) -->
   <h2 class="section-h2">Phase 2 — Consuming the product (defendant)</h2>
-  <p class="section-intro">The defendant's Phase 2 is active, not passive. They are making a rational settlement calculation in real time. C1 established that non-engagement leads to court. C2b provides the information needed to make the settlement decision rational rather than resistant.</p>
+  <p class="section-intro">The defendant's Phase 2 is active, not passive. They are making a rational buyout decision in real time. C1 established that non-engagement leads to court. C2b provides the information needed to make the decision rational rather than resistant. C6 provides the structured exit instrument. Under the v2.0 design, Phase 2 centres on the buyout decision (D2) — accept, negotiate, or decline — rather than mediation engagement as the primary path.</p>
+  <div class="updated-note"><strong>v2.0 C6 update:</strong> Phase 2 defendant journey restructured. Old path: D1 demand received → D2 defendant decides to settle → accesses financing app. New path: D1 demand + EV report + buyout offer received simultaneously → D2 buyout decision (accept / negotiate / decline) → D3 buyout signed, legal closure. The financing app is replaced by the defendant liability buyout app. Mediation remains available for defendants who decline the buyout — but the buyout is the primary designed path.</div>
 
-  <!-- D2A Engagement -->
-  <div class="phase-header">
+  <!-- D2A — Buyout decision -->
+  <div class="phase-header" style="margin-top:28px;">
     <div class="phase-number working">D2A</div>
     <div class="phase-title">
-      <h3>Mediation engagement</h3>
-      <div class="phase-arc">EV signal received → defendant engages in mediation</div>
+      <h3>Buyout decision — accept, negotiate, or decline</h3>
+      <div class="phase-arc">D1 package received → D2 decision point: buy out legal exposure or engage mediation</div>
     </div>
   </div>
 
@@ -749,97 +759,136 @@
     <div class="state-card-header">
       <span class="tag tag-c1">C1 mechanism</span>
       <span class="tag tag-c2" style="margin-left:4px;">C2b — bounded liability</span>
-      <span class="state-card-title" style="margin-left:4px;">Defendant — D2A Mediation engagement</span>
+      <span class="tag tag-c3plus" style="margin-left:4px;background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6 — buyout decision</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D2A Buyout decision (D2 in lifecycle)</span>
     </div>
     <div class="state-card-body">
       <div class="state-dim">
         <div class="dim-label">Cognitive — must think</div>
-        <div class="dim-content">"My best outcome now is a settlement that reflects the merits — not a wait-and-see. Refusal leads to court with a credible adversary. Delay adds to the cost I will eventually pay. The number I am being asked to settle at is independently assessed; I cannot dismiss it as motivated."</div>
+        <div class="dim-content">"I have three options. I can accept the buyout — transferring my legal liability to the buyout operator for a fixed financial commitment, extinguishing my legal exposure immediately. I can negotiate the buyout terms. Or I can decline and engage mediation directly. Refusal to engage at all leads to court with a credible adversary. The buyout converts an indefinite legal obligation into a structured, manageable financial one."</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">A shift from passive stonewalling to active rational engagement. Not necessarily willing — but rational. The defendant participates because the alternative is court with a credible adversary (C1) and the settlement amount is bounded and independently justified (C2b). The without-prejudice framing removes the liability cascade fear: any settlement offer cannot be used as evidence of admission in other proceedings.</div>
+        <div class="dim-content">A shift from open-ended legal dread to a structured financial decision. The buyout path is emotionally distinct from the old mediation-only path: the defendant is not negotiating what they owe — they are deciding whether to transfer the obligation entirely. For Cluster 1 (SME/corporate): risk transfer logic is familiar; the buyout converts a contingent liability to a scheduled payment. For Cluster 2 (sole trader): the buyout removes the fear that the dispute will resurface — legal closure is complete at D3, not gradual.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Engages in mediation. Responds to the pool's demand. Makes a settlement offer or enters negotiation from a position where the expected value is known to both parties.</div>
+        <div class="dim-content">Evaluates the buyout offer against the alternative (mediation, potential court). The cost-of-delay mechanism still applies: each week of non-decision increases the defendant's legal escalation costs, making early buyout acceptance the dominant strategy.
+          <div class="inset" style="margin-top:8px;"><p><strong>C2 Efficacy Strategy (Defendant):</strong> Manufacture a store of "savings" for the defendant that they will lose if they delay. With each week of non-decision, legal escalation costs increase. Framed as loss accrual (Prospect Theory), not future expense, this changes the temporal discounting calculation decisively — and applies equally to the buyout decision as to the old mediation path.</p></div>
+          <div class="updated-note"><strong>v2.0 C6 update:</strong> Three options at D2: (1) accept buyout — proceed to D3 (buyout signed, legal closure); (2) negotiate buyout — adjust terms, then proceed to D3; (3) decline buyout — enter mediation via the standard path. Option 3 represents a minority of defendants who decline risk transfer and prefer to negotiate settlement directly. They follow a path closer to the prior CTM design. The buyout is the primary designed path; mediation remains available.</div>
+        </div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Working Product — mediation platform. C1 makes engagement necessary (BATNA has changed). C2b makes engagement rational (bounded liability rather than open-ended exposure). Without-prejudice framework is the enabling condition for genuine engagement: the door opened by engaging stays closed beyond this claim.
+        Payment Product — defendant liability buyout app (C6). Arrow (1963): proactive risk transfer instrument. The buyout operator has priced the risk against the independent EV report and offers a conditional buyout at D1. The defendant's decision at D2 is whether to transfer legal obligation to the buyout operator (financial obligation, no legal exposure) or retain it through mediation. C1 makes declining engagement entirely irrational (BATNA has changed). C2b ensures the liability is bounded and calculable — making the buyout pricing credible.
       </div>
     </div>
   </div>
 
-  <!-- D2B Value realisation (time pressure) -->
+  <!-- D2B Value realisation (time pressure on buyout decision) -->
   <div class="phase-header" style="margin-top:28px;">
     <div class="phase-number working">D2B</div>
     <div class="phase-title">
-      <h3>Early settlement</h3>
-      <div class="phase-arc">Engaged → settles early to avoid accruing legal escalation costs</div>
+      <h3>Early buyout acceptance</h3>
+      <div class="phase-arc">Buyout decision engaged → accepts early to avoid accruing legal escalation costs</div>
     </div>
   </div>
 
   <div class="state-card">
     <div class="state-card-header">
       <span class="tag tag-c2">C2b — loss accrual (Prospect Theory)</span>
-      <span class="state-card-title" style="margin-left:4px;">Defendant — D2B Early settlement</span>
+      <span class="tag tag-c3plus" style="margin-left:4px;background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6 — buyout timing</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D2B Early buyout acceptance</span>
     </div>
     <div class="state-card-body">
       <div class="state-dim">
         <div class="dim-label">Cognitive — must think</div>
-        <div class="dim-content">"Each week I delay, the cost of resolution increases. The savings I could have made by settling last week are now gone. Early settlement is not a concession — it is the rational move given the time structure of the costs I face."</div>
+        <div class="dim-content">"Each week I delay, the cost of resolution increases. The savings I could have made by accepting last week are now gone. Early buyout acceptance is not a concession — it is the rational move given the time structure of the costs I face. The buyout converts an open-ended legal liability into a scheduled financial repayment. That conversion is worth paying for."</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">Urgency — manufactured by the cost-of-delay mechanism. This is Prospect Theory applied to the defendant's frame: delay is reframed from a neutral hold (no immediate cost) to active loss accrual (costs increasing with each week of non-settlement). The emotional register shifts from passive resistance to calculated urgency.</div>
+        <div class="dim-content">Urgency — manufactured by the cost-of-delay mechanism. Prospect Theory applied to the defendant's frame: delay is reframed from a neutral hold (no immediate cost) to active loss accrual (costs increasing with each week of non-decision). The emotional register shifts from passive resistance to calculated urgency — and the buyout path provides a clear, structured action to take in response to that urgency.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Makes a settlement offer at or near the independently assessed fair value. Does not wait. The "savings" manufactured by C2 — the legal escalation costs the defendant would lose by waiting — make earlier settlement the dominant strategy.
-          <div class="inset" style="margin-top:8px;"><p><strong>C2 Efficacy Strategy (Defendant):</strong> Manufacture a store of "savings" for the defendant that they will lose if they delay settlement, akin to a switching cost. With each week of non-settlement, the defendant's legal escalation costs increase. Framed as loss accrual (Prospect Theory), not future expense, this changes the temporal discounting calculation decisively.</p></div>
-        </div>
+        <div class="dim-content">Accepts the buyout offer. The legal dispute is still open at this point — legal closure happens at D3 (buyout signed). The acceptance is the decision to transfer liability; the legal extinguishment follows when the buyout agreement is executed.</div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Working Product — cost-of-delay schedule. Kahneman &amp; Tversky (1979): losses loom approximately twice as large as equivalent gains. The time-indexed cost-of-delay mechanism reframes each week of non-settlement as a loss the defendant is actively incurring — not a future discretionary payment. Early settlement becomes the rational response.
+        Working Product — cost-of-delay schedule (C2b). Kahneman &amp; Tversky (1979): losses loom approximately twice as large as equivalent gains. The time-indexed cost-of-delay mechanism reframes each week of non-decision as a loss the defendant is actively incurring. Payment Product — defendant liability buyout app (C6): acceptance at D2B triggers the D3 buyout signing process.
       </div>
     </div>
   </div>
 
-  <!-- Phase 3 — Payment (Defendant) -->
-  <h2 class="section-h2">Phase 3 — Payment (defendant)</h2>
-  <p class="section-intro">The defendant's payment is the settlement itself. Their key monetizable cost — the cost of not knowing what they legitimately owe — has been eliminated by C2b. Payment at fair value is now the dominant rational strategy.</p>
+  <!-- Phase 3 — Buyout signing + legal closure (Defendant) -->
+  <h2 class="section-h2">Phase 3 — Buyout signed, legal closure (defendant)</h2>
+  <p class="section-intro">D3 is the moment legal obligation is extinguished. The defendant signs the buyout agreement; the dispute is legally closed. From D3 onward, the defendant has a financial obligation to the buyout operator only — no legal exposure remains. This is the structural difference from the old settlement payment model: the claim is not paid, it is transferred.</p>
+  <div class="updated-note"><strong>v2.0 C6 update:</strong> Phase 3 (defendant) redesigned. Old: D3A was settlement payment — defendant paid the settlement amount and the legal dispute closed at the same moment. New: D3 is buyout signed — the defendant signs the buyout agreement and legal obligation is extinguished. The defendant does not pay the claimant directly; the buyout operator assumes the legal obligation. D4 is the repayment phase — defendant repays the buyout operator only (financial obligation, no legal exposure). The risk transfer is complete at D3.</div>
 
   <div class="phase-header">
     <div class="phase-number payment">D3A</div>
     <div class="phase-title">
-      <h3>Settlement payment</h3>
-      <div class="phase-arc">Agreement reached → defendant pays fair settlement</div>
+      <h3>Buyout signed — legal obligation extinguished</h3>
+      <div class="phase-arc">Buyout accepted (D2) → D3: defendant signs buyout agreement, legal dispute closed</div>
     </div>
   </div>
 
   <div class="state-card">
     <div class="state-card-header">
       <span class="tag tag-c2">C2b resolved</span>
-      <span class="state-card-title" style="margin-left:4px;">Defendant — D3A Settlement payment</span>
+      <span class="tag tag-c3plus" style="margin-left:4px;background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6 — legal closure</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D3A Buyout signed (D3 in lifecycle)</span>
     </div>
     <div class="state-card-body">
       <div class="state-dim">
         <div class="dim-label">Cognitive — must think</div>
-        <div class="dim-content">"I am paying what I legitimately owe — no more. The independent assessment gave me the factual basis to know that. I am not over-settling out of fear, and I am not under-settling out of motivated reasoning."</div>
+        <div class="dim-content">"I have signed the buyout agreement. My legal obligation is extinguished — the buyout operator has assumed it. I now owe a financial repayment to the buyout operator only. The claim cannot be reopened. My legal exposure is gone."</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">Resolution without admission cascade. The without-prejudice framing means paying does not constitute an admission for other proceedings. For Cluster 2 defendants (sole traders): optional acknowledgment pathway — a structured non-admissible statement — allows genuine psychological closure rather than purely financial settlement. Tangney (1994): guilt resolves through acknowledgment and amends, not through financial settlement alone.</div>
+        <div class="dim-content">Clean legal closure. The distinction from the old settlement model matters emotionally: the defendant is not paying the claimant — they are transferring a risk. The legal threat is extinguished immediately at signing. For Cluster 2 defendants (sole traders): optional acknowledgment pathway — a structured non-admissible statement — allows genuine psychological closure to accompany the legal closure. Tangney (1994): guilt resolves through acknowledgment and amends, not through financial settlement alone. The buyout does not preclude acknowledgment; it separates legal and psychological resolution.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">Pays the settled amount. Closes the dispute. No further legal proceedings.</div>
+        <div class="dim-content">Signs the buyout agreement. Legal dispute is closed. Defendant's obligation to the claimant (via the pool) is extinguished. Defendant now has a financial repayment schedule with the buyout operator. No further legal proceedings.</div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Payment Product — settlement execution. Without-prejudice framing as enabling condition. Optional acknowledgment pathway for Cluster 2 defendants (not required for payment; available for psychological closure).
+        Payment Product — defendant liability buyout app (C6). Arrow (1963): risk transfer instrument — legal obligation transferred from defendant to buyout operator at signing. Without-prejudice framing applies to the signing event; the buyout agreement records the financial obligation, not the legal admission. Optional acknowledgment pathway for Cluster 2 defendants (not required; available for psychological closure).
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 — Repayment phase -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number payment">D4A</div>
+    <div class="phase-title">
+      <h3>Repayment — financial obligation to buyout operator</h3>
+      <div class="phase-arc">D3 signed → D4: repaying buyout operator only, no legal exposure</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-c3plus" style="background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;border:1px solid #c4aff0;display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6 — repayment phase</span>
+      <span class="state-card-title" style="margin-left:4px;">Defendant — D4A Repayment (D4 in lifecycle)</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"I am repaying the buyout operator according to the agreed schedule. This is a financial obligation only — no legal exposure remains. Calmly's role in my case is complete. The dispute with the claimant is closed."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Managed obligation. The repayment schedule converts an indeterminate legal threat into a predictable financial commitment. The open-ended anxiety is gone. The defendant knows exactly what they owe, to whom, and over what period. For Cluster 1 (SME/corporate): this is a standard commercial credit relationship with a known counterparty. For Cluster 2 (sole trader): the manageability of a structured repayment is significant — it replaces the fear of an unknown outcome with a concrete schedule.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Repays the buyout operator per the agreed schedule. No interaction with Calmly at this stage — D4 is a relationship between the defendant and the buyout operator only. Calmly's platform role is complete at D3.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Payment Product — defendant liability buyout app (C6). The buyout operator operates on their own P&L — no cost to Calmly from D4 onward. Calmly earns a platform fee for defendant routing and buyout app curation (see AOM Section 5). The repayment relationship is entirely between the defendant and the buyout operator. Calmly's financial exposure in the defendant journey ends at D3.
       </div>
     </div>
   </div>
@@ -1076,52 +1125,64 @@
         <tr class="row-working">
           <td rowspan="2">Defendant</td>
           <td rowspan="2" class="col-phase">1 — Becoming</td>
-          <td class="col-subphase">D1A Receipt of demand</td>
-          <td class="col-state">This is not an individual claimant I can wait out; the pool's payoff makes following through their dominant strategy</td>
-          <td class="col-state">Unease; standard calculation no longer holds</td>
-          <td class="col-state">Receives pool demand; assesses position; non-engagement now has genuine consequences</td>
-          <td class="col-product"><span class="tag tag-blue">Working</span> Pool credibility mechanism</td>
-          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+          <td class="col-subphase">D1A Receipt of demand + buyout offer (D1)</td>
+          <td class="col-state">This is not an individual claimant I can wait out; I have simultaneously received a pool demand, an independent EV report, and a conditional buyout offer — three elements that together frame a structured decision</td>
+          <td class="col-state">Unease about threat; buyout offer converts open-ended anxiety into a bounded financial decision</td>
+          <td class="col-state">Receives pool demand + EV report + buyout offer simultaneously (D1); assesses three options: accept buyout, negotiate buyout, or decline and engage mediation</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Pool credibility (C1) + <span class="tag tag-blue">Working</span> EV assessment (C2b/C3) + <span class="tag tag-amber">Payment</span> Buyout offer (C6)</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2b</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span></td>
         </tr>
         <tr class="row-working">
-          <td class="col-subphase">D1B EV signal</td>
-          <td class="col-state">I have an independent assessment of what I legitimately owe from a party with no financial stake</td>
-          <td class="col-state">Open-ended uncertainty collapses to bounded liability; acknowledgment becomes possible</td>
-          <td class="col-state">Evaluates independent EV assessment; compares against self-serving estimate</td>
-          <td class="col-product"><span class="tag tag-blue">Working</span> Independent EV assessment (Spence signalling)</td>
-          <td class="col-balm"><span class="tag tag-c2">C2b</span> <span class="tag tag-blue">C3</span></td>
+          <td class="col-subphase">D1B EV signal — dual function (D1)</td>
+          <td class="col-state">I have an independent assessment of what I legitimately owe from a party with no financial stake; the same report is the buyout operator's underwriting basis</td>
+          <td class="col-state">Open-ended uncertainty collapses to bounded liability; buyout operator's independent pricing validates the EV signal further</td>
+          <td class="col-state">Evaluates independent EV assessment and buyout offer together; gap between self-serving estimate and independent assessment now visible — and validated by a third party with money on the table</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Independent EV assessment (Spence signalling / C3); dual function: (a) defendant scepticism defeat, (b) buyout underwriting basis (C6)</td>
+          <td class="col-balm"><span class="tag tag-c2">C2b</span> <span class="tag tag-blue">C3</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span></td>
         </tr>
 
         <!-- Defendant Phase 2 -->
         <tr class="row-working">
           <td rowspan="2">Defendant</td>
           <td rowspan="2" class="col-phase">2 — Consuming</td>
-          <td class="col-subphase">D2A Mediation</td>
-          <td class="col-state">Refusal leads to court; settlement is bounded and independently justified; without-prejudice framing removes admission risk</td>
-          <td class="col-state">Shift from passive stonewalling to rational active engagement</td>
-          <td class="col-state">Engages in mediation; responds to pool demand; negotiates from known EV basis</td>
-          <td class="col-product"><span class="tag tag-blue">Working</span> Mediation platform + without-prejudice framework</td>
-          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2b</span></td>
+          <td class="col-subphase">D2A Buyout decision (D2)</td>
+          <td class="col-state">I can accept the buyout (transfer legal liability), negotiate its terms, or decline and engage mediation; refusal to engage leads to court; the buyout converts an indefinite legal obligation into a structured financial one</td>
+          <td class="col-state">Shift from open-ended legal dread to structured financial decision; risk transfer logic replaces mediation anxiety</td>
+          <td class="col-state">Evaluates buyout offer against mediation alternative; cost-of-delay urgency applies to the buyout decision as it did to old mediation path</td>
+          <td class="col-product"><span class="tag tag-amber">Payment</span> Defendant liability buyout app (C6) — Arrow (1963) proactive risk transfer; without-prejudice framing; C1 ensures declining entirely is irrational</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C2b</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span></td>
         </tr>
         <tr class="row-working">
-          <td class="col-subphase">D2B Early settlement</td>
-          <td class="col-state">Each week of delay costs me more; settling now is the rational move</td>
-          <td class="col-state">Urgency; time pressure manufactured by cost-of-delay schedule</td>
-          <td class="col-state">Makes settlement offer at or near independently assessed fair value</td>
-          <td class="col-product"><span class="tag tag-blue">Working</span> Cost-of-delay schedule (Prospect Theory)</td>
-          <td class="col-balm"><span class="tag tag-c2">C2b</span></td>
+          <td class="col-subphase">D2B Early buyout acceptance</td>
+          <td class="col-state">Each week of delay costs me more; accepting the buyout now is the rational move; legal closure will follow at D3</td>
+          <td class="col-state">Urgency; time pressure manufactured by cost-of-delay schedule; buyout provides clear structured action in response</td>
+          <td class="col-state">Accepts buyout offer; proceeds to D3 (buyout signing)</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Cost-of-delay schedule (C2b, Prospect Theory) + <span class="tag tag-amber">Payment</span> Buyout acceptance trigger (C6)</td>
+          <td class="col-balm"><span class="tag tag-c2">C2b</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span></td>
         </tr>
 
-        <!-- Defendant Phase 3 -->
+        <!-- Defendant Phase 3 — Buyout signed, legal closure -->
         <tr class="row-payment">
           <td>Defendant</td>
-          <td class="col-phase">3 — Payment</td>
-          <td class="col-subphase">D3A Settlement</td>
-          <td class="col-state">I am paying what I legitimately owe — no more; independently assessed; without admission cascade</td>
-          <td class="col-state">Resolution without liability cascade; optional acknowledgment for psychological closure</td>
-          <td class="col-state">Pays settlement; closes dispute</td>
-          <td class="col-product"><span class="tag tag-amber">Payment</span> Settlement execution + optional acknowledgment pathway</td>
-          <td class="col-balm"><span class="tag tag-c2">C2b</span></td>
+          <td class="col-phase">3 — Legal closure</td>
+          <td class="col-subphase">D3A Buyout signed (D3)</td>
+          <td class="col-state">Legal obligation extinguished; buyout operator has assumed it; financial repayment to buyout operator only from D4 onward; claim cannot be reopened</td>
+          <td class="col-state">Clean legal closure; open-ended anxiety replaced by defined financial schedule; optional acknowledgment for psychological closure (Cluster 2)</td>
+          <td class="col-state">Signs buyout agreement; legal dispute closed; Calmly's role in defendant journey complete at D3</td>
+          <td class="col-product"><span class="tag tag-amber">Payment</span> Defendant liability buyout app (C6) — Arrow (1963) risk transfer; without-prejudice; optional acknowledgment pathway</td>
+          <td class="col-balm"><span class="tag tag-c2">C2b</span> <span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span></td>
+        </tr>
+
+        <!-- Defendant Phase 4 — Repayment -->
+        <tr class="row-payment">
+          <td>Defendant</td>
+          <td class="col-phase">4 — Repayment</td>
+          <td class="col-subphase">D4A Repayment to buyout operator (D4)</td>
+          <td class="col-state">Repaying buyout operator per agreed schedule; financial obligation only; no legal exposure; Calmly not involved</td>
+          <td class="col-state">Managed obligation; predictable schedule replaces indeterminate legal threat</td>
+          <td class="col-state">Repays buyout operator — no further Calmly involvement; D4 is a relationship between defendant and buyout operator only</td>
+          <td class="col-product"><span class="tag tag-amber">Payment</span> Buyout operator P&amp;L (not Calmly cost); Calmly earns platform fee for defendant routing at D3</td>
+          <td class="col-balm"><span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span></td>
         </tr>
 
         <!-- Convergence -->
@@ -1173,10 +1234,16 @@
         <td class="balm-note">Standard practice: defendant receives only the claimant's valuation — adversarial and dismissible as motivated. Motivated disengagement is rational. C2b override: defendant receives an independent EV signal from a party with no financial stake. Signal is credible by design (Spence 1973). Open-ended uncertainty collapses to a calculable liability. Rational settlement becomes possible.</td>
       </tr>
       <tr>
-        <td class="balm-req"><span class="tag tag-blue">C3</span> Scaling strategy — independent assessment org<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Spence (1973) — speed dimension</span></td>
-        <td class="balm-note">D1B (defendant EV signal — now fully resolved); D2A (mediation — credibility delay tactic foreclosed)</td>
-        <td class="balm-note">Working Product — independent EV assessment generated by org with no financial stake</td>
-        <td class="balm-note">Standard practice: report produced by interested party (Calmly). C3 override: report generated by independent org — law students, no financial stake. Defendant cannot extend mediation on source-credibility grounds. Average recovery time shortens. WC contracts.</td>
+        <td class="balm-req"><span class="tag tag-blue">C3</span> Scaling strategy — independent assessment org<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Spence (1973) — speed dimension; dual-function from C6 update</span></td>
+        <td class="balm-note">D1B (defendant EV signal — now fully resolved); D2A (buyout decision — credibility delay tactic foreclosed; same report underwrites buyout offer)</td>
+        <td class="balm-note">Working Product — independent EV assessment generated by org with no financial stake. Dual function (v2.0 C6 update): (a) defendant scepticism defeat via Spence signalling; (b) underwriting basis for the buyout operator — Arrow (1963), the buyout firm prices risk against the same independent assessment.</td>
+        <td class="balm-note">Standard practice: report produced by interested party (Calmly). C3 override: report generated by independent org — law students, no financial stake. Defendant cannot extend mediation on source-credibility grounds. C6 update adds a second function: the same report allows a litigation finance firm to price a conditional buyout at D1. One assessment output; two structural benefits. Average recovery time shortens. WC contracts.</td>
+      </tr>
+      <tr>
+        <td class="balm-req"><span class="tag" style="background:#f0ebfb;color:#5b21b6;border:1px solid #c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C6</span> Defendant amortisation strategy — liability buyout app<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Arrow (1963) — proactive risk transfer; replaces financing app</span></td>
+        <td class="balm-note">D1A (buyout offer arrives simultaneously with demand + EV report — D1 lifecycle stage); D2A (buyout decision — accept / negotiate / decline); D3A (buyout signed, legal closure — D3 lifecycle stage); D4A (repayment to buyout operator — D4, no Calmly involvement)</td>
+        <td class="balm-note">Payment Product — defendant liability buyout app. Conditional offer from a litigation finance firm. Presented at D1 (not D2 as in the old financing app design). Legal obligation extinguished at D3 when defendant signs. D4 repayment is a financial obligation to the buyout operator only. Calmly earns a platform fee for defendant routing and buyout app curation.</td>
+        <td class="balm-note">Old design (financing app — Stiglitz &amp; Weiss, 1981): reactive consumer credit instrument. Defendant applied to a financing app after deciding to settle at D2. Legal dispute remained open during repayment. New design (liability buyout app — Arrow, 1963): proactive risk transfer instrument. Buyout offer arrives at D1 — before the defendant has decided anything — simultaneously with the pool demand and EV report. Legal obligation is extinguished at D3 when the buyout agreement is signed. D4 is repayment to the buyout operator only; Calmly has no financial exposure from D4 onward. The structural change: the defendant no longer needs to remain in a legal dispute while repaying. Risk transfer is complete at D3.</td>
       </tr>
       <tr>
         <td class="balm-req"><span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C8</span> Switching cost — ITP lock-in<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Three stores of value: EV calibration data, ITP outcomes dataset, integration depth + community reputation</span></td>
@@ -1270,9 +1337,9 @@
       <p>The following mechanisms remain flagged [REQUIRES C5+] because they are not yet formally complete:</p>
       <ul>
         <li>Pre-sale indicative valuation (claim-specific independent EV before commitment) — C5</li>
-        <li>Payment instrument detail (specific distribution mechanism, amortisation) — C6</li>
+        <li>Claimant-side payment instrument detail (specific pool distribution mechanism) — C6 claimant side</li>
       </ul>
-      <p>C7 (ITP referral architecture) remains resolved — see 1A and D1A mechanisms. C4 (pool insurance) remains resolved at Phase 1B and 1D. The EV assessment at D1B remains fully resolved by C3.</p>
+      <p>C6 defendant-side is now partially resolved. The defendant liability buyout app replaces the earlier financing app design. The new design: proactive risk transfer instrument (Arrow, 1963) — buyout offer presented at D1 simultaneously with demand and EV report; legal closure at D3; repayment to buyout operator at D4. C7 (ITP referral architecture) remains resolved — see 1A and D1A mechanisms. C4 (pool insurance) remains resolved at Phase 1B and 1D. The EV assessment at D1B remains fully resolved by C3 — and now serves a second function as the underwriting basis for the buyout operator.</p>
     </div>
   </div>
 
@@ -1282,9 +1349,9 @@
   ══════════════════════════════════════════════════════════════════ -->
   <div class="routing-panel">
     <div class="rp-label">Next steps</div>
-    <p><strong>CTM v2 now reflects C1 through C10 — the complete IVE architecture.</strong> C8 (switching cost), C9 (supplier leverage), and C10 (competitive moat) are added in this version. Every mechanism is grounded; remaining gaps (C5 and C6 only) are flagged.</p>
-    <p><strong>What C1–C10 collectively delivers:</strong> C1 makes mediation structurally operative. C2a/C2b collapse the information asymmetries that prevent rational settlement. C3 grounds the EV signal operationally via independent assessment orgs. C4 resolves pool financial survivability doubt via insurance. C7 routes both claimants and defendant notifications through the ITP's institutional channel. C8 accumulates three stores of value in the ITP relationship — making switching cost invisible during normal operation and near-prohibitive when a competitor approaches. C9 eliminates single-source supplier dependency — Calmly owns the methodology; orgs compete for volume on quality metrics. C10 creates the self-reinforcing data flywheel — EV accuracy as a function of cumulative claims that compounds the time-compression diseconomy for new entrants.</p>
-    <p><strong>What the CTM cannot yet map (requires C5+):</strong> pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6). Run <code>/ive-ctm-custom</code> after C5 is designed to add the pre-sale EV mechanism to Phase 1C/1D.</p>
+    <p><strong>CTM v2 now reflects C1 through C10 — the complete IVE architecture.</strong> C8 (switching cost), C9 (supplier leverage), and C10 (competitive moat) are added in a prior version. C6 defendant-side mechanism is updated in this version — financing app replaced by defendant liability buyout app. Every mechanism is grounded; remaining gaps (C5 and C6 claimant side only) are flagged.</p>
+    <p><strong>What C1–C10 collectively delivers:</strong> C1 makes mediation structurally operative. C2a/C2b collapse the information asymmetries that prevent rational settlement. C3 grounds the EV signal operationally via independent assessment orgs — now with a dual function: defendant scepticism defeat (Spence signalling) and underwriting basis for the buyout operator (Arrow, 1963). C4 resolves pool financial survivability doubt via insurance. C6 defendant-side: proactive liability buyout app — offer presented at D1, legal closure at D3, repayment to buyout operator at D4. C7 routes both claimants and defendant notifications through the ITP's institutional channel. C8 accumulates three stores of value in the ITP relationship — making switching cost invisible during normal operation and near-prohibitive when a competitor approaches. C9 eliminates single-source supplier dependency — Calmly owns the methodology; orgs compete for volume on quality metrics. C10 creates the self-reinforcing data flywheel — EV accuracy as a function of cumulative claims that compounds the time-compression diseconomy for new entrants.</p>
+    <p><strong>What the CTM cannot yet map (requires C5+):</strong> pre-sale indicative valuation for claim qualification (C5), claimant-side payment instrument detail (C6 claimant). Run <code>/ive-ctm-custom</code> after C5 is designed to add the pre-sale EV mechanism to Phase 1C/1D. Run <code>/ive-ctm-custom</code> after C6 claimant-side is designed to add the pool distribution mechanism.</p>
     <p><strong>AOM implications from C8/C9/C10:</strong> C8 adds ITP outcomes reporting as a HQ account management activity (quarterly + annual per active ITP partnership). C9 adds assessment org QA framework and pool maintenance at HQ (multi-org competition structure). C10 adds claim data infrastructure and EV accuracy tracking at HQ (fixed infrastructure, cumulative benefit). See AOM v2 updated for full activity detail.</p>
   </div>
 

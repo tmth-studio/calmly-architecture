@@ -150,6 +150,10 @@
     .tp-cp { background: var(--accent-light); color: var(--accent); border: 1px solid #b8c8e8; }
     .tp-wp { background: #fde8e8; color: #991b1b; border: 1px solid #f0b4b4; }
     .tp-part { background: var(--purple-bg); color: var(--purple-text); border: 1px solid #c4aff0; }
+
+    /* ─── Updated note ─── */
+    .updated-note { border-left: 4px solid var(--inset-border); background: var(--accent-light); padding: 10px 14px; margin: 10px 0; font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+    .updated-note strong { font-family: var(--font-ui); color: var(--accent); }
   </style>
 </head>
 <body>
@@ -473,10 +477,12 @@
       </tr>
       <tr>
         <td><span class="tag tag-blue">CP3 <span class="tag tag-yellow">NEW</span></span></td>
-        <td class="body-cell">Defendant onboarding and settlement facilitation. Defendant receives initial notification via ITP institutional channel (ITP forwards pre-drafted template). Defendant engagement specialist follows up with independent EV assessment and without-prejudice settlement offer. Structures settlement terms. Optional acknowledgment pathway offered. Settlement recorded on platform.</td>
+        <td class="body-cell">Defendant onboarding and liability buyout facilitation. Defendant receives initial notification via ITP institutional channel (ITP forwards pre-drafted template). At D1, the defendant receives three elements simultaneously: pool demand + independent EV assessment + conditional buyout offer from the defendant liability buyout app. Defendant engagement specialist facilitates the buyout decision (accept / negotiate / decline). Optional acknowledgment pathway offered. Buyout agreement executed at D3 — legal closure recorded on platform. Claims where the defendant declines the buyout enter mediation; court handoff to pool operator at ~10 min.
+          <div class="updated-note"><strong>v2.0 C6 update:</strong> CP3 mechanism redesigned. Old: defendant engagement specialist presented a settlement offer and, if agreed, facilitated access to a financing app at D2. Legal dispute remained open during repayment. New: defendant receives buyout offer at D1 (same moment as demand and EV report). CP3 facilitates the buyout decision at D2 and records legal closure at D3. The buyout operator operates on their own P&amp;L from D3 — no cost to Calmly from the repayment phase (D4). Calmly earns a platform fee for defendant routing and buyout app curation (see Section 5 — defendant-side fee).</div>
+        </td>
         <td>Defendant engagement specialist + settlement facilitator</td>
         <td>60 min engagement + 30 min facilitation per settled claim</td>
-        <td>Per unit in settlement phase. Assumes ~70% settle before court (TIER 4). Full 90 min per settled claim. Claims proceeding to court: 10 min handoff to pool operator only.</td>
+        <td>Per unit in settlement phase. Assumes ~70% settle before court (TIER 4). Full 90 min per settled claim. Claims proceeding to court (defendant declines buyout): 10 min handoff to pool operator only.</td>
       </tr>
     </tbody>
   </table>
@@ -579,11 +585,13 @@
         <td>~80% proceed to pool matching. This is the commitment point.</td>
       </tr>
       <tr>
-        <td class="body-cell">Defendant engagement and offer presentation (CP3)</td>
+        <td class="body-cell">Defendant engagement and buyout offer facilitation (CP3)
+          <div class="updated-note" style="font-size:12px;"><strong>v2.0 C6 update:</strong> CP3 selling activity redesigned. The defendant engagement specialist now facilitates the buyout decision (D2), not just a settlement offer. The buyout offer arrives at D1 (simultaneously with demand and EV report) — the specialist's role is to clarify terms, handle objections, and facilitate the D3 signing. This is a different conversation from the old settlement negotiation — it is structured risk transfer facilitation, not mediation.</div>
+        </td>
         <td>Defendant engagement specialist</td>
         <td>LMU</td>
         <td>60 min per defendant</td>
-        <td>~70% settle before court. This is the second fee trigger — Calmly's defendant-side revenue.</td>
+        <td>~70% accept buyout or settle before court. This is the second fee trigger — Calmly's defendant-side platform fee (see Section 5), earned at D3 (legal closure). Buyout operator P&amp;L starts at D3; Calmly has no financial exposure in the D4 repayment phase.</td>
       </tr>
       <tr>
         <td class="body-cell">ITP national partnership activation — single contract per ITP type. Embed pool as standard escalation pathway for qualifying claims. SRA-compliant terms, fee structure disclosed, no exclusivity. Concentration limit: 30% max per ITP. Periodic outcomes report (claims referred, value recovered, settlement rates).</td>
@@ -767,11 +775,12 @@
     <div class="rev-card">
       <div class="rev-label">Defendant-side fee</div>
       <h4>Platform fee from defendant</h4>
-      <p><strong>Trigger:</strong> claim resolved (settled or adjudicated).</p>
-      <p><strong>Basis:</strong> fixed fee per claim resolved, structured as a percentage premium over settlement amount or a flat service fee. Defendant pays for the bounded, verified liability — certainty has value distinct from the settlement amount itself.</p>
-      <p><strong>Price ceiling (C2b):</strong> the defendant avoids the cost of uncertainty — estimated at up to £1,850 in legal fees plus the psychological and reputational cost of open-ended exposure. The independent EV assessment removes the information asymmetry that drives both over-settling and stonewalling. The bounded, credible number is worth paying for.</p>
+      <p><strong>Trigger:</strong> buyout agreement signed at D3 (legal closure). Calmly's fee is earned at the point of legal closure — not contingent on D4 repayment, which is between the defendant and the buyout operator.</p>
+      <p><strong>Basis:</strong> fixed platform fee per claim resolved, earned for defendant routing and buyout app curation. Defendant pays for: (a) the bounded, independently assessed liability (C2b); (b) access to the defendant liability buyout app that extinguishes legal exposure at D3; (c) structured facilitation through the buyout decision. The buyout operator operates on their own P&L — Calmly earns a curation fee for routing defendants to the app, not a share of the repayment stream.</p>
+      <p><strong>Price ceiling (C2b):</strong> the defendant avoids the cost of uncertainty — estimated at up to £1,850 in legal fees plus the psychological and reputational cost of open-ended exposure. The buyout adds a further value dimension: legal closure at D3 (vs remaining in a live dispute during repayment under the old financing app design). The certainty of legal closure is worth paying for.</p>
       <p><strong>Indicative fee range:</strong> £150–£300 flat per claim resolved, or 5–10% of settlement amount.</p>
-      <div class="assumption"><strong>TIER 4 ASSUMPTION:</strong> £200 flat fee mid-point (or 7% of settlement). Grounded in C2b price ceiling. Without-prejudice structure adds value to defendant — they pay for certainty, not just settlement. Flat fee may be preferable to percentage to reduce anchoring on settlement size.</div>
+      <div class="assumption"><strong>TIER 4 ASSUMPTION:</strong> £200 flat fee mid-point (or 7% of settlement). Grounded in C2b price ceiling. The buyout design (legal closure at D3) increases the value delivered to the defendant vs the old financing app (legal dispute open during repayment) — the fee ceiling may be higher under the new design. Validate at C6 design stage. Note: the platform fee is Calmly's revenue for routing; the buyout operator's margin on the repayment stream is separate and off Calmly's P&amp;L.</div>
+      <div class="updated-note"><strong>v2.0 C6 update:</strong> Defendant-side fee trigger updated from "claim resolved (settled or adjudicated)" to "buyout agreement signed at D3". Calmly earns a platform routing and app curation fee — not a share of the defendant's repayment to the buyout operator. The buyout operator's P&amp;L is independent. Fee ceiling analysis is unchanged; if anything, it is higher because legal closure at D3 is a more complete value delivery than the old financing app's settlement-with-open-litigation design.</div>
     </div>
 
   </div>
@@ -849,10 +858,12 @@
             </ul>
             <em>Defendant:</em>
             <ul>
-              <li>Receives settlement offer via ITP channel</li>
-              <li>Engages settlement facilitation (CP3)</li>
-              <li>Pays bounded liability, exits exposure</li>
+              <li>Receives demand + EV report + buyout offer simultaneously via ITP channel (D1)</li>
+              <li>Makes buyout decision at D2 (accept / negotiate / decline) — facilitated via CP3</li>
+              <li>Signs buyout agreement at D3 — legal obligation extinguished; pays platform fee</li>
+              <li>Repays buyout operator from D4 — no further Calmly involvement</li>
             </ul>
+            <div class="updated-note" style="font-size:12px;"><strong>v2.0 C6 update:</strong> Defendant now receives three elements simultaneously at D1 (not sequentially). Legal closure occurs at D3 (buyout signed), not at settlement payment. D4 repayment is to the buyout operator only — off Calmly's P&amp;L.</div>
           </td>
         </tr>
         <!-- ENABLERS — LMU -->
@@ -1124,22 +1135,28 @@
         <td class="driver">Per unit confirmed. Automated at scale. Manual exception handling for ~10% of claims (TIER 4).</td>
         <td style="font-size:12px;">Automated. Cost driver is platform infrastructure, not labour — see Group 5 technology costs.</td>
       </tr>
-      <!-- CP3 — defendant engagement -->
+      <!-- CP3 — defendant engagement + buyout facilitation -->
       <tr>
-        <td class="body-cell"><span class="tag tag-blue">CP3</span> Defendant onboarding and offer presentation — outreach via ITP channel, present independent EV, structure settlement offer</td>
+        <td class="body-cell">
+          <span class="tag tag-blue">CP3</span> Defendant onboarding and liability buyout facilitation — outreach via ITP channel; at D1 presents independent EV report + buyout offer; facilitates D2 buyout decision; records D3 legal closure on platform
+          <div class="updated-note" style="font-size:12px;"><strong>v2.0 C6 update:</strong> CP3 activity redesigned from "settlement offer presentation" to "liability buyout facilitation". The defendant engagement specialist facilitates the buyout decision at D2 (accept / negotiate / decline). The buyout offer is already presented at D1 via the ITP channel — the specialist's role is to facilitate the decision, not to negotiate the settlement amount. D3 (buyout signing) is the activity endpoint for the specialist; D4 (repayment) is entirely between the defendant and the buyout operator. Trigger point is D1 (buyout offer sent), not D2 (defendant decides to settle) as in the old financing app design.</div>
+        </td>
         <td>Defendant engagement specialist</td>
         <td>LMU</td>
         <td>60</td>
-        <td class="driver">Per unit in settlement phase. Gross up ÷ 0.70 (pre-court settlement rate) = 86 min per confirmed claim (effort is spent on non-settling defendants too)</td>
-        <td style="font-size:12px;">TIER 4: 70% settle before court. The 30% that proceed to court represent a Calmly cost with no defendant-side fee — absorbed as cost of the double-signal mechanism.</td>
+        <td class="driver">Per unit in settlement phase. Gross up ÷ 0.70 (pre-court settlement / buyout rate) = 86 min per confirmed claim (effort is spent on defendants who decline buyout and proceed to court too)</td>
+        <td style="font-size:12px;">TIER 4: 70% accept buyout or settle before court. The 30% that proceed to court represent a Calmly cost with no defendant-side fee — absorbed as cost of the double-signal mechanism. Buyout operator costs from D3 onward are not Calmly's P&amp;L.</td>
       </tr>
-      <!-- CP3 — settlement facilitation -->
+      <!-- CP3 — buyout signing facilitation -->
       <tr>
-        <td class="body-cell"><span class="tag tag-blue">CP3</span> Settlement facilitation — structure terms, offer acknowledgment pathway, record agreed settlement on platform</td>
+        <td class="body-cell">
+          <span class="tag tag-blue">CP3</span> Buyout agreement execution — structure buyout terms, offer acknowledgment pathway, record D3 legal closure on platform
+          <div class="updated-note" style="font-size:12px;"><strong>v2.0 C6 update:</strong> This activity was previously "settlement facilitation". Under the liability buyout app design, the facilitation activity at D3 is executing the buyout agreement and recording legal closure — not structuring a direct settlement payment. The acknowledgment pathway remains available for Cluster 2 defendants. The buyout operator's repayment schedule (D4) is outside this activity scope.</div>
+        </td>
         <td>Settlement facilitator</td>
         <td>LMU</td>
         <td>30</td>
-        <td class="driver">Per settled claim (70% of confirmed claims). Effective driver: 30 min × 0.70 = 21 min per confirmed claim. Plus 5 min handoff for non-settling claims.</td>
+        <td class="driver">Per buyout-accepted claim (70% of confirmed claims). Effective driver: 30 min × 0.70 = 21 min per confirmed claim. Plus 5 min handoff for non-accepting claims.</td>
         <td style="font-size:12px;">Role may be combined with defendant engagement specialist at lower volume. Split at ~45+ claims/month.</td>
       </tr>
       <!-- Platform team lead overhead -->
@@ -1475,9 +1492,11 @@
 
   <div class="routing">
     <div class="routing-label">Routing instruction</div>
-    <p>AOM updated for C8, C9, and C10. Three new HQ activities added: (1) <strong>ITP outcomes reporting [C8]</strong> — quarterly + annual per active ITP, ~£4/claim amortised, same resource as commercial/ITP partnerships team, primary lock-in mechanism; (2) <strong>assessment org pool QA [C9]</strong> — quality management and volume allocation across multi-org pool, absorbed into EV methodology team (~£1/claim amortised), eliminates single-source supplier risk; (3) <strong>claim data management and EV accuracy tracking [C10]</strong> — fixed HQ infrastructure, cumulative accuracy improvement, data flywheel moat. All three add to the cost floor but each produces a structural benefit that justifies it: C8 protects ITP LTV (switching cost), C9 eliminates supplier disruption risk, C10 builds the primary competitive barrier to entry.</p>
-    <p>Updated cost floor: C3 baseline £199 + CAC £38 + insurance curation £2 [C4] + ITP outcomes reporting ~£4 [C8] + assessment org pool QA ~£1 [C9] + data infrastructure (fixed, ~£1/claim amortised at scale) [C10] = approximately <strong>£245/claim</strong>. Run <code>/ive-fit-verifier-custom</code> to update FMOS gate with revised cost floor. Prior FMOS was 63.2% at £239 — revised floor at £245 produces FMOS ~62.4% at same revenue assumptions (still above 60% threshold).</p>
-    <p>Architecture discipline reminders: pool insurance premium is a pool member cost, not Calmly's (~£2/claim oversight only). EV calibration data and ITP outcomes dataset are Calmly-owned assets — they accumulate on Calmly's platform infrastructure, not in the pool operator's system. The data flywheel (C10) is a fixed infrastructure cost, not a variable per-claim cost — ensure Group 5 captures it as fixed overhead, not Group 2 cost of goods.</p>
+    <p>AOM updated for C8, C9, C10, and now C6 defendant-side mechanism. Three HQ activities added in prior version: (1) <strong>ITP outcomes reporting [C8]</strong> — quarterly + annual per active ITP, ~£4/claim amortised, same resource as commercial/ITP partnerships team, primary lock-in mechanism; (2) <strong>assessment org pool QA [C9]</strong> — quality management and volume allocation across multi-org pool, absorbed into EV methodology team (~£1/claim amortised), eliminates single-source supplier risk; (3) <strong>claim data management and EV accuracy tracking [C10]</strong> — fixed HQ infrastructure, cumulative accuracy improvement, data flywheel moat.</p>
+    <p><strong>C6 defendant-side update (this version):</strong> Defendant liability buyout app replaces financing app. Key operational implications: (1) CP3 trigger point is D1 (buyout offer sent simultaneously with demand and EV report) — not D2 as in the old design. The defendant engagement specialist's role is buyout decision facilitation, not settlement negotiation. (2) D3 (buyout signed, legal closure) is the Calmly fee trigger and the end of Calmly's operational involvement in the defendant's case. (3) D4 (repayment to buyout operator) is entirely off Calmly's P&amp;L — the buyout operator operates on their own P&amp;L. (4) No new Calmly cost line is introduced by the buyout app: the buyout operator bears their own underwriting and capital costs; Calmly earns a platform curation fee (already captured in the defendant-side platform fee at Section 5). The CP3 activity time remains unchanged (~90 min per claim through the funnel) because the facilitation work is comparable — structured decision facilitation vs structured settlement negotiation.</p>
+    <p>Cost floor implication: the C6 defendant-side change is cost-neutral for Calmly. The buyout operator's P&amp;L is independent. No new line items are added to the Calmly cost stack. The defendant-side fee (Section 5) is the same revenue instrument — the trigger and framing are updated, but the TIER 4 mid-point (£200 flat) is unchanged. FMOS calculation is therefore unaffected by this update specifically.</p>
+    <p>Updated cost floor (prior version, unchanged): C3 baseline £199 + CAC £38 + insurance curation £2 [C4] + ITP outcomes reporting ~£4 [C8] + assessment org pool QA ~£1 [C9] + data infrastructure (fixed, ~£1/claim amortised at scale) [C10] = approximately <strong>£245/claim</strong>. Run <code>/ive-fit-verifier-custom</code> to update FMOS gate with revised cost floor. Prior FMOS was 63.2% at £239 — revised floor at £245 produces FMOS ~62.4% at same revenue assumptions (still above 60% threshold).</p>
+    <p>Architecture discipline reminders: pool insurance premium is a pool member cost, not Calmly's (~£2/claim oversight only). EV calibration data and ITP outcomes dataset are Calmly-owned assets — they accumulate on Calmly's platform infrastructure, not in the pool operator's system. The data flywheel (C10) is a fixed infrastructure cost, not a variable per-claim cost — ensure Group 5 captures it as fixed overhead, not Group 2 cost of goods. The buyout operator is not a Calmly cost centre — its capital, underwriting costs, and repayment management are entirely off Calmly's P&amp;L from D3 onward.</p>
     <p>Next: run <code>/ive-fit-verifier-custom</code> with updated cost floor (~£245). Proceed to fin-sim update once R5+R6 are also captured for the full F2 cost floor in one pass.</p>
   </div>
 
@@ -1486,10 +1505,10 @@
   <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <div class="finsim" style="margin-top: 36px;">
-    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C8/C9/C10 updated)</div>
+    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C8/C9/C10/C6 updated)</div>
     <pre>
-FIN-SIM INPUTS FROM AOM v2 (Calmly — marketplace — C1–C10)
-===========================================================
+FIN-SIM INPUTS FROM AOM v2 (Calmly — marketplace — C1–C10, C6 defendant-side updated)
+=======================================================================================
 
 GROUP 1 — Venture and unit
 Unit: one claim resolved through the Calmly exchange (matched, rated, facilitated to settlement or adjudication)
@@ -1519,8 +1538,8 @@ Activity: WP2 Route claim to assessment org, receive report, quality review [C3:
 Activity: WP2 QA and dataset entry | Product: WP | Role: EV assessment specialist | Driver: per unit purchased | Time: 15 min
 Activity: CP2 EV disclosure and claim activation | Product: CP | Role: EV assessment specialist | Driver: per inquiry at 80% proceed rate (gross up ÷ 0.80) | Time: 30 min
 Activity: WP3 Pool matching (exceptions) | Product: WP | Role: Intake assessor | Driver: per unit confirmed, 10% exceptions only | Time: 5 min
-Activity: CP3 Defendant onboarding and offer | Product: CP | Role: Defendant engagement specialist | Driver: per confirmed claim, gross up ÷ 0.70 (70% settle pre-court) | Time: 60 min
-Activity: CP3 Settlement facilitation | Product: CP | Role: Settlement facilitator | Driver: per settled claim (70% × confirmed) + 5 min handoff for non-settling | Time: 30 min (settled) / 5 min (non-settling)
+Activity: CP3 Defendant liability buyout facilitation [C6 updated] | Product: CP | Role: Defendant engagement specialist | Driver: per confirmed claim, gross up ÷ 0.70 (70% accept buyout or settle pre-court) | Time: 60 min | Note: trigger is D1 (buyout offer sent) not D2 (post-decision) as in old financing app design
+Activity: CP3 Buyout agreement execution (legal closure at D3) [C6 updated] | Product: CP | Role: Settlement facilitator | Driver: per buyout-accepted/settled claim (70% × confirmed) + 5 min handoff for non-accepting claims | Time: 30 min (accepted) / 5 min (declined) | Note: buyout operator P&L starts at D3; Calmly cost ends here
 Activity: Platform team lead overhead | Product: Enabler | Role: Senior platform specialist (+20% time) | Driver: fixed per LMU per month | Time: ~15 hrs/month (amortise across monthly volume)
 Activity: Territory compliance | Product: Enabler | Role: Territory compliance officer | Driver: fixed per territory per month (÷ LMUs × volume) | Time: shared FTE, amortise
 Activity: ITP partnership activation | Product: Enabler | Role: Commercial team HQ | Driver: fixed per ITP, amortise over lifetime claims | Time: TBC
@@ -1559,6 +1578,8 @@ Excluded from this fin-sim:
 ✗ Court filing fees (pool operator cost)
 ✗ Working capital for claims in litigation (pool operator cost)
 ✗ Pool insurance premium (pool member cost — Calmly earns marketplace fee from insurer, not the premium)
+✗ Defendant repayment to buyout operator (D4) — buyout operator P&L from D3; Calmly earns platform fee at D3 only, not a share of repayment stream
+✗ Buyout operator underwriting capital and credit costs — buyout operator bears these; Calmly earns routing/curation fee (already in defendant-side platform fee, Section 5)
 ✗ Securitisation vehicle administration [REQUIRES later architecture]
 ✗ Institutional investor KYC/onboarding [REQUIRES later architecture]
     </pre>
