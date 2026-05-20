@@ -235,7 +235,7 @@
     <p>Only challenges with formally completed sub-requirements are represented. C1, C2, C3, and C4 sub-requirements are complete; C5 through C10 are not yet formally complete for CTM purposes.</p>
     <ul>
       <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1+C2+C3+C4, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation (structurally separate from Calmly, law students, no financial stake) — generates every EV settlement report (C3), pool loss insurance as standard pool membership feature — protects member contributions against early losses, resolves pool financial survivability doubt (C4).</li>
-      <li><strong>Excluded:</strong> pre-sale indicative valuation (C5), payment contingency detail (C6), NTP referral architecture (C7), lock-in (C8), lock-out (C9, C10). These appear as <strong>[REQUIRES C5+]</strong> placeholders where they would otherwise be required.</li>
+      <li><strong>Excluded:</strong> pre-sale indicative valuation (C5), payment contingency detail (C6), lock-in (C8), lock-out (C9, C10). These appear as <strong>[REQUIRES C5+]</strong> placeholders where they would otherwise be required. ITP referral architecture (C7) is now resolved — see 1A and D1A mechanisms below.</li>
       <li><strong>Marketplace architecture:</strong> Calmly is a verified dispute resolution marketplace. The EV assessment app and pool insurance app are verified apps on the marketplace. The marketplace infrastructure (pooling, settlement mechanism, payment rails) is Calmly's. Calmly does not own claims, bear litigation risk, or employ solicitors — those belong to the pool operator.</li>
     </ul>
   </div>
@@ -326,7 +326,7 @@
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
         <div class="dim-content">Encounters a description of the pool concept. Reads enough to recognise that the credibility problem has a structural solution. Does not yet need to understand how the pool is managed or how they would be paid.
-          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> How the claimant encounters Calmly — which channel, which referral, which institutional partner routes them — is not established by C1 or C2. That is a C7 (NTP gateway partner) problem. C1+C2 is silent on origination.</div>
+          <div class="inset" style="margin-top:8px;"><p><strong>[C7 — ITP referral mechanism]</strong> The claimant encounters Calmly through their ITP (Intermediating Third Party) — the mutual dispute resolution authority already present in their ecosystem. When a dispute arises (housing association complaint, HR grievance, marketplace dispute), the ITP's standard escalation process now includes Calmly as the default pathway for qualifying claims (value ≥ threshold, recoverable without court costs). The ITP provides: (1) one-page explainer at first contact, (2) digital referral form (&lt;5 min to complete), (3) automatic outcome notification to close the loop. State change this enables: claimant moves from unaware to aware that a resolution pathway exists within their existing ecosystem — without needing to seek external legal advice.</p></div>
         </div>
       </div>
       <div class="dim-mechanism">
@@ -477,7 +477,7 @@
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
         <div class="dim-content">No required action. Waits for the pool to initiate contact with the defendant.
-          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> How the pool notifies the defendant — through what mechanism, at what point, performed by whom — is a C7 (NTP gateway partner) and operational design question. C1+C2 establishes that the pool will pursue; it does not specify the notification mechanism.</div>
+          <div class="inset" style="margin-top:8px;"><p><strong>[C7 — ITP defendant notification]</strong> When the claimant submits to the pool, the ITP receives a pre-drafted defendant notification template. The ITP reviews and forwards it to the defendant through the ITP's existing communication channel — housing association correspondence, HR system, or marketplace messaging. The defendant receives a formal demand from the authority both parties already recognise — not from Calmly directly. This is the two-sided function of the ITP: it is the mutual authority within whose ecosystem the dispute arose. Notification through the ITP carries institutional weight neither party can dismiss.</p></div>
         </div>
       </div>
       <div class="dim-mechanism">
@@ -589,12 +589,12 @@
       </div>
       <div class="state-dim">
         <div class="dim-label">Emotive — must feel</div>
-        <div class="dim-content">Residual trust in the mechanism — structural trust (the payoff logic holds) persists without relationship maintenance. Individual claimants are low-frequency and event-driven; the more important retention dynamic is at the NTP partner level, not the individual level.</div>
+        <div class="dim-content">Residual trust in the mechanism — structural trust (the payoff logic holds) persists without relationship maintenance. Individual claimants are low-frequency and event-driven; the more important retention dynamic is at the ITP partner level, not the individual level.</div>
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
         <div class="dim-content">No active re-engagement required. Returns if a new dispute arises.
-          <div class="c3plus-flag"><strong>[REQUIRES C3+]</strong> Structured lock-in — case history reusable, accumulated credentials reducing future onboarding friction, NTP recommending return — is a C8 mechanism. C1+C2 provides the rational premise for return. Switching cost creation is not yet designed.</div>
+          <div class="c3plus-flag"><strong>[REQUIRES C5+]</strong> Structured lock-in — case history reusable, accumulated credentials reducing future onboarding friction, ITP recommending return — is a C8 mechanism. C1+C2 provides the rational premise for return. Switching cost creation is not yet designed.</div>
         </div>
       </div>
       <div class="dim-mechanism">
@@ -1071,7 +1071,7 @@
     <div class="finding-body">
       <p>C4 closes the pool financial survivability doubt at 1B and 1D. Every Phase 1 sub-phase now has a mechanism — but several conversion-critical mechanisms are still pending:</p>
       <ul>
-        <li><strong>1A (awareness)</strong> depends on an origination channel. That is a C7 (NTP gateway partner) problem. Organic SEO is in the architecture but not yet operationally specified.</li>
+        <li><strong>1A (awareness)</strong> origination channel is now resolved: ITP (Intermediating Third Party) routes the claimant at dispute onset via the referral protocol (one-page explainer + digital form, &lt;5 min). Housing associations, HR departments, and online marketplaces are the three ITP types. See 1A mechanism above.</li>
         <li><strong>1B (consideration)</strong> — pool financial survivability doubt is now resolved by C4 insurance. <span style="color:var(--green-text);font-weight:600;">C4 complete.</span></li>
         <li><strong>1C (conviction)</strong> is strengthened by claim-specific qualification — which requires the pre-sale indicative valuation (C5). Without it, conviction rests on the pool concept and C2a loss framing alone.</li>
         <li><strong>1D (sign-up)</strong> — pool membership with insurance is now specified (C4). The specific payment instrument and distribution mechanism remain C6 detail.</li>
@@ -1102,7 +1102,7 @@
       <ul>
         <li>Pre-sale indicative valuation (claim-specific independent EV before commitment) — C5</li>
         <li>Payment instrument detail (specific distribution mechanism, amortisation) — C6</li>
-        <li>NTP referral architecture and origination channel — C7</li>
+        <li>ITP referral architecture and origination channel — C7 <strong style="color:var(--green-text);">[RESOLVED — see 1A and D1A mechanisms]</strong></li>
         <li>Lock-in (case history, switching costs) — C8</li>
         <li>Lock-out (scarce resource strategy) — C9, C10</li>
       </ul>
@@ -1118,7 +1118,7 @@
     <div class="rp-label">Next steps</div>
     <p><strong>CTM v2 now reflects C1, C2, C3, and C4.</strong> C4 resolves pool financial survivability doubt at Phase 1B and 1D via pool loss insurance as a standard pool membership feature. Every sub-phase is grounded in a confirmed mechanism; remaining gaps are flagged with the challenge that closes them.</p>
     <p><strong>What C1+C2+C3+C4 delivers:</strong> C1 makes mediation structurally operative — the defendant's BATNA changes so that non-participation leads somewhere costly. C2a inverts the time pressure — delay becomes active loss accrual for the defendant. C2b collapses the defendant's information asymmetry — an independent EV signal removes the factual basis for motivated disengagement. C3 grounds that signal operationally via the independent assessment org. C4 resolves the claimant's pool financial survivability doubt — insurance makes collective persistence individually rational from the moment of joining. Together, the four challenges define a settlement that reflects the merits of the case as the rational outcome for both parties, and make joining the pool individually rational even knowing early claims may lose.</p>
-    <p><strong>What the CTM cannot yet map (requires C5+):</strong> origination channel (C7), pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6), lock-in (C8).</p>
+    <p><strong>What the CTM cannot yet map (requires C5+):</strong> pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6), lock-in (C8). C7 (ITP referral architecture) is now resolved — origination channel and defendant notification are both provided by the ITP, as set out in 1A and D1A above.</p>
     <p><strong>AOM implication:</strong> C4 adds one new HQ activity: insurance app curation — accrediting the pool insurer, setting pool insurance standards, monitoring claims handling. This is a small HQ overhead (~0.5 FTE). The insurance premium is paid by pool members (built into membership); Calmly earns a marketplace fee from the insurer. Run <code>/ive-ctm-custom</code> again after C5 is designed to extend this CTM incrementally.</p>
   </div>
 
