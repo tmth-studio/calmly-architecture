@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- CTM v2 — Calmly — C1+C2+C3 — 19 May 2026 -->
+<!-- CTM v2 — Calmly — C1+C2+C3+C8+C9+C10 — 20 May 2026 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calmly — Customer Transformation Model v2 (C1+C2+C3+C4)</title>
+  <title>Calmly — Customer Transformation Model v2 (C1–C10)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -214,15 +214,15 @@
        HEADER
   ══════════════════════════════════════════════════════════════════ -->
   <div class="doc-header">
-    <div class="doc-label">Calmly — IVE Customer Transformation Model v2 — C1+C2+C3 — 19 May 2026</div>
+    <div class="doc-label">Calmly — IVE Customer Transformation Model v2 — C1–C10 — 20 May 2026</div>
     <h1>Customer Transformation Model</h1>
-    <div class="doc-subtitle">Two customer journeys — claimant and defendant — converging at settlement. C1, C2, and C3.</div>
+    <div class="doc-subtitle">Two customer journeys — claimant and defendant — converging at settlement. C1 through C10.</div>
     <div class="meta-row">
       <span>Tom Manuel</span>
-      <span>19 May 2026</span>
+      <span>20 May 2026</span>
       <span>Framework: IVE CTM — Simanis / Cornell</span>
-      <span>Scope: C1 + C2 + C3</span>
-      <span>Supersedes: CTM v2 C1+C2 (18 May 2026)</span>
+      <span>Scope: C1–C10</span>
+      <span>Supersedes: CTM v2 C1+C2+C3 (19 May 2026)</span>
     </div>
   </div>
 
@@ -230,12 +230,12 @@
        ARCHITECTURE DISCIPLINE NOTICE
   ══════════════════════════════════════════════════════════════════ -->
   <div class="arch-discipline">
-    <div class="ad-label">Architecture discipline — C1+C2+C3+C4 scope</div>
-    <h3>This CTM reflects C1, C2, C3, and C4. Elements requiring C5+ are excluded.</h3>
-    <p>Only challenges with formally completed sub-requirements are represented. C1, C2, C3, and C4 sub-requirements are complete; C5 through C10 are not yet formally complete for CTM purposes.</p>
+    <div class="ad-label">Architecture discipline — C1–C10 scope</div>
+    <h3>This CTM reflects C1 through C10. The full IVE architecture is now in scope.</h3>
+    <p>All ten challenges are formally complete. C8 (switching cost / lock-in), C9 (supplier leverage / lock-out), and C10 (competitive moat / data flywheel) are reflected in Phase 2 (Consuming), Phase 4 (Repeating), and the relevant ITP and supply-side sections.</p>
     <ul>
-      <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1+C2+C3+C4, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation (structurally separate from Calmly, law students, no financial stake) — generates every EV settlement report (C3), pool loss insurance as standard pool membership feature — protects member contributions against early losses, resolves pool financial survivability doubt (C4).</li>
-      <li><strong>Excluded:</strong> pre-sale indicative valuation (C5), payment contingency detail (C6), lock-in (C8), lock-out (C9, C10). These appear as <strong>[REQUIRES C5+]</strong> placeholders where they would otherwise be required. ITP referral architecture (C7) is now resolved — see 1A and D1A mechanisms below.</li>
+      <li><strong>Included:</strong> Pooling mechanism (C1), EV/risk pooling theory of change, the BFF for C1–C4, Prospect Theory loss aversion mechanism (C2a claimant), Spence signalling mechanism (C2b defendant), independent assessment organisation — law students, no financial stake — generates every EV settlement report (C3), pool loss insurance as standard pool membership feature (C4), ITP referral architecture and origination channel (C7), guided submission flow as EV calibration generator (R5/C8 dual function), ITP-specific outcomes dataset and integration depth as switching cost stores of value (C8), multi-org methodology ownership eliminating single-source supplier dependency (C9), EV accuracy as self-reinforcing data flywheel (C10).</li>
+      <li><strong>Elements requiring later design (flagged [REQUIRES C5+]):</strong> pre-sale indicative valuation (C5), payment contingency detail (C6). These placeholders remain where the prior version left them. C7, C8, C9, and C10 are now resolved throughout.</li>
       <li><strong>Marketplace architecture:</strong> Calmly is a verified dispute resolution marketplace. The EV assessment app and pool insurance app are verified apps on the marketplace. The marketplace infrastructure (pooling, settlement mechanism, payment rails) is Calmly's. Calmly does not own claims, bear litigation risk, or employ solicitors — those belong to the pool operator.</li>
     </ul>
   </div>
@@ -478,11 +478,12 @@
         <div class="dim-label">Behavioural — must do</div>
         <div class="dim-content">No required action. Waits for the pool to initiate contact with the defendant.
           <div class="inset" style="margin-top:8px;"><p><strong>[C7 — ITP defendant notification]</strong> When the claimant submits to the pool, the ITP receives a pre-drafted defendant notification template. The ITP reviews and forwards it to the defendant through the ITP's existing communication channel — housing association correspondence, HR system, or marketplace messaging. The defendant receives a formal demand from the authority both parties already recognise — not from Calmly directly. This is the two-sided function of the ITP: it is the mutual authority within whose ecosystem the dispute arose. Notification through the ITP carries institutional weight neither party can dismiss.</p></div>
+          <div class="inset" style="margin-top:8px;"><p><strong>[C8 — dual-function submission]</strong> The claimant's guided submission (the same action that removes the learning disruption in Phase 1D) creates two stores of value automatically and without deliberate effort: (1) a structured case record that contributes to EV accuracy calibration for this dispute category — every claim referred refines the EV model for this ITP's specific dispute profile; (2) a contribution to the ITP-specific outcomes dataset — the running record of claims referred, values recovered, and settlement rates within that ITP's ecosystem. One action, two functions. Neither store of value requires any additional claimant action. The calibration asset accumulates as a structural byproduct of normal referral activity.</p></div>
         </div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Working Product — pool operation. The pool acts on the claimant's behalf. This is the core structural shift C1 produces: the threatening party is now the pool operator, not the claimant.
+        Working Product — pool operation. The pool acts on the claimant's behalf. This is the core structural shift C1 produces: the threatening party is now the pool operator, not the claimant. <strong>C8 dual function:</strong> the submission event also seeds the EV calibration dataset and the ITP outcomes record — both switching cost assets.
       </div>
     </div>
   </div>
@@ -567,7 +568,7 @@
 
   <!-- Phase 4 — Repeating (Claimant) -->
   <h2 class="section-h2">Phase 4 — Repeating (claimant)</h2>
-  <p class="section-intro">Retention at C1+C2 is structurally thin. The pool concept and the C2a cost resolution — once experienced as effective — provide a rational basis for return if a future dispute arises. Structured lock-in (C8) is not yet in scope.</p>
+  <p class="section-intro">Individual claimants are low-frequency and event-driven — the primary retention dynamic is at the ITP level, not the individual level. The claimant's return is rational but passive: the pool concept, once experienced as effective, is sufficient. The structurally important Phase 4 mechanism is the ITP repeating relationship — where switching cost accumulation is active and load-bearing.</p>
 
   <div class="phase-header">
     <div class="phase-number comms">4A</div>
@@ -593,13 +594,51 @@
       </div>
       <div class="state-dim">
         <div class="dim-label">Behavioural — must do</div>
-        <div class="dim-content">No active re-engagement required. Returns if a new dispute arises.
-          <div class="c3plus-flag"><strong>[REQUIRES C5+]</strong> Structured lock-in — case history reusable, accumulated credentials reducing future onboarding friction, ITP recommending return — is a C8 mechanism. C1+C2 provides the rational premise for return. Switching cost creation is not yet designed.</div>
+        <div class="dim-content">No active re-engagement required. Returns if a new dispute arises. The case history from prior resolution may reduce onboarding friction on return — the ITP already has the referral protocol in place and the claimant's dispute category is known to the system.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Communications Product — outcome-driven return. Pool concept, once experienced as effective, is the rational basis for return. The ITP's referral protocol is the structural channel — the claimant does not need to find Calmly again; the ITP routes them.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4 — Repeating (ITP) — C8 lock-in -->
+  <div class="phase-header" style="margin-top:28px;">
+    <div class="phase-number convergence">4B</div>
+    <div class="phase-title">
+      <h3>ITP repeating relationship — switching cost accumulation</h3>
+      <div class="phase-arc">Active ITP partnership → switching cost assets accumulate automatically → lock-in becomes load-bearing</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-dark" style="background:#1f4fa8;color:#fff;border-color:#1f4fa8;">C8 — switching cost</span>
+      <span class="state-card-title" style="margin-left:4px;">ITP — 4B Repeating relationship</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Cognitive — must think</div>
+        <div class="dim-content">"Calmly's outcomes data is embedded in our reporting. The claims our members refer generate a dataset we now rely on for board and funder communications. The EV model is calibrated specifically to our dispute profile — our settlement rates are better than they would be on a generic platform. Switching to an alternative would mean starting from zero on all three."</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Emotive — must feel</div>
+        <div class="dim-content">Institutional reliance — the switching cost is largely invisible during normal operation. It becomes visible only when a competitor approaches, at which point the ITP recognises the replacement cost: (1) losing the calibrated EV model for their dispute profile; (2) losing the outcomes dataset formatted for their own board/funder reporting; (3) unwinding the community reputation built within their member population. The emotional register is not loyalty — it is the quiet recognition of accumulated dependency.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Behavioural — must do</div>
+        <div class="dim-content">Continues referring qualifying disputes to Calmly as part of the standard escalation protocol. No deliberate action required to accumulate switching cost — it accumulates as a structural byproduct of normal referral activity.
+          <div class="inset" style="margin-top:8px;"><p><strong>[C8 — three stores of value]</strong> Three switching cost assets accumulate automatically with each claim referred:</p>
+          <p style="margin-top:6px;"><strong>1. EV accuracy calibration data.</strong> Every claim referred and resolved calibrates Calmly's EV model for this ITP's specific dispute profile — the categories, values, and defendant types that arise within this ITP's ecosystem. The model becomes progressively more accurate for this ITP's claims specifically. A new provider would start with a generic model. The accuracy gap is quantifiable and grows with volume.</p>
+          <p style="margin-top:6px;"><strong>2. ITP-specific outcomes dataset.</strong> A running record of claims referred, settlement rates, values recovered, and resolution times within this ITP's member population. Calmly produces quarterly summaries and an annual deep report formatted for the ITP's own board and funder communications — in the ITP's stakeholder language, using the ITP's own reporting structure. The goal is for the ITP to cite exchange outcomes in its own annual report. When that happens, the dataset is load-bearing in the ITP's institutional accountability framework. Switching cost becomes near-prohibitive.</p>
+          <p style="margin-top:6px;"><strong>3. Integration depth and community reputation.</strong> The referral protocol is embedded in the ITP's dispute escalation process. Staff know the pathway. Members within the ITP's population have used it and recommend it to others. Both assets are lost on exit.</p>
+          </div>
         </div>
       </div>
       <div class="dim-mechanism">
         <div class="mech-label">4-D product component</div>
-        Communications Product — outcome-driven return prompt. The pool concept, once experienced as effective, is sufficient rational basis for future return at C1+C2 scope.
+        Working Product — ITP outcomes reporting (quarterly + annual). The outcomes report is the primary lock-in mechanism: it formats Calmly's platform data into the ITP's own reporting language, making the dataset load-bearing. The lock-in strategy: make the outcomes dataset useful for the ITP's institutional reporting, then make it relied upon. Communications Product — co-branded member communications referencing Calmly outcomes reinforce community reputation within the ITP's population.
       </div>
     </div>
   </div>
@@ -807,6 +846,102 @@
 
 
   <!-- ══════════════════════════════════════════════════════════════
+       SUPPLY SIDE — C9 SUPPLIER LEVERAGE (LOCK-OUT)
+  ══════════════════════════════════════════════════════════════════ -->
+  <hr class="journey-divider">
+
+  <div class="journey-heading">
+    <span class="jh-icon">⬡</span>
+    <h2>Supply side — assessment organisation</h2>
+    <span class="jh-subtitle">C9: supplier leverage — no single org has hold-up power</span>
+  </div>
+
+  <p class="section-intro" style="margin-top:20px;">The assessment org is not a customer — it is a supply-side partner that delivers EV reports under Calmly's methodology. C9 addresses the primary supply-side risk: single-source dependency on one assessment org. The resolution is structural — Calmly owns the methodology, not the org.</p>
+
+  <div class="phase-header" style="margin-top:20px;">
+    <div class="phase-number convergence">S1</div>
+    <div class="phase-title">
+      <h3>Assessment org pool — multi-org structure</h3>
+      <div class="phase-arc">Single-source risk → methodology owned by Calmly → multiple orgs compete on quality</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-dark" style="background:#5b21b6;color:#fff;border-color:#5b21b6;">C9 — supplier leverage</span>
+      <span class="state-card-title" style="margin-left:4px;">Assessment org pool — S1</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Risk being addressed</div>
+        <div class="dim-content">Single-source dependency: if Calmly relies on one assessment org, that org has hold-up power — it can raise prices, reduce quality, or exit, and Calmly cannot easily replace it without disrupting the EV signal. The assessment org's independence is the foundation of C2b (Spence signalling) — any disruption to that independence breaks the mechanism.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Resolution — methodology ownership</div>
+        <div class="dim-content">Calmly owns the methodology, not the org. Multiple university law departments are onboarded on the same shared playbook — the assessment framework, structured report template, quality standards, and training materials are all Calmly's IP. Any org operating on Calmly's methodology can produce a compliant EV report. No single org has hold-up power because no single org is irreplaceable.
+          <div class="inset" style="margin-top:8px;"><p><strong>[C9 mechanism]</strong> Assessment orgs compete for volume on quality metrics: accuracy (actual settlement vs predicted EV), turnaround time, and dispute rate. Volume is allocated centrally by HQ based on quality scores. A new org can be onboarded by learning the shared playbook — setup time is weeks, not months. Geographic coverage expands by adding new university law departments under the same framework. The pool of assessment orgs grows as Calmly scales geographically; each new partnership is a substitutable node in the network, not a new dependency.</p></div>
+        </div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Operational structure</div>
+        <div class="dim-content">HQ maintains a QA framework across all orgs. Volume allocation is a quality-driven market, not a fixed contract. No single org is awarded exclusivity. Assessment org setup is a repeatable process — the playbook is the asset, not the relationship.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — shared methodology playbook (Calmly's IP). HQ QA framework. Volume allocation algorithm. Org onboarding process. The EV assessment engine is Calmly technology — the org provides human assessment capacity only, not the analytical framework.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       COMPETITIVE ARCHITECTURE — C10 DATA FLYWHEEL
+  ══════════════════════════════════════════════════════════════════ -->
+  <hr class="journey-divider">
+
+  <div class="journey-heading">
+    <span class="jh-icon">↻</span>
+    <h2>Competitive architecture — data flywheel</h2>
+    <span class="jh-subtitle">C10: EV accuracy as the self-reinforcing competitive moat</span>
+  </div>
+
+  <p class="section-intro" style="margin-top:20px;">C10 establishes the primary competitive moat: EV accuracy as a function of cumulative claims processed. This is not a moat that needs to be built separately — it accumulates automatically as Calmly operates. Every claim resolved adds a data point that improves the EV model's accuracy. Better accuracy drives higher settlement rates; higher settlement rates attract more pool operators and ITPs; more volume improves accuracy further. The flywheel is self-reinforcing.</p>
+
+  <div class="phase-header" style="margin-top:20px;">
+    <div class="phase-number convergence">C10</div>
+    <div class="phase-title">
+      <h3>EV accuracy flywheel</h3>
+      <div class="phase-arc">Volume → EV accuracy → settlement rate → investor confidence → volume → accuracy (repeat)</div>
+    </div>
+  </div>
+
+  <div class="state-card">
+    <div class="state-card-header">
+      <span class="tag tag-dark" style="background:#0f2744;color:#fff;border-color:#0f2744;">C10 — competitive moat</span>
+      <span class="state-card-title" style="margin-left:4px;">Data flywheel — C10</span>
+    </div>
+    <div class="state-card-body">
+      <div class="state-dim">
+        <div class="dim-label">Flywheel mechanism</div>
+        <div class="dim-content">EV accuracy is a function of cumulative claims processed. More claims → better calibration of the EV model against actual settlement outcomes → higher pre-settlement accuracy → higher settlement rates → greater pool operator confidence → more operators joining the exchange → more volume. The cycle is self-reinforcing. Each completed claim contributes a data point (predicted EV vs actual outcome) that tightens the model's calibration for its dispute category.
+          <div class="inset" style="margin-top:8px;"><p><strong>[C10 mechanism]</strong> The accuracy gap between Calmly and a new entrant widens with time. A new entrant starting from zero cannot acquire this dataset — it can only be accumulated through live claims. At 18,000 claims/year (at-scale), Calmly's model is calibrated against years of actual outcomes data across all dispute categories. A new entrant requires years of operation before its accuracy approaches Calmly's. Pool operators price this explicitly: accuracy directly determines the settlement rate they can credibly offer investors. An inferior EV model means lower settlement rates, lower investor returns, and therefore lower willingness to fund the pool. The accuracy gap is a compounding barrier to entry.</p></div>
+        </div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">Operational implication</div>
+        <div class="dim-content">Data infrastructure is HQ-level, not LMU-level. Structured claim records are maintained as a strategic asset — prediction, outcome, delta, dispute category, ITP source. Model calibration updates are fed back to assessment orgs as improved assessment parameters. The EV assessment engine (see AOM Section 8) is the platform that makes the flywheel operational — it builds the track record dataset automatically as part of normal claim processing. No separate data collection process is required.</div>
+      </div>
+      <div class="state-dim">
+        <div class="dim-label">New entrant diseconomy</div>
+        <div class="dim-content">Time compression is not available to a new entrant. They cannot buy the dataset — it can only be generated through live claims, which require pool operators, which require accuracy, which requires data. The moat is created by the sequence itself: the first mover advantage here is specifically a data accumulation advantage, not a technology advantage. A well-resourced new entrant can replicate the technology; it cannot replicate the dataset without operating for years at comparable volume.</div>
+      </div>
+      <div class="dim-mechanism">
+        <div class="mech-label">4-D product component</div>
+        Working Product — EV assessment engine with track record dataset (HQ). Structured claim records: prediction, outcome, category, ITP source. Model calibration update cycle. Data infrastructure is the durable asset; it accumulates from every claim processed, without additional cost per claim beyond the infrastructure fixed cost.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
        CONVERGENCE — SHARED HIO
   ══════════════════════════════════════════════════════════════════ -->
   <div class="convergence-block" style="margin-top:52px;">
@@ -889,9 +1024,9 @@
           <td class="col-subphase">2A Activation</td>
           <td class="col-state">My claim is in the pool; the pool will pursue it; I do not need to act</td>
           <td class="col-state">Passive expectation; operational burden transferred</td>
-          <td class="col-state">No action; waits for pool to contact defendant</td>
-          <td class="col-product"><span class="tag tag-blue">Working</span> Pool operation</td>
-          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+          <td class="col-state">No action; waits for pool to contact defendant. Submission automatically seeds EV calibration data and ITP outcomes dataset (C8 dual function)</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> Pool operation + <span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C8</span> EV calibration + ITP outcomes record</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C8</span></td>
         </tr>
         <tr class="row-working">
           <td class="col-subphase">2B Engagement</td>
@@ -919,11 +1054,22 @@
           <td>Claimant</td>
           <td class="col-phase">4 — Repeating</td>
           <td class="col-subphase">4A Retention</td>
-          <td class="col-state">Pooling worked; this is my path for future disputes</td>
-          <td class="col-state">Residual structural trust in mechanism</td>
-          <td class="col-state">Returns if new dispute arises; no active re-engagement required</td>
-          <td class="col-product"><span class="tag tag-green">Comms</span> Outcome-driven return</td>
-          <td class="col-balm"><span class="tag tag-c1">C1</span></td>
+          <td class="col-state">Pooling worked; this is my path for future disputes; ITP will route me again</td>
+          <td class="col-state">Residual structural trust; ITP referral protocol makes return frictionless</td>
+          <td class="col-state">Returns if new dispute arises via ITP; no active re-engagement required</td>
+          <td class="col-product"><span class="tag tag-green">Comms</span> Outcome-driven return via ITP protocol</td>
+          <td class="col-balm"><span class="tag tag-c1">C1</span> <span class="tag tag-c2">C7</span></td>
+        </tr>
+        <!-- ITP Phase 4B — C8 switching cost -->
+        <tr class="row-convergence">
+          <td>ITP</td>
+          <td class="col-phase">4 — Repeating</td>
+          <td class="col-subphase">4B ITP lock-in</td>
+          <td class="col-state">Calmly's outcomes data is embedded in our reporting; EV model is calibrated to our dispute profile; integration depth makes switching prohibitively costly</td>
+          <td class="col-state">Invisible reliance during normal operation; switching cost becomes visible only when a competitor approaches</td>
+          <td class="col-state">Continues standard referral protocol; receives quarterly outcomes summary and annual board-formatted deep report</td>
+          <td class="col-product"><span class="tag tag-blue">Working</span> ITP outcomes reporting (quarterly + annual) + EV calibration data accumulation + community reputation within ITP population</td>
+          <td class="col-balm"><span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C8</span></td>
         </tr>
 
         <!-- Defendant Phase 1 -->
@@ -1032,6 +1178,24 @@
         <td class="balm-note">Working Product — independent EV assessment generated by org with no financial stake</td>
         <td class="balm-note">Standard practice: report produced by interested party (Calmly). C3 override: report generated by independent org — law students, no financial stake. Defendant cannot extend mediation on source-credibility grounds. Average recovery time shortens. WC contracts.</td>
       </tr>
+      <tr>
+        <td class="balm-req"><span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C8</span> Switching cost — ITP lock-in<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Three stores of value: EV calibration data, ITP outcomes dataset, integration depth + community reputation</span></td>
+        <td class="balm-note">Phase 2A (claimant submission creates calibration data and ITP outcomes record — dual function); Phase 4B (ITP repeating — switching cost accumulates automatically; outcomes reporting becomes load-bearing in ITP's institutional reporting)</td>
+        <td class="balm-note">Working Product — ITP outcomes reporting (quarterly + annual deep report formatted for ITP's board/funder communications). EV assessment engine (track record dataset). Communications Product — co-branded member communications.</td>
+        <td class="balm-note">Standard practice: platform provider has no structural mechanism to prevent ITP switching to a competitor. C8 override: three stores of value accumulate as structural byproducts of normal referral activity — no deliberate action required. The ITP-specific outcomes dataset becomes load-bearing in the ITP's own reporting. At that point, switching cost is near-prohibitive: the ITP would need to restart the dataset from zero, lose calibrated EV accuracy, and explain to its funder why outcomes data is no longer available. The switching cost is invisible until the moment it matters — which is precisely when a competitor approaches.</td>
+      </tr>
+      <tr>
+        <td class="balm-req"><span class="tag" style="background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C9</span> Supplier leverage — assessment org lock-out<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Methodology owned by Calmly; multi-org pool; no single-source dependency</span></td>
+        <td class="balm-note">Supply side S1 (assessment org pool — multi-org structure); Making stream at HQ (QA framework and volume allocation by quality metrics)</td>
+        <td class="balm-note">Working Product — shared methodology playbook (Calmly's IP). HQ QA framework. Volume allocation algorithm. Org onboarding process.</td>
+        <td class="balm-note">Standard practice: single assessment provider relationship creates hold-up risk — provider can raise prices, reduce quality, or exit. C9 override: Calmly owns the methodology, not the org. Multiple university law departments operate on the shared playbook. No single org is irreplaceable; volume is allocated on quality metrics. Geographic coverage expands by onboarding new orgs, not renegotiating with existing ones. The supplier pool is structurally competitive by design.</td>
+      </tr>
+      <tr>
+        <td class="balm-req"><span class="tag" style="background:#0f2744;color:#fff;border-color:#0f2744;font-size:11px;font-weight:600;padding:3px 9px;border-radius:3px;">C10</span> Competitive moat — EV accuracy flywheel<br><span style="font-size:11px;font-weight:400;color:var(--text-muted);">Volume → calibration → accuracy → settlement rate → volume (self-reinforcing)</span></td>
+        <td class="balm-note">C10 section (data flywheel); Making stream at HQ (claim data infrastructure); Phase 4 (repeating claims accumulate calibration data)</td>
+        <td class="balm-note">Working Product — EV assessment engine with track record dataset (HQ). Structured claim records (prediction, outcome, delta, dispute category, ITP source). Model calibration update cycle fed back to assessment orgs.</td>
+        <td class="balm-note">Standard practice: EV accuracy is fixed at model design — no structural mechanism to improve it over time. C10 override: every resolved claim adds a calibration data point. Accuracy improves with cumulative volume. The moat is not technology (replicable) but data (time-compressed, not purchasable). A new entrant at Year 5 faces a competitor with five years of calibration data across every dispute category. The accuracy gap compounds with each passing year — and pool operators price it explicitly, because their investor returns depend directly on settlement rates, which depend directly on EV accuracy.</td>
+      </tr>
     </tbody>
   </table>
 
@@ -1094,19 +1258,21 @@
   <div class="finding">
     <div class="finding-header">
       <span class="tag tag-green">Architecture discipline check</span>
-      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--green-text);">C1+C2+C3+C4 complete — no C5+ mechanisms present</span>
+      <span style="font-size:12px;font-weight:600;margin-left:8px;color:var(--green-text);">C1–C10 complete — full IVE architecture reflected</span>
     </div>
     <div class="finding-body">
-      <p>C4 is now complete: pool loss insurance (Olson 1965 + Arrow 1963) is reflected in Phase 1B (consideration) and Phase 1D (sign-up). Pool membership includes insurance as a standard feature — not an add-on. Individual contributions are protected regardless of early claim outcomes.</p>
-      <p>The following mechanisms are explicitly excluded and flagged [REQUIRES C5+] where they would otherwise appear:</p>
+      <p>All ten challenges are now reflected in the CTM. C8, C9, and C10 are added in this version:</p>
+      <ul>
+        <li><strong>C8 (switching cost):</strong> Phase 2A (dual-function submission — EV calibration data + ITP outcomes dataset created as structural byproduct); Phase 4B (ITP repeating relationship — outcomes reporting becomes load-bearing in ITP's institutional accountability framework). Three stores of value: EV accuracy calibration data, ITP-specific outcomes dataset, integration depth and community reputation.</li>
+        <li><strong>C9 (supplier leverage):</strong> Supply side S1 — Calmly owns the methodology, not the org. Multiple university law departments operate on the shared playbook. Volume allocated on quality metrics. No single org has hold-up power. Geographic expansion via new org onboarding, not renegotiation.</li>
+        <li><strong>C10 (competitive moat):</strong> Data flywheel section — EV accuracy improves with cumulative volume. Self-reinforcing flywheel creates compounding time-compression diseconomies for new entrants. Data infrastructure at HQ; claim records maintained as strategic asset. Pool operators price EV accuracy directly in investor returns — accuracy gap is commercially load-bearing.</li>
+      </ul>
+      <p>The following mechanisms remain flagged [REQUIRES C5+] because they are not yet formally complete:</p>
       <ul>
         <li>Pre-sale indicative valuation (claim-specific independent EV before commitment) — C5</li>
         <li>Payment instrument detail (specific distribution mechanism, amortisation) — C6</li>
-        <li>ITP referral architecture and origination channel — C7 <strong style="color:var(--green-text);">[RESOLVED — see 1A and D1A mechanisms]</strong></li>
-        <li>Lock-in (case history, switching costs) — C8</li>
-        <li>Lock-out (scarce resource strategy) — C9, C10</li>
       </ul>
-      <p>The EV assessment at D1B remains fully resolved by C3. The pool insurance at 1B and 1D is now resolved by C4. The marketplace structure — with the EV assessment app (C3) and pool insurance app (C4) as verified apps — is reflected throughout.</p>
+      <p>C7 (ITP referral architecture) remains resolved — see 1A and D1A mechanisms. C4 (pool insurance) remains resolved at Phase 1B and 1D. The EV assessment at D1B remains fully resolved by C3.</p>
     </div>
   </div>
 
@@ -1116,10 +1282,10 @@
   ══════════════════════════════════════════════════════════════════ -->
   <div class="routing-panel">
     <div class="rp-label">Next steps</div>
-    <p><strong>CTM v2 now reflects C1, C2, C3, and C4.</strong> C4 resolves pool financial survivability doubt at Phase 1B and 1D via pool loss insurance as a standard pool membership feature. Every sub-phase is grounded in a confirmed mechanism; remaining gaps are flagged with the challenge that closes them.</p>
-    <p><strong>What C1+C2+C3+C4 delivers:</strong> C1 makes mediation structurally operative — the defendant's BATNA changes so that non-participation leads somewhere costly. C2a inverts the time pressure — delay becomes active loss accrual for the defendant. C2b collapses the defendant's information asymmetry — an independent EV signal removes the factual basis for motivated disengagement. C3 grounds that signal operationally via the independent assessment org. C4 resolves the claimant's pool financial survivability doubt — insurance makes collective persistence individually rational from the moment of joining. Together, the four challenges define a settlement that reflects the merits of the case as the rational outcome for both parties, and make joining the pool individually rational even knowing early claims may lose.</p>
-    <p><strong>What the CTM cannot yet map (requires C5+):</strong> pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6), lock-in (C8). C7 (ITP referral architecture) is now resolved — origination channel and defendant notification are both provided by the ITP, as set out in 1A and D1A above.</p>
-    <p><strong>AOM implication:</strong> C4 adds one new HQ activity: insurance app curation — accrediting the pool insurer, setting pool insurance standards, monitoring claims handling. This is a small HQ overhead (~0.5 FTE). The insurance premium is paid by pool members (built into membership); Calmly earns a marketplace fee from the insurer. Run <code>/ive-ctm-custom</code> again after C5 is designed to extend this CTM incrementally.</p>
+    <p><strong>CTM v2 now reflects C1 through C10 — the complete IVE architecture.</strong> C8 (switching cost), C9 (supplier leverage), and C10 (competitive moat) are added in this version. Every mechanism is grounded; remaining gaps (C5 and C6 only) are flagged.</p>
+    <p><strong>What C1–C10 collectively delivers:</strong> C1 makes mediation structurally operative. C2a/C2b collapse the information asymmetries that prevent rational settlement. C3 grounds the EV signal operationally via independent assessment orgs. C4 resolves pool financial survivability doubt via insurance. C7 routes both claimants and defendant notifications through the ITP's institutional channel. C8 accumulates three stores of value in the ITP relationship — making switching cost invisible during normal operation and near-prohibitive when a competitor approaches. C9 eliminates single-source supplier dependency — Calmly owns the methodology; orgs compete for volume on quality metrics. C10 creates the self-reinforcing data flywheel — EV accuracy as a function of cumulative claims that compounds the time-compression diseconomy for new entrants.</p>
+    <p><strong>What the CTM cannot yet map (requires C5+):</strong> pre-sale indicative valuation for claim qualification (C5), payment instrument detail (C6). Run <code>/ive-ctm-custom</code> after C5 is designed to add the pre-sale EV mechanism to Phase 1C/1D.</p>
+    <p><strong>AOM implications from C8/C9/C10:</strong> C8 adds ITP outcomes reporting as a HQ account management activity (quarterly + annual per active ITP partnership). C9 adds assessment org QA framework and pool maintenance at HQ (multi-org competition structure). C10 adds claim data infrastructure and EV accuracy tracking at HQ (fixed infrastructure, cumulative benefit). See AOM v2 updated for full activity detail.</p>
   </div>
 
 </div>

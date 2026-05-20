@@ -1,10 +1,10 @@
-<!-- Updated: C3 — 19 May 2026 -->
+<!-- Updated: C8/C9/C10 — 20 May 2026 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calmly — AOM v2 — C1+C2+C3 — 19 May 2026</title>
+  <title>Calmly — AOM v2 — C1–C10 — 20 May 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -160,26 +160,26 @@
   <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <div class="doc-header">
-    <div class="label">Calmly — AOM v2 — C1+C2+C3 — 19 May 2026 — IVE Step 4</div>
+    <div class="label">Calmly — AOM v2 — C1–C10 — 20 May 2026 — IVE Step 4</div>
     <h1>At-Scale Operational Model</h1>
     <div class="subtitle">Platform-only costs. Pool operator costs excluded by design.</div>
     <div class="meta-row">
       <span>Tom Manuel</span>
-      <span>19 May 2026</span>
+      <span>20 May 2026</span>
       <span>Based on: Design Memo v2.0 (exchange architecture)</span>
-      <span>Supersedes: AOM v2 C1+C2 (18 May 2026)</span>
+      <span>Supersedes: AOM v2 C1+C2+C3 (19 May 2026)</span>
       <span>Feeds into: /ive-fin-sim-custom (Group 4)</span>
     </div>
   </div>
 
   <!-- ─── Architecture Discipline Notice ─── -->
   <div class="arch-notice">
-    <div class="arch-label">Architecture discipline — C1+C2+C3+C4</div>
+    <div class="arch-label">Architecture discipline — C1–C10</div>
     <p>This AOM reflects Calmly platform costs only. Pool operator costs (solicitors, litigation, court filing, working capital for claims in flight) are excluded — they belong to the pool operator's P&L, not Calmly's.</p>
     <p>Calmly is a verified dispute resolution marketplace. It does not own claims, bear litigation risk, employ solicitors, or fund court proceedings. The EV assessment app and pool insurance app are verified apps on the marketplace — curated by Calmly, delivered by independent third parties. Calmly earns platform fees from both parties per claim resolved, and marketplace fees from verified app providers.</p>
     <ul>
       <li><strong>Excluded:</strong> solicitor salaries, law student supervision, N1 court filing fees, pool insurance premiums (paid by pool members — Calmly earns marketplace fee from insurer, not the premium itself), working capital for claims in litigation, SRA compliance costs at the operating unit level.</li>
-      <li><strong>Included:</strong> technology infrastructure, claim intake and eligibility assessment, independent EV assessment delivery (routed via independent assessment org under C3 — £16.28/claim), defendant onboarding and settlement facilitation, pool operator relationship management, <strong>pool insurance app curation (C4) — accrediting the insurer, setting pool insurance standards, monitoring claims handling (~0.5 FTE HQ, ~£2/claim amortised)</strong>.</li>
+      <li><strong>Included:</strong> technology infrastructure, claim intake and eligibility assessment, independent EV assessment delivery (routed via independent assessment org under C3 — £16.28/claim), defendant onboarding and settlement facilitation, pool operator relationship management, pool insurance app curation (C4 — ~0.5 FTE HQ, ~£2/claim amortised), <strong>ITP outcomes reporting (C8 — quarterly + annual per active ITP, ~£4/claim amortised at scale), assessment org pool QA framework (C9 — multi-org structure, HQ function), claim data infrastructure and EV accuracy tracking (C10 — HQ fixed infrastructure, strategic asset management)</strong>.</li>
       <li><strong>Not modelled (requires later architecture):</strong> securitisation vehicle management, SPV operations, investor relations infrastructure at institutional scale, AML compliance for investor onboarding. These are flagged <code>[REQUIRES later architecture]</code> and excluded from cost lines.</li>
     </ul>
   </div>
@@ -513,11 +513,12 @@
       </tr>
       <tr>
         <td class="body-cell">
-          <span class="tag tag-red">WP2</span> Independent EV assessment — route claim to independent assessment org, receive returned report, run quality review, handle assessment disputes, record in track record dataset
+          <span class="tag tag-red">WP2</span> Independent EV assessment — route claim to assessment org pool, receive returned report, run quality review, handle assessment disputes, record in track record dataset
           <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C3 update:</strong> assessment generation transferred to independent assessment org (external enabler, law students, no financial stake). Specialist time reduced from 90 min (generation) to 20 min (routing and quality review). PVC cost of £16.28/claim added — see cost stack.</div>
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C9 update:</strong> assessment org pool, not a single org. Multiple university law departments operate on Calmly's shared methodology playbook. Volume is routed to the highest-quality orgs based on quality metrics (EV accuracy, turnaround time, dispute rate). No single org has hold-up power — methodology ownership is Calmly's. New orgs are onboarded as geographic coverage expands. The HQ QA framework governs all orgs; volume allocation is a quality-driven market, not a fixed contract.</div>
         </td>
-        <td>EV assessment specialist</td>
-        <td>LMU</td>
+        <td>EV assessment specialist (routing + review); HQ QA team (cross-org quality oversight)</td>
+        <td>LMU (routing + review); HQ (QA framework and volume allocation)</td>
         <td>20 min</td>
         <td>Per unit (every claim that passes pre-screen receives a full EV assessment)</td>
       </tr>
@@ -590,6 +591,16 @@
         <td>HQ</td>
         <td>Fixed per ITP type</td>
         <td>Not per-claim. One-time setup cost per ITP type (housing associations, HR departments, online marketplaces). Amortise over lifetime claims from that ITP type. Fin-sim Group 5.</td>
+      </tr>
+      <tr>
+        <td class="body-cell">
+          ITP outcomes reporting — quarterly summary + annual deep report per active ITP partnership <span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;">C8</span>
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C8 — primary lock-in mechanism.</strong> Quarterly summary: claims referred, settlement rates, values recovered within this ITP's ecosystem. Annual deep report: formatted for the ITP's own board and funder communications, in the ITP's stakeholder language. Goal: the ITP cites Calmly exchange outcomes in its own annual report. When that happens, the outcomes dataset is load-bearing in the ITP's institutional accountability framework. Three switching cost assets accumulate automatically: (1) ITP-specific EV calibration data, (2) outcomes dataset for board/funder reporting, (3) integration depth and community reputation. Switching cost is invisible during normal operation; it becomes visible only when a competitor approaches.</div>
+        </td>
+        <td>ITP account management (HQ) — same resource as commercial team / ITP partnerships</td>
+        <td>HQ</td>
+        <td>Fixed per active ITP partnership (not per claim). Quarterly cycle + annual deep report.</td>
+        <td>Volume driver: per active ITP (not per claim). At-scale: ~20–30 active ITPs. Estimated ~1.5 days/ITP/quarter for quarterly summary; ~3 days/ITP/year for annual deep report. Amortised: ~£4/claim at 20 ITPs, 18,000 claims/year. Fin-sim Group 5.</td>
       </tr>
       <tr>
         <td class="body-cell">Pool operator onboarding and quality management</td>
@@ -941,9 +952,21 @@
               <li>Assessor training and QA</li>
               <li>Track record dataset governance</li>
             </ul>
-            <strong>Head of Operations <span class="tag tag-blue" style="font-size:10px;">C3 absorbed</span></strong>
+            <strong>Head of Operations <span class="tag tag-blue" style="font-size:10px;">C3</span></strong>
             <ul>
-              <li>Assessment org methodology oversight — maintaining EV assessment standards and escalation protocols for the independent org. Estimated 0.5 days/week at scale. No new dedicated role — absorbed into existing Head of Operations scope.</li>
+              <li>Assessment org methodology oversight — EV standards and escalation protocols. ~0.5 days/week at scale. Absorbed into existing scope.</li>
+            </ul>
+            <strong>HQ QA team <span class="tag" style="background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;">C9</span></strong>
+            <ul>
+              <li>Assessment org pool quality management — QA framework applied across all orgs; volume allocated on quality metrics (accuracy, turnaround, dispute rate)</li>
+              <li>New org onboarding on shared methodology playbook as geographic coverage expands</li>
+              <li>No single org has hold-up power — pool is structurally competitive</li>
+            </ul>
+            <strong>Data infrastructure <span class="tag" style="background:#0f2744;color:#fff;border-color:#0f2744;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;">C10</span></strong>
+            <ul>
+              <li>Claim data management — structured records: prediction, outcome, delta, dispute category, ITP source</li>
+              <li>EV accuracy tracking against actual settlement outcomes — model calibration updates fed back to assessment orgs as improved assessment parameters</li>
+              <li>Strategic asset management — cumulative dataset is the primary competitive moat; accuracy gap vs new entrant widens with volume</li>
             </ul>
           </td>
           <td class="cell">
@@ -951,6 +974,12 @@
             <ul>
               <li>National ITP activation (Stage 1–3)</li>
               <li>Placement fee structure and agreements</li>
+            </ul>
+            <strong>ITP account management <span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;">C8</span></strong>
+            <ul>
+              <li>Quarterly ITP outcomes summaries (claims referred, settlement rates, values recovered)</li>
+              <li>Annual deep report per ITP — formatted for ITP's own board/funder communications in ITP's stakeholder language</li>
+              <li>Goal: ITP cites exchange outcomes in its own annual report (dataset becomes load-bearing)</li>
             </ul>
             <strong>Pool operator relations (2)</strong>
             <ul>
@@ -962,8 +991,8 @@
           <td class="cell">
             <strong>Commercial team</strong>
             <ul>
-              <li>ITP welfare impact reports (lock-in)</li>
-              <li>Co-branded member communications</li>
+              <li>ITP outcomes reports (primary C8 lock-in mechanism)</li>
+              <li>Co-branded member communications referencing exchange outcomes</li>
               <li>Case studies (with consent)</li>
             </ul>
           </td>
@@ -1148,6 +1177,45 @@
         <td>Fixed per operator</td>
         <td class="driver">Fixed per pool operator onboarded. Amortise over lifetime claims processed. Fin-sim Group 5.</td>
         <td style="font-size:12px;">TIER 4: relationship management cost — not legal supervision. Pool operator bears its own legal infrastructure costs.</td>
+      </tr>
+      <!-- C8 — ITP outcomes reporting -->
+      <tr>
+        <td class="body-cell">
+          ITP outcomes reporting — quarterly summary + annual deep report per active ITP partnership
+          <span class="tag" style="background:#e8eef8;color:#1f4fa8;border-color:#b8c8e8;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;margin-left:4px;">C8 new</span>
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C8 — primary lock-in mechanism.</strong> Quarterly summary formatted for ITP internal review; annual deep report formatted for the ITP's own board/funder communications in their stakeholder language. Includes both claimant and defendant outcomes within the ITP's ecosystem. The annual report is the load-bearing deliverable — when an ITP cites Calmly exchange data in its own annual report, the dataset becomes embedded in the ITP's institutional accountability framework. Switching cost at that point is near-prohibitive.</div>
+        </td>
+        <td>ITP account management (HQ) — same resource as commercial / ITP partnerships team</td>
+        <td>HQ</td>
+        <td>Fixed per active ITP (not per claim). Quarterly + annual cycle.</td>
+        <td class="driver">Per active ITP partnership. ~1.5 days/ITP/quarter for quarterly summary; ~3 days/ITP/year for annual deep report. At 20 active ITPs, 18,000 claims/year: amortised ~£4/claim. Fin-sim Group 5.</td>
+        <td style="font-size:12px;">TIER 4: ITP count and time estimates. This is the same resource as commercial team / ITP partnerships — account management scope expands as ITPs activate; does not require a separate headcount at pilot scale.</td>
+      </tr>
+      <!-- C9 — Assessment org pool QA -->
+      <tr>
+        <td class="body-cell">
+          Assessment org quality management and pool maintenance — QA framework, volume allocation, new org onboarding
+          <span class="tag" style="background:#f0ebfb;color:#5b21b6;border-color:#c4aff0;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;margin-left:4px;">C9 new</span>
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C9 — supplier leverage.</strong> QA framework applied across all orgs in the pool. Volume allocated centrally by HQ on quality metrics: EV accuracy (predicted vs actual settlement), turnaround time, dispute rate. New org onboarding on shared methodology playbook as geographic coverage expands. No single org is awarded exclusivity or a volume guarantee — structural competition keeps quality high and costs at floor. HQ owns the methodology; orgs provide human assessment capacity only.</div>
+        </td>
+        <td>EV methodology team / Head of Operations (HQ)</td>
+        <td>HQ</td>
+        <td>Fixed HQ function. ~0.5 FTE at scale (absorbed into existing EV methodology team scope).</td>
+        <td class="driver">Fixed per active org in pool + per new org onboarded. Not per-claim. Amortise across annual volume. Fin-sim Group 5.</td>
+        <td style="font-size:12px;">TIER 4: absorbed into existing EV methodology team scope (2–3 FTE). At early scale, QA oversight is ~0.25 FTE; expands to ~0.5 FTE as the org pool grows. No dedicated new headcount at pilot.</td>
+      </tr>
+      <!-- C10 — Claim data infrastructure -->
+      <tr>
+        <td class="body-cell">
+          Claim data management and EV accuracy tracking — structured claim records as strategic asset; model calibration update cycle
+          <span class="tag" style="background:#0f2744;color:#fff;border-color:#0f2744;font-size:10px;font-weight:600;padding:2px 8px;border-radius:3px;margin-left:4px;">C10 new</span>
+          <div class="inset" style="margin-top: 8px; font-size: 13px;"><strong>C10 — competitive moat.</strong> Structured claim records maintained as primary strategic asset: prediction, outcome, delta, dispute category, ITP source. EV accuracy tracked against actual settlement outcomes across every dispute category. Model calibration updates generated periodically and fed back to assessment orgs as improved assessment parameters. The dataset accumulates automatically as part of normal claim processing — no separate data collection process. At scale, the track record dataset is the primary barrier to entry: a new entrant cannot purchase it and cannot compress the time required to accumulate it. Pool operators price EV accuracy directly in investor returns.</div>
+        </td>
+        <td>Platform engineering + EV methodology team (HQ)</td>
+        <td>HQ</td>
+        <td>Fixed infrastructure. Not a per-claim cost — infrastructure fixed cost; accuracy benefit is cumulative.</td>
+        <td class="driver">Fixed HQ infrastructure — EV assessment engine (see Section 8). Scales sub-linearly with volume; calibration value increases with cumulative claims. Fin-sim Group 5 (fixed infrastructure).</td>
+        <td style="font-size:12px;">The EV assessment engine already captures the data — this row names it explicitly as a strategic asset with its own management discipline. No additional headcount at pilot scale; data governance absorbed into EV methodology team scope. At scale (~18,000 claims/year), dedicated data/analytics function may be warranted (fin-sim sensitivity).</td>
       </tr>
     </tbody>
   </table>
@@ -1407,10 +1475,10 @@
 
   <div class="routing">
     <div class="routing-label">Routing instruction</div>
-    <p>AOM updated for C4. Pool insurance app curation added as HQ activity: accrediting the insurer, setting pool insurance standards, monitoring claims handling (~0.5 FTE HQ, ~£2/claim amortised at 18,000 claims/year). Insurance premium is paid by pool members — not a Calmly cost. Calmly earns a marketplace fee from the insurer. Architecture discipline notice updated: pool insurance is no longer excluded as "ATE insurance (pool operator cost)" — instead, insurance curation is now a Calmly HQ function.</p>
-    <p>Key updated inputs: Group 4 adds insurance curation activity (0.5 FTE HQ, ~£2/claim). Group 5 adds insurance compliance role (0.5 FTE £30k amortised). R4 FIT Verifier gate: cost floor £239 (C3 £199 + CAC £38 + insurance curation £2), FMOS 63.2% — PASS.</p>
-    <p>Next: proceed to R5 design (Use Block). Run <code>/ive-fit-verifier-custom</code> R5 gate after R5 is designed. Fin-sim update can be deferred until after R5+R6 to capture full F2 cost floor in one pass.</p>
-    <p><strong>Architecture discipline reminder:</strong> pool insurance premium is a pool member cost, not Calmly's. Do not include it in the cost floor. Calmly's insurance-related cost is oversight only (~£2/claim). Insurance is a marketplace revenue stream (Calmly earns a fee per insured pool member from the verified insurer).</p>
+    <p>AOM updated for C8, C9, and C10. Three new HQ activities added: (1) <strong>ITP outcomes reporting [C8]</strong> — quarterly + annual per active ITP, ~£4/claim amortised, same resource as commercial/ITP partnerships team, primary lock-in mechanism; (2) <strong>assessment org pool QA [C9]</strong> — quality management and volume allocation across multi-org pool, absorbed into EV methodology team (~£1/claim amortised), eliminates single-source supplier risk; (3) <strong>claim data management and EV accuracy tracking [C10]</strong> — fixed HQ infrastructure, cumulative accuracy improvement, data flywheel moat. All three add to the cost floor but each produces a structural benefit that justifies it: C8 protects ITP LTV (switching cost), C9 eliminates supplier disruption risk, C10 builds the primary competitive barrier to entry.</p>
+    <p>Updated cost floor: C3 baseline £199 + CAC £38 + insurance curation £2 [C4] + ITP outcomes reporting ~£4 [C8] + assessment org pool QA ~£1 [C9] + data infrastructure (fixed, ~£1/claim amortised at scale) [C10] = approximately <strong>£245/claim</strong>. Run <code>/ive-fit-verifier-custom</code> to update FMOS gate with revised cost floor. Prior FMOS was 63.2% at £239 — revised floor at £245 produces FMOS ~62.4% at same revenue assumptions (still above 60% threshold).</p>
+    <p>Architecture discipline reminders: pool insurance premium is a pool member cost, not Calmly's (~£2/claim oversight only). EV calibration data and ITP outcomes dataset are Calmly-owned assets — they accumulate on Calmly's platform infrastructure, not in the pool operator's system. The data flywheel (C10) is a fixed infrastructure cost, not a variable per-claim cost — ensure Group 5 captures it as fixed overhead, not Group 2 cost of goods.</p>
+    <p>Next: run <code>/ive-fit-verifier-custom</code> with updated cost floor (~£245). Proceed to fin-sim update once R5+R6 are also captured for the full F2 cost floor in one pass.</p>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -1418,10 +1486,10 @@
   <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <div class="finsim" style="margin-top: 36px;">
-    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C4 updated)</div>
+    <div class="finsim-label">Fin-sim handoff — plain text Group 4 feed (C8/C9/C10 updated)</div>
     <pre>
-FIN-SIM INPUTS FROM AOM v2 (Calmly — marketplace — C1+C2+C3+C4)
-===============================================================
+FIN-SIM INPUTS FROM AOM v2 (Calmly — marketplace — C1–C10)
+===========================================================
 
 GROUP 1 — Venture and unit
 Unit: one claim resolved through the Calmly exchange (matched, rated, facilitated to settlement or adjudication)
@@ -1458,19 +1526,27 @@ Activity: Territory compliance | Product: Enabler | Role: Territory compliance o
 Activity: ITP partnership activation | Product: Enabler | Role: Commercial team HQ | Driver: fixed per ITP, amortise over lifetime claims | Time: TBC
 Activity: Pool operator relationship management | Product: Enabler | Role: Pool operator relations HQ | Driver: fixed per operator, amortise over lifetime claims | Time: TBC
 Activity: Pool insurance app curation [C4 new] | Product: Enabler | Role: Insurance compliance / curation (HQ) | Driver: fixed HQ function, ~0.5 FTE at £60k/yr = £30k/yr ÷ 18,000 claims/yr ≈ £1.67/claim | Time: ~£2/claim amortised
+Activity: ITP outcomes reporting [C8 new] | Product: Enabler (lock-in mechanism) | Role: ITP account management (HQ, same resource as commercial / ITP partnerships) | Driver: fixed per active ITP partnership (quarterly + annual cycle) — not per claim | Time: ~1.5 days/ITP/quarter quarterly + ~3 days/ITP/year annual deep report. At 20 ITPs, 18,000 claims/yr: ~£4/claim amortised
+Activity: Assessment org pool QA and volume allocation [C9 new] | Product: Enabler (supplier leverage) | Role: EV methodology team / Head of Operations (HQ) | Driver: fixed per active org + per new org onboarded — absorbed into EV methodology team scope (~0.5 FTE at scale) | Time: ~£1/claim amortised at scale
+Activity: Claim data management and EV accuracy tracking [C10 new] | Product: Enabler (competitive moat infrastructure) | Role: Platform engineering + EV methodology team (HQ) | Driver: fixed infrastructure — not per-claim cost; accuracy benefit cumulative | Time: fixed infrastructure cost; see Group 5. Calibration update cycle adds ~0.25 FTE data/analytics at scale.
 
-GROUP 5 — Other costs (fixed and semi-fixed) [C4 updated]
+GROUP 5 — Other costs (fixed and semi-fixed) [C8/C9/C10 updated]
 Platform technology (build and maintenance): HQ fixed — amortise across annual volume
-EV methodology team: HQ fixed — 2–3 FTE
+EV methodology team: HQ fixed — 2–3 FTE (includes C9 org pool QA at scale: +0.5 FTE; includes C10 data governance at scale: +0.25 FTE)
 Pool operator relations: HQ fixed — 2 FTE
-Commercial / ITP partnerships: HQ fixed — 2–3 FTE
+Commercial / ITP partnerships: HQ fixed — 2–3 FTE (includes C8 ITP account management at scale: +0.5–1 FTE)
 Finance and compliance: HQ fixed — 2 FTE
 CEO / leadership: HQ fixed — 2 FTE
 Assessment org setup [C3]: £80,000 one-time startup cost (SC) — legal structure, law school partnerships, methodology development, assessment tooling. Amortise over at-scale claim volume.
 Insurance curation [C4]: ~0.5 FTE HQ insurance compliance/curation role (~£30k/year). Amortise at ~£2/claim at scale. Calmly earns marketplace fee from insurer — insurance curation generates net-positive revenue at scale.
+ITP outcomes reporting infrastructure [C8]: report template design and data extraction tooling — one-time setup ~£15,000 (TIER 4 assumption). Ongoing cost absorbed into ITP account management scope.
+Assessment org pool management [C9]: no additional startup cost beyond existing assessment org setup (C3 £80,000 already includes methodology development). Geographic expansion adds ~£5,000/new org onboarded (training and onboarding on shared playbook). TIER 4 assumption.
 
-GROUP 6 — Mechanisms [C3 addition]
+GROUP 6 — Mechanisms [C3/C8/C9/C10 additions]
 C3 mechanism — independent assessment org: cost £16.28/claim PVC; effect: defendant settlement lag falls, peak WC contracts from ~£4.3M baseline to ~£2.2M with mechanism at Y5. Mechanism improves the weighted average recovery period by increasing the proportion of claims in the 1.5-month settlement bucket.
+C8 mechanism — ITP outcomes reporting (lock-in): cost ~£4/claim amortised; effect: ITP switching cost accumulates automatically with each claim referred — EV calibration data, ITP-specific outcomes dataset, integration depth. Switching cost becomes load-bearing when ITP's annual report cites exchange outcomes data. No direct revenue effect per-claim, but lock-in protects lifetime ITP value: LTV loss from ITP churn is catastrophic (an ITP relationship represents thousands of claims/year).
+C9 mechanism — assessment org pool (supplier leverage): cost absorbed into EV methodology team (~£1/claim amortised); effect: eliminates single-source dependency risk. Pool quality competition keeps PVC at floor. No disruption risk from individual org failure or price increase.
+C10 mechanism — EV accuracy flywheel (data moat): cost fixed infrastructure (included in Group 5); effect: EV accuracy improves with cumulative volume — self-reinforcing. At Year 5 (18,000 claims/year), accuracy calibration advantage vs new entrant is substantial. Pool operators price this in investor returns — accuracy gap creates demand concentration toward Calmly. New entrant disadvantage compounds with each year of Calmly operation.
 
 GROUP 7 — Scale and targets
 At-scale volume: ~18,000 claims/year (~25–30 platform teams × 60 claims/month × 12)
