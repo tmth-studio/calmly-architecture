@@ -97,7 +97,7 @@
       <div class="header-meta-item"><div class="key">Date</div><div class="val">19 May 2026</div></div>
       <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — consumer small claims exchange (E&amp;W)</div></div>
       <div class="header-meta-item"><div class="key">Unit</div><div class="val">One claim resolved</div></div>
-      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R5 adds £0 new cost · cost floor held at £237/claim</div></div>
+      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R5 adds £0 new cost · cost floor held at £239/claim</div></div>
     </div>
   </div>
 
@@ -105,17 +105,17 @@
     <div class="fit-check pass">
       <div class="check-letter">F</div>
       <div class="check-label">Financial margin of safety</div>
-      <div class="check-result">Pass — 63.5% FMOS (unchanged)</div>
+      <div class="check-result">Pass — 63.2% FMOS (unchanged)</div>
     </div>
     <div class="fit-check pass">
       <div class="check-letter">I</div>
       <div class="check-label">Intrinsic performance capability</div>
-      <div class="check-result">Pass — guided flow reduces drop-off</div>
+      <div class="check-result">Pass — Coase assignment + guided flow</div>
     </div>
     <div class="fit-check pass">
       <div class="check-letter">T</div>
       <div class="check-label">Theorem-driven design</div>
-      <div class="check-result">Pass — Bandura (1986)</div>
+      <div class="check-result">Pass — Coase (1937) + Williamson (1985)</div>
     </div>
   </div>
 
@@ -124,40 +124,36 @@
 
     <h3>Use Block diagnosis</h3>
     <div class="inset-block">
-      <p><strong>Primary block:</strong> Evidence assembly anxiety. The consumer does not know what evidence is needed, does not know if they have enough, and fears that submitting an incomplete case will weaken their position or waste time.</p>
-      <p><strong>Key clarification:</strong> In Calmly's exchange model, the consumer is not submitting to court — they are submitting to Calmly. The activation question is whether the consumer can submit dispute details in a way that gives the assessment org sufficient input to produce a valid EV report.</p>
-      <p><strong>Secondary block:</strong> Intimidation from perceived legal complexity. Consumers associate claim submission with legal form-filling (County Court Money Claims Centre) — a genuinely complex process. They must understand that Calmly's submission is not a court filing.</p>
+      <p><strong>Primary block: anticipated litigation complexity (steps 5–6 transition).</strong> The consumer, having formed the intention to join the pool (C4 resolved), carries a mental model of what being a party to litigation requires: court hearings, CPR compliance, legal document review, tactical decisions. This expectation of sustained specialist-grade effort is the Use Block. It manifests at sign-up — consumers hesitate to commit, anticipating ongoing demands, or disengage post-sign-up when they expect to be called upon to act.</p>
+      <p><strong>Secondary block: evidence assembly anxiety (step 2).</strong> The consumer does not know what evidence is needed, does not know if they have enough, and fears that submitting an incomplete case will weaken their position or waste time. This block is bounded — it applies to a single, one-time submission step — and is addressed by the guided intake flow.</p>
     </div>
 
     <h3>Theory of Change — Adoption (CMO format)</h3>
     <div class="inset-block">
-      <p><strong>Class of problem:</strong> Competence gap + completion anxiety — consumers do not know what "good enough" looks like and fear failure.</p>
-      <p><strong>Theory:</strong> Bandura (1986) self-efficacy — belief in one's ability to complete a task determines whether one attempts it and persists through difficulty. Guided structured input with explicit evidence standards reduces perceived competence gap and raises task completion probability. Thaler &amp; Sunstein (2008) choice architecture — defaults and progress indicators guide behaviour toward completion without removing agency.</p>
-      <p><strong>Context:</strong> Consumer who has accepted in principle (R4 PASS) but faces the evidence submission step with a pile of emails, screenshots, and receipts and no sense of what matters.</p>
-      <p><strong>Mechanism:</strong> A structured claim submission flow with progressive disclosure (step-by-step, showing one category at a time), in-context evidence standards (examples of sufficient evidence for each claim type), and a live completeness indicator produces self-efficacy — consumer sees they already have enough to proceed.</p>
-      <p><strong>Outcome:</strong> Consumer completes claim submission with all required evidence. Assessment org receives sufficient input to produce EV assessment within 48 hours.</p>
+      <p><strong>Class of problem:</strong> Transaction cost mismatch — lay claimants bear prohibitively high transaction costs when managing CPR-compliant litigation; a professional pool operator bears low transaction costs for the same activity. The consumer's use block is not a perception problem — it is a rational response to a genuine cost disparity.</p>
+      <p><strong>Theory:</strong> Coase (1937), "The Nature of the Firm" — economic activities are organised by the party that can execute them at lowest total cost. Williamson (1985) — asset specificity: when one party holds specialist assets (legal expertise, CPR infrastructure, court familiarity, economies of scale across a portfolio of claims), assigning the activity to that party minimises total transaction costs and eliminates the cost imposed on the party without those assets.</p>
+      <p><strong>Context:</strong> Consumer who has signed the pool participation agreement and anticipates being required to manage CPR-compliant litigation as a lay claimant — with no legal training, no court familiarity, and no economies of scale.</p>
+      <p><strong>Mechanism:</strong> Pool operator holds all post-submission litigation management by architectural design — CPR compliance, evidence bundle preparation, court filing, defendant correspondence, judgment enforcement. Consumer's required actions after sign-up: receive notifications, receive payment. No court attendance. No CPR compliance. No legal document review. The consumer's use routine is bounded to one guided submission session and passive outcome receipt.</p>
+      <p><strong>Outcome:</strong> Consumer's anticipated litigation complexity is eliminated — not reduced, eliminated — because the consumer is not a party to the litigation management activity. Adoption disruption is bounded to the guided submission step only.</p>
     </div>
 
     <h3>Adoption Strategy</h3>
-    <p>Guided claim submission flow with progressive disclosure and real-time completeness feedback. The platform shows the consumer: (1) exactly which categories of evidence are needed for their specific claim type, (2) examples of sufficient evidence at each step, (3) a live completeness indicator confirming when they have enough. No legal jargon. Auto-save prevents loss of progress. The consumer is told whether they have a complete submission before submitting — eliminating fear of an incomplete case and reducing support burden.</p>
+    <p><strong>Primary move — Coase assignment:</strong> assign all post-submission litigation management to the pool operator as professional litigant. This is not a service tier or an optional upgrade — it is the structural default of pool membership. Calmly communicates the consumer's passive role explicitly and early: at pool invitation, at sign-up, and in the participation agreement. The consumer knows before committing what they will and will not be required to do.</p>
+    <p><strong>Secondary move — guided submission flow:</strong> addresses the secondary block (evidence assembly anxiety at step 2). Progressive disclosure, in-context evidence standards, and a live completeness indicator remove the fear of an incomplete submission. Note: the guided submission flow also improves assessment org input quality (C3) — same designed artefact, two requirements served.</p>
 
-    <h3>Cross-requirement consistency</h3>
-    <div class="inset-block">
-      <p>The R5 guided submission flow is also the R3 assessment org input quality mechanism. The evidence categories the flow collects are designed around what the assessment org requires to produce a valid EV report. R5 and R3 share a single designed artefact: the claim intake form architecture. This is not incidental — the two requirements are structurally linked through the assessment org's input specification.</p>
-    </div>
   </div>
 
   <div class="section">
     <div class="section-title">Section 2 — F: Financial margin of safety (FMOS)</div>
 
     <div class="warning-block">
-      <p>⚠ <strong>R5 adds no new per-unit cost.</strong> The guided submission flow is a product development investment. That investment is already captured in the SC layer (platform development, amortised at £1/claim from C3). No additional per-claim cost is introduced at R5. The FMOS calculation is identical to R4.</p>
+      <p>⚠ <strong>R5 adds no new per-unit cost.</strong> Professional litigant is not a Calmly cost — the pool operator manages all litigation and bears all associated costs as part of its own P&amp;L (recovered through the pool's contingent fee structure). The guided submission flow is a product design investment in the SC layer — no new per-unit cost. The FMOS calculation is identical to R4.</p>
     </div>
 
     <div class="fmos-grid">
       <div class="fmos-card"><div class="card-label">Price ceiling</div><div class="card-value">£650</div><div class="card-sub">Bilateral KMC × 50% surplus (C2)</div></div>
-      <div class="fmos-card"><div class="card-label">Cost floor (R5)</div><div class="card-value">£237</div><div class="card-sub">Unchanged from R4 · no new cost</div></div>
-      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.5%</div><div class="card-sub">Unchanged from R4</div></div>
+      <div class="fmos-card"><div class="card-label">Cost floor (R5)</div><div class="card-value">£239</div><div class="card-sub">Unchanged from R4 · no new cost</div></div>
+      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.2%</div><div class="card-sub">Unchanged from R4</div></div>
     </div>
 
     <table>
@@ -165,11 +161,12 @@
       <tbody>
         <tr><td>Price ceiling</td><td class="amount">£650</td><td class="note-col">C2.</td></tr>
         <tr><td>C3 base cost floor</td><td class="amount">£199</td><td class="note-col">PVC £24 + RC £175 + SC £1 + IC £1. Carried from C3.</td></tr>
-        <tr><td>R4 CAC</td><td class="amount">£38</td><td class="note-col">Organic SEO + word of mouth. Designed at R4.</td></tr>
-        <tr><td>R5 new cost</td><td class="amount">£0</td><td class="note-col">UX/product development in SC layer. No per-unit cost.</td></tr>
-        <tr class="total-row"><td colspan="2"><strong>Cost floor — R5 cumulative</strong></td><td class="amount"><strong>£237</strong></td></tr>
-        <tr><td>Net contribution</td><td class="amount">£413</td><td class="note-col">£650 − £237</td></tr>
-        <tr class="highlight-row"><td><strong>FMOS</strong></td><td class="amount"><strong>63.5%</strong></td><td class="note-col">Unchanged from R4</td></tr>
+        <tr><td>R4 CAC</td><td class="amount">£40</td><td class="note-col">Organic SEO + word of mouth. Designed at R4.</td></tr>
+        <tr><td>R5 new cost — professional litigant</td><td class="amount">£0</td><td class="note-col">Pool operator bears all litigation costs. Not a Calmly cost line.</td></tr>
+        <tr><td>R5 new cost — guided submission flow</td><td class="amount">£0</td><td class="note-col">UX/product development in SC layer. No per-unit cost.</td></tr>
+        <tr class="total-row"><td colspan="2"><strong>Cost floor — R5 cumulative</strong></td><td class="amount"><strong>£239</strong></td></tr>
+        <tr><td>Net contribution</td><td class="amount">£411</td><td class="note-col">£650 − £239</td></tr>
+        <tr class="highlight-row"><td><strong>FMOS</strong></td><td class="amount"><strong>63.2%</strong></td><td class="note-col">Unchanged from R4</td></tr>
       </tbody>
     </table>
   </div>
@@ -178,7 +175,8 @@
     <div class="section-title">Section 3 — I: Intrinsic performance capability</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
     <div class="inset-block">
-      <p>The guided submission flow has two intrinsic performance properties. First, it reduces drop-off during submission — fewer incomplete submissions means more claims reach the assessment org, which means more assessments per unit of fixed content/acquisition cost. This improves the effective CAC (more completions per £ of acquisition spend). Second, higher evidence quality at intake reduces back-and-forth between the assessment org and the claimant, cutting the LMU specialist intake time (currently 69 min/confirmed claim). Both effects reduce cost per resolved claim over time without requiring additional investment. <strong>Pass.</strong></p>
+      <p>The professional litigant structure has an intrinsic performance property independent of adoption. The pool operator manages litigation at scale — across a portfolio of claims — with economies of scale unavailable to any individual lay claimant. This drives higher settlement rates and better per-claim outcomes than self-represented litigation, which improves per-claim revenue and strengthens the pool's contingent fee yield. The Coase assignment is therefore not merely a use block solution; it is a performance architecture.</p>
+      <p>The guided submission flow has a second intrinsic performance property: higher evidence quality at intake reduces back-and-forth between the assessment org and the claimant, cutting LMU specialist intake time (currently ~69 min/confirmed claim). Both effects reduce cost per resolved claim over time without requiring additional investment. <strong>Pass.</strong></p>
     </div>
   </div>
 
@@ -186,14 +184,19 @@
     <div class="section-title">Section 4 — T: Theorem-driven design</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
 
-    <h4>Adoption — Bandura (1986) self-efficacy</h4>
+    <h4>Primary — Coase (1937), "The Nature of the Firm"</h4>
     <div class="inset-block">
-      <p>Perceived competence is the primary determinant of task initiation and completion. Bandura's self-efficacy theory is one of the most replicated findings in behavioural psychology — applied extensively in digital product design (onboarding flows, step-by-step guidance, progress indicators). The specific mechanism — guided structured input with explicit standards — directly reduces perceived competence gap. Applicable precedent: financial services (open banking claim flows), legal tech (Resolver's structured complaint submission), consumer platforms (insurance claim flows). <strong>Pass.</strong></p>
+      <p>Coase's central insight: economic activities are organised by the party that can execute them at lowest total cost. Where one party has lower transaction costs for an activity, assigning that activity to them is allocatively efficient. Applied here: CPR-compliant litigation management has near-zero transaction cost for a professional pool operator (specialist assets, established process, economies of scale) and prohibitively high transaction cost for a lay claimant (no legal training, no court familiarity, no scale). The efficient assignment is the one the architecture makes: pool operator manages all post-submission litigation. This is not a design choice — it is the economically necessary allocation. <strong>Pass.</strong></p>
     </div>
 
-    <h4>Choice architecture — Thaler &amp; Sunstein (2008)</h4>
+    <h4>Secondary — Williamson (1985), transaction cost economics and asset specificity</h4>
     <div class="inset-block">
-      <p>Progressive disclosure (showing one step at a time) and a live completeness indicator are choice architecture interventions that reduce cognitive load and nudge toward completion. Thaler &amp; Sunstein's nudge framework is well-grounded and extensively applied in digital consumer products. <strong>Pass.</strong></p>
+      <p>Williamson extends Coase: when one party holds highly specific assets — expertise, infrastructure, relationships — that cannot easily be replicated by the other party, governance structures that assign activities to the asset holder minimise total transaction costs. The pool operator holds specific legal assets (CPR expertise, court familiarity, solicitor relationships, claims portfolio management infrastructure) that the lay claimant cannot acquire for a single claim. Assigning litigation management to the pool operator is therefore not only efficient but structurally stable — it exploits genuine comparative advantage. <strong>Pass.</strong></p>
+    </div>
+
+    <h4>Secondary — Bandura (1986) self-efficacy (guided submission flow)</h4>
+    <div class="inset-block">
+      <p>The guided submission flow retains Bandura's self-efficacy mechanism for the secondary block: evidence assembly anxiety at step 2. Perceived competence is the primary determinant of task initiation and completion. Structured input with explicit evidence standards and a live completeness indicator reduces the perceived competence gap, raising submission completion probability. This is a contained application — it addresses one bounded step — and does not bear the weight of the primary adoption strategy. <strong>Pass (secondary).</strong></p>
     </div>
   </div>
 
@@ -202,29 +205,30 @@
     <div class="verdict-panel">
       <div class="verdict-label">Verdict — R5 gate · 19 May 2026</div>
       <div class="verdict-headline">PASS</div>
-      <p><strong>FMOS: 63.5%</strong> — unchanged from R4. R5 adds no new per-unit cost. The guided submission flow is a product design investment within the existing SC/platform development budget.</p>
-      <p>The Adoption Strategy is grounded in Bandura (1986) self-efficacy — a well-replicated theory with extensive digital product application. The R5 mechanism (guided submission flow) also serves R3 (assessment org input quality) — same designed artefact, two requirements served. Consistent.</p>
-      <p><strong>Proceed to R6 — Circumvent the Cash Flow Constraint (Amortisation).</strong></p>
+      <p><strong>FMOS: 63.2%</strong> — unchanged from R4. R5 adds no new per-unit cost. The professional litigant structure is not a Calmly cost — the pool operator bears all litigation costs as part of its own P&amp;L.</p>
+      <p>The Coase assignment eliminates the primary use block structurally — not by lowering the barrier but by removing the consumer from the activity entirely. The consumer's required actions after sign-up are: receive notifications, receive payment. There is no litigation management task for them to perform. This is also an architectural requirement of the pool model: the pool cannot let individual consumers manage their own litigation within a coordinated claims portfolio without undermining the pool's ability to run a coherent CPR-compliant strategy across claims.</p>
+      <p>The guided submission flow addresses the secondary block (evidence assembly anxiety) and also improves assessment org input quality — a single designed artefact serving R5 and C3. Consistent with the cross-requirement structure of the architecture.</p>
+      <p><strong>Proceed to R6 — Circumvent the Cash Flow Constraint.</strong></p>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">Section 6 — Conditions before capital commitment</div>
     <ol class="conditions-list">
-      <li><span class="cond-number">Condition 1</span><strong>Validate evidence category requirements with the assessment org.</strong> The guided submission flow must be built around the specific evidence categories the assessment org needs. This requires a detailed intake specification from the assessment org before the product is built. Dependency: assessment org partnership confirmed (C3 condition).</li>
-      <li><span class="cond-number">Condition 2</span><strong>Measure submission completion rate in pilot.</strong> Target: ≥75% of consumers who begin submission complete it. If below 60%, the flow needs redesign before scaling. Pilot must instrument completion at each step to identify drop-off points.</li>
-      <li><span class="cond-number">Condition 3</span><strong>Validate LMU intake time reduction.</strong> If the guided flow improves evidence quality, intake assessor time should fall below the 69 min/confirmed claim baseline. Track in pilot — every 10-minute reduction saves ~£5/claim on the RC layer.</li>
+      <li><span class="cond-number">Condition 1</span><strong>Validate consumer role communication.</strong> The Coase mechanism only holds if consumers understand their post-sign-up role before they sign up. The pilot must measure whether consumers have accurate expectations of what pool membership requires. Target: ≥80% of pool participants correctly understand (unprompted) that they will not need to attend court or manage legal documents, measured at 30-day post-sign-up check-in. If below 80%, communication architecture requires redesign before scaling.</li>
+      <li><span class="cond-number">Condition 2</span><strong>Confirm pool operator contractual obligation to manage all litigation.</strong> The Coase assignment is an architectural claim — it must be contractually enforced. Pool membership agreements must assign all post-submission litigation management to the pool operator with no carve-outs that push tasks back to consumers. Validate: pool participation agreement reviewed by an SRA-registered solicitor before launch. Any carve-out that requires consumer action (beyond notification receipt) must be flagged as an architecture break and returned to design.</li>
+      <li><span class="cond-number">Condition 3</span><strong>Validate guided submission completion rate.</strong> The secondary block mechanism requires the guided submission flow to achieve sufficient completion. Target: ≥75% of consumers who begin a submission complete it. Track drop-off by step in pilot. If overall completion falls below 60%, or if a single step accounts for &gt;20% drop-off, that step requires redesign before scaling.</li>
     </ol>
   </div>
 
   <div class="routing-block">
     <div class="routing-title">Next step — R6</div>
-    <p><strong>Proceed to R6</strong> — Circumvent the Cash Flow Constraint (Amortisation / Buy Block). The question: a consumer who can use the product (R5 PASS) now faces the "payment" — which in Calmly's model is the discount they must accept relative to face value. How do we circumvent loss aversion at the offer stage?</p>
+    <p><strong>Proceed to R6</strong> — Circumvent the Cash Flow Constraint. The question: a consumer who can use the product (R5 PASS) faces the payment structure — a contingent fee from recovered money. How does Calmly's amortisation strategy circumvent the consumer's absence of an upfront budget line item?</p>
   </div>
 
   <div class="doc-footer">
-    <div class="footer-left">FIT Verifier — R5 gate · 19 May 2026<br>Cumulative cost floor: £237/claim · FMOS: 63.5%</div>
-    <div class="footer-right">Builds on: calmly-fit-verifier-r4-2026-05-19.html (PASS, 63.5%)</div>
+    <div class="footer-left">FIT Verifier — R5 gate · 19 May 2026<br>Cumulative cost floor: £239/claim · FMOS: 63.2%</div>
+    <div class="footer-right">Builds on: calmly-fit-verifier-r4-2026-05-19.html (PASS, 63.2%)</div>
   </div>
 
 </div>
