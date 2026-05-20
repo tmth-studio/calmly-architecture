@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FIT Verifier — Calmly R6 Gate · 19 May 2026</title>
+  <title>FIT Verifier — Calmly R6 Gate · 20 May 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -13,6 +13,8 @@
       --accent: #1f4fa8; --accent-light: #e8eef8; --panel-bg: #0f2744; --panel-text: #ffffff;
       --warning-bg: #fff8e6; --warning-border: #d4820a; --inset-border: #1f4fa8;
       --green-bg: #e6f4ec; --green-text: #166534; --green-border: #a7d4b8;
+      --red-bg: #fde8e8; --red-text: #991b1b;
+      --amber-bg: #fff8e6; --amber-text: #854d0e;
       --tag-radius: 3px; --font-ui: 'DM Sans', system-ui, sans-serif; --font-body: 'Lora', Georgia, serif; --width: 960px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,21 +32,21 @@
     h4 { font-family: var(--font-ui); font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; margin-top: 20px; }
     p { font-family: var(--font-body); font-size: 17px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
     p:last-child { margin-bottom: 0; }
-    .inset-block { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 16px 20px; margin-bottom: 24px; }
-    .inset-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
-    .inset-block p:last-child { margin-bottom: 0; }
-    .inset-block strong { font-weight: 600; }
     .warning-block { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 16px 20px; margin-bottom: 24px; }
     .warning-block p { font-family: var(--font-ui); font-size: 15px; color: #4a3000; margin-bottom: 10px; }
     .warning-block p:last-child { margin-bottom: 0; }
     .warning-block strong { font-weight: 600; }
+    .inset-block { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 16px 20px; margin-bottom: 24px; }
+    .inset-block p { font-family: var(--font-ui); font-size: 15px; color: #1a2a4a; margin-bottom: 10px; }
+    .inset-block p:last-child { margin-bottom: 0; }
+    .inset-block strong { font-weight: 600; }
     table { width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 14px; margin-bottom: 24px; }
     thead th { font-weight: 600; font-size: 13px; text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border-strong); color: var(--text); background: #f9f9f8; }
     tbody td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
     tbody tr:last-child td { border-bottom: none; }
     tbody tr.total-row td { font-weight: 600; color: var(--text); background: var(--accent-light); border-top: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
     tbody tr.highlight-row td { font-weight: 600; color: var(--green-text); background: var(--green-bg); }
-    td.amount { text-align: right; }
+    td.amount { text-align: right; font-variant-numeric: tabular-nums; }
     th.amount { text-align: right; }
     td.note-col { color: var(--text-muted); font-size: 13px; }
     .fmos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
@@ -70,6 +72,7 @@
     .fit-check.pass .check-result { color: var(--green-text); }
     .tag { display: inline-block; font-family: var(--font-ui); font-size: 12px; font-weight: 500; border-radius: var(--tag-radius); padding: 2px 8px; border: 1px solid; }
     .tag-green { background: #e6f4ec; color: #166534; border-color: #a7d4b8; }
+    .tag-grey { background: #f1f3f5; color: #4a5568; border-color: #d0d5dd; }
     .conditions-list { list-style: none; padding: 0; }
     .conditions-list li { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 14px 18px; margin-bottom: 12px; font-family: var(--font-ui); font-size: 15px; color: #3a2800; line-height: 1.6; }
     .conditions-list li strong { font-weight: 600; }
@@ -82,19 +85,33 @@
     .doc-footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
     .doc-footer .footer-left { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
     .doc-footer .footer-right { font-size: 12px; color: var(--text-muted); text-align: right; font-style: italic; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .party-block { border: 1px solid var(--border); padding: 18px 20px; background: #fafaf9; }
+    .party-block .party-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+    .party-block p { font-family: var(--font-ui); font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+    .party-block p:last-child { margin-bottom: 0; }
+    .fee-calc-block { background: #f9f9f8; border: 1px solid var(--border); padding: 18px 20px; margin-bottom: 24px; }
+    .fee-calc-block .calc-title { font-family: var(--font-ui); font-size: 13px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .fee-calc-block .calc-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--border); font-family: var(--font-ui); font-size: 14px; color: var(--text-secondary); }
+    .fee-calc-block .calc-row:last-child { border-bottom: none; }
+    .fee-calc-block .calc-row.result { font-weight: 600; color: var(--green-text); background: var(--green-bg); margin: 8px -8px -8px; padding: 8px; }
+    .fee-calc-block .calc-label { }
+    .fee-calc-block .calc-value { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--text); }
   </style>
 </head>
 <body>
 <div class="container">
 
   <div class="header-panel">
-    <div class="gate-label">FIT Verifier · R6 gate — Cash Flow Constraint (Amortisation)</div>
+    <div class="gate-label">FIT Verifier · R6 gate — Circumvent the Cash Flow Constraint</div>
     <h1>FIT Verifier — Calmly — R6 gate</h1>
     <div class="header-meta">
-      <div class="header-meta-item"><div class="key">Date</div><div class="val">19 May 2026</div></div>
-      <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — consumer small claims exchange (E&amp;W)</div></div>
+      <div class="header-meta-item"><div class="key">Date</div><div class="val">20 May 2026</div></div>
+      <div class="header-meta-item"><div class="key">Venture</div><div class="val">Calmly — verified dispute resolution marketplace (E&amp;W)</div></div>
       <div class="header-meta-item"><div class="key">Unit</div><div class="val">One claim resolved</div></div>
-      <div class="header-meta-item"><div class="key">Cumulative gate</div><div class="val">R6 adds £0 new cost · cost floor held at £237/claim</div></div>
+      <div class="header-meta-item"><div class="key">Cost floor</div><div class="val">£239/claim (held from R5)</div></div>
+      <div class="header-meta-item"><div class="key">FMOS</div><div class="val">63.2% (held from R5)</div></div>
+      <div class="header-meta-item"><div class="key">Theory basis</div><div class="val">Rubinfeld &amp; Scotchmer (1993) + Arrow (1963)</div></div>
     </div>
   </div>
 
@@ -102,73 +119,119 @@
     <div class="fit-check pass">
       <div class="check-letter">F</div>
       <div class="check-label">Financial margin of safety</div>
-      <div class="check-result">Pass — 63.5% FMOS (unchanged)</div>
+      <div class="check-result">Pass — 63.2% FMOS (unchanged)</div>
     </div>
     <div class="fit-check pass">
       <div class="check-letter">I</div>
       <div class="check-label">Intrinsic performance capability</div>
-      <div class="check-result">Pass — EV frame built into architecture</div>
+      <div class="check-result">Pass — fee inseparable from value delivery</div>
     </div>
     <div class="fit-check pass">
       <div class="check-letter">T</div>
       <div class="check-label">Theorem-driven design</div>
-      <div class="check-result">Pass — Kahneman &amp; Tversky (1979)</div>
+      <div class="check-result">Pass — Rubinfeld &amp; Scotchmer (1993) + Arrow (1963) + Stiglitz &amp; Weiss (1981)</div>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">Section 1 — Strategic design: R6 Cash Flow Constraint</div>
+    <div class="section-title">Section 1 — Strategic design: R6 cash flow constraint</div>
 
     <h3>Cash flow constraint diagnosis</h3>
     <div class="inset-block">
-      <p><strong>Clarification — the consumer is not paying cash.</strong> In Calmly's exchange model, the "payment" is the discount the consumer must accept relative to the face value of their claim. Calmly offers a settlement amount lower than full face value in exchange for immediate, certain recovery.</p>
-      <p><strong>The constraint:</strong> The consumer anchors on face value (what they are owed) and perceives Calmly's offer as "less than I deserve" — even when the expected value of the alternative (court, 12+ months, uncertain) is lower than Calmly's offer. This is loss aversion combined with a reference point problem.</p>
-      <p><strong>The alternative the consumer faces:</strong> pursue the claim independently (expensive, time-consuming, uncertain) or give up entirely. Both alternatives have lower expected value than Calmly's offer. But the consumer's mental account anchors on face value, not expected value.</p>
+      <p><strong>Architecture note (pool model, not exchange model).</strong> Previous R6 analysis was written against the exchange model, where the consumer accepted a discounted offer and the constraint was loss aversion relative to face value. The architecture has since been revised to a pool/contingent fee model. The cash flow constraint analysis changes entirely.</p>
+      <p><strong>Claimant — no cash flow constraint exists.</strong> Calmly charges a platform fee as a percentage of gross settlement proceeds, deducted at the point of settlement before net recovery is paid to the claimant. No payment is due at sign-up, during pool membership, or at any pre-recovery stage. The payment event is architecturally inseparable from value delivery — they are the same transaction. The buy block for the claimant is not a cash flow problem: no budget line item is required because no cash is ever spent. Commitment cost is effort only (one guided submission session, ~20–30 min).</p>
+      <p><strong>Defendant — concentrated liquidity shock plus uncertainty.</strong> A bounded settlement demand lands on a firm at an unpredictable moment. For micro and sole trader defendants (the primary target cluster), a £2,000–£5,000 demand against thin margins is a genuine liquidity crisis. Two constraints are compounded: (a) the lump sum may exceed available cash today; (b) without a known ceiling, the defendant cannot plan around a number that may move. Both constraints make rational settlement structurally difficult even for defendants who want to resolve.</p>
     </div>
 
-    <h3>Theory of Change — Amortisation (CMO format)</h3>
+    <h3>Theory of Change (CMO format)</h3>
+
+    <div class="two-col">
+      <div class="party-block">
+        <div class="party-label">Claimant — contingent payoff commitment</div>
+        <p><strong>Class of problem:</strong> contingent payoff commitment, not cash flow. No cash is required at any stage, so there is no timing mismatch or lumpiness to amortise.</p>
+        <p><strong>Theory:</strong> Rubinfeld &amp; Scotchmer (1993) — contingent fee contracting. When payment is deducted from recovery proceeds, the supplier bears litigation risk and the client bears zero liquidity cost. Contingent payment aligns supplier incentives with client outcomes and eliminates client-side adverse selection and liquidity barriers simultaneously. Dana &amp; Spier (1993) confirm contingent contracts are efficient when the client is liquidity-constrained and the supplier can bear risk.</p>
+        <p><strong>Mechanism:</strong> the platform fee is charged as a percentage of gross settlement. The payment event and the value delivery event are the same transaction. No payment can precede value delivery because the payment is extracted from value delivered. Cash flow constraint is architecturally dissolved, not strategically resolved.</p>
+        <p><strong>Outcome:</strong> claimant receives net recovery with no prior cash obligation at any stage. The buy block, where it exists, is about conviction (R4), not cash flow.</p>
+      </div>
+      <div class="party-block">
+        <div class="party-label">Defendant — concentrated liquidity shock</div>
+        <p><strong>Class of problem:</strong> concentrated liquidity shock plus certainty premium resistance. A bounded demand lands on a firm with thin margins at an unpredictable moment.</p>
+        <p><strong>Theory:</strong> Arrow (1963) — differential risk-bearing capacity. The same expected loss is genuinely less costly for a diversified pool to hold than for a concentrated defendant. The pool accepts a settlement at or above EV; the defendant eliminates an exposure that costs them more than EV to carry. Risk transfer at actuarially fair price is mutually beneficial.</p>
+        <p><strong>Mechanism for genuine liquidity constraint:</strong> a verified financing app on the Calmly marketplace pays the pool the full settlement amount on settlement day — the claimant receives net recovery immediately. The defendant repays the financing app in instalments. The underwriting basis is the signed settlement agreement plus the defendant's credit profile (Stiglitz &amp; Weiss, 1981 — purpose-specific credit collapses information asymmetry and attracts lower rates than general consumer credit).</p>
+        <p><strong>Outcome:</strong> defendant's exposure is bounded (EV-assessed), certain (settlement extinguishes all liability), and payable on terms where genuine liquidity constraints exist.</p>
+      </div>
+    </div>
+
+    <h3>Required platform fee rate — derivation</h3>
+    <p>The platform fee rate is an output of the financial model, not a design decision. It is derived from the cost floor, the FMOS target, and the average settlement amount. The verifier makes this calculation explicit.</p>
+
+    <div class="fee-calc-block">
+      <div class="calc-title">Platform fee rate derivation</div>
+      <div class="calc-row">
+        <span class="calc-label">Cost floor (R5 cumulative)</span>
+        <span class="calc-value">£239/claim</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Average claim face value (fin-sim baseline)</span>
+        <span class="calc-value">£3,000</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Settlement rate assumed (pool negotiated outcome)</span>
+        <span class="calc-value">72% of face value</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Average settlement (£3,000 × 72%)</span>
+        <span class="calc-value">£2,160</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Minimum fee to cover cost floor (£239 ÷ £2,160)</span>
+        <span class="calc-value">~11.1% of settlement</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">Required price at 25% FMOS headroom (£239 ÷ 0.75)</span>
+        <span class="calc-value">£319</span>
+      </div>
+      <div class="calc-row result">
+        <span class="calc-label">Required fee rate for 25% FMOS (£319 ÷ £2,160)</span>
+        <span class="calc-value">~14.8% of settlement</span>
+      </div>
+    </div>
+
     <div class="inset-block">
-      <p><strong>Class of problem:</strong> Temporal discounting + loss aversion. The consumer weights a certain small loss (accepting discount vs face value) more heavily than an uncertain larger gain (court outcome).</p>
-      <p><strong>Theory:</strong> Kahneman &amp; Tversky (1979) Prospect Theory — value is assessed relative to a reference point, and losses loom larger than equivalent gains. Reframing shifts the reference point from face value to expected value, changing the perceived loss. Thaler (1980) mental accounting — the correct comparison is not face value vs Calmly offer, but expected value of alternatives vs Calmly offer.</p>
-      <p><strong>Context:</strong> Consumer who has received Calmly's specific offer and is mentally comparing it to what they are owed (face value).</p>
-      <p><strong>Mechanism:</strong> Presenting the offer relative to the claim's independently-assessed EV (not its face value) shifts the reference point. The independent EV assessment (already produced at R4) arrives before Calmly's offer, establishing EV as the frame. Calmly's offer is then presented as "Y% of your claim's expected value" — a gain framing — rather than "Y% less than what you're owed" — a loss framing.</p>
-      <p><strong>Outcome:</strong> Consumer accepts the offer because the comparison is EV (independent assessment) vs Calmly offer, not face value vs Calmly offer.</p>
+      <p><strong>Interpretation:</strong> to maintain 25% headroom within the £650/claim price ceiling, the platform fee must be approximately 14.8% of the gross settlement amount. This is an output, not a cap — it sets the floor for commercially viable pricing. A fee rate above 14.8% increases FMOS headroom. A rate below 14.8% compresses headroom toward the cost floor. At 14.8%, the platform earns £319/claim on average (£2,160 × 14.8%), leaving £80/claim margin over the £239 cost floor (FMOS 63.2% is measured against the £650 price ceiling, not the fee rate).</p>
+      <p><strong>Market test:</strong> 14.8% of settlement compares favourably against the defendant's alternative. A defendant who pursues or defends through a solicitor plus county court typically incurs 25–40% of the claim value in costs, with no certainty of outcome. The pool demand offers resolution at a known, bounded amount through a structured process — the fee rate is well inside the range where rational defendants prefer settlement.</p>
     </div>
 
-    <h3>Amortisation Strategy</h3>
-    <p>The EV assessment frame is the amortisation mechanism. The independent assessment org's report establishes expected value — not face value — as the reference point before Calmly makes its offer. Calmly's offer is presented as a percentage of independently-assessed EV. The framing is architecturally sequenced: EV report arrives first, then offer. This is not a communication trick — the EV assessment is a genuine independent calculation, making the reference point credible and resistant to motivated reasoning.</p>
-
-    <h3>Architectural elegance: one mechanism, three requirements</h3>
+    <h3>Defendant financing app — architectural role</h3>
     <div class="inset-block">
-      <p>The C3 independent assessment org produces a single EV report per claim. That report serves:</p>
-      <p><strong>C3:</strong> Third-party credibility signal for defendants and investors (shortens recovery time).</p>
-      <p><strong>R4:</strong> Free conviction mechanism for potential claimants (dissolves credibility doubt about the model).</p>
-      <p><strong>R6:</strong> Reference point anchor for the offer (shifts consumer comparison from face value to EV).</p>
-      <p>One mechanism, three problems solved. No additional cost or institutional actor required for R6. The amortisation strategy is built into the submission-to-offer sequence as a design property.</p>
+      <p><strong>Why a separate app, not pool operator instalment terms.</strong> The pool operator's function is litigation management. Instalment terms on the pool operator create credit risk exposure incompatible with that function and a zero-sum timing problem for the claimant — they would wait for the defendant to pay rather than receiving net recovery immediately. A financing app is a specialist who can diversify across many defendant liabilities, price the risk actuarially, and offer lower effective rates than a non-specialist.</p>
+      <p><strong>What makes defendant financing possible:</strong> not the EV assessment, but the signed settlement agreement. Once the defendant has agreed to settle for a specific sum, the financing app holds a legally binding obligation for a known, fixed amount — purpose-specific credit where the lender knows exactly what the funds are for and that the borrower cannot redirect them. Purpose-specific lending attracts lower rates than general consumer credit because it eliminates adverse selection risk (Stiglitz &amp; Weiss, 1981). The EV assessment's role ends at the settlement decision — it brings the defendant to agree. The financing app's underwriting is against the signed agreement and the defendant's credit profile, not the EV number.</p>
+      <p><strong>Platform P&amp;L interaction:</strong> Calmly earns a curation fee for the verified financing app on the marketplace — not a share of the credit spread. The financing app operates on its own P&amp;L. No new per-unit cost to Calmly is introduced.</p>
     </div>
+
   </div>
 
   <div class="section">
     <div class="section-title">Section 2 — F: Financial margin of safety (FMOS)</div>
 
     <div class="warning-block">
-      <p>⚠ <strong>R6 adds no new per-unit cost.</strong> The offer framing (EV vs face value) is delivered through the platform's communications product — an already-built capability within the existing platform development budget. No new cost line is introduced.</p>
+      <p>⚠ <strong>R6 adds no new per-unit cost.</strong> The contingent fee structure is an architectural property of the pool model — no cost line is introduced by the payment mechanism itself. The verified financing app curation adds no per-unit cost: Calmly earns a curation fee from the app, not a cost. Cost floor is held at £239/claim. FMOS is held at 63.2%.</p>
     </div>
 
     <div class="fmos-grid">
       <div class="fmos-card"><div class="card-label">Price ceiling</div><div class="card-value">£650</div><div class="card-sub">Bilateral KMC × 50% surplus (C2)</div></div>
-      <div class="fmos-card"><div class="card-label">Cost floor (R6)</div><div class="card-value">£237</div><div class="card-sub">Unchanged from R5</div></div>
-      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.5%</div><div class="card-sub">Unchanged from R5</div></div>
+      <div class="fmos-card"><div class="card-label">Cost floor (R6)</div><div class="card-value">£239</div><div class="card-sub">Unchanged from R5 · no new cost</div></div>
+      <div class="fmos-card pass"><div class="card-label">FMOS</div><div class="card-value">63.2%</div><div class="card-sub">Unchanged from R5</div></div>
     </div>
 
     <table>
       <thead><tr><th>Gate</th><th class="amount">Cost floor</th><th class="amount">FMOS</th><th>Change</th></tr></thead>
       <tbody>
-        <tr><td>C3 base</td><td class="amount">£199</td><td class="amount">69.4%</td><td class="note-col">Assessment org + LMU + HQ + platform</td></tr>
-        <tr><td>R4 (+ CAC £38)</td><td class="amount">£237</td><td class="amount">63.5%</td><td class="note-col">−5.9pp from C3</td></tr>
-        <tr><td>R5 (+ £0)</td><td class="amount">£237</td><td class="amount">63.5%</td><td class="note-col">No change</td></tr>
-        <tr class="total-row"><td>R6 (+ £0)</td><td class="amount">£237</td><td class="amount">63.5%</td><td class="note-col">No change · FMOS stable</td></tr>
-        <tr class="highlight-row"><td>Headroom to ceiling</td><td class="amount">£413</td><td class="amount">63.5%</td><td class="note-col">£650 − £237</td></tr>
+        <tr><td>C3 base</td><td class="amount">£199</td><td class="amount">69.4%</td><td class="note-col">PVC £24 + RC £175 + SC £1 + IC £1. Carried from C3.</td></tr>
+        <tr><td>R4 (+ CAC £40)</td><td class="amount">£239</td><td class="amount">63.2%</td><td class="note-col">−6.2pp from C3. Organic SEO + word of mouth.</td></tr>
+        <tr><td>R5 (+ £0)</td><td class="amount">£239</td><td class="amount">63.2%</td><td class="note-col">No change. Pool operator bears all litigation costs.</td></tr>
+        <tr class="total-row"><td>R6 (+ £0)</td><td class="amount">£239</td><td class="amount">63.2%</td><td class="note-col">No change · FMOS stable · curation fee is income, not cost</td></tr>
+        <tr class="highlight-row"><td>Headroom to ceiling</td><td class="amount">£411</td><td class="amount">63.2%</td><td class="note-col">£650 − £239</td></tr>
       </tbody>
     </table>
   </div>
@@ -177,7 +240,8 @@
     <div class="section-title">Section 3 — I: Intrinsic performance capability</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
     <div class="inset-block">
-      <p>The EV frame is produced by the same assessment org process that runs for every claim regardless of R6. There is no additional cost to produce the framing. As claim volume grows and EV assessment accuracy improves (R10 data flywheel), the offer-to-acceptance rate should improve — the EV frame becomes more credible as the reference data set behind it grows. This is an intrinsic improving mechanism: the more claims Calmly processes, the more accurate the EV reports, and the stronger the amortisation frame. <strong>Pass.</strong></p>
+      <p><strong>Claimant side.</strong> The contingent fee structure has an intrinsic incentive alignment property: Calmly's revenue is directly proportional to the settlement amount recovered. The higher the settlement, the higher the platform fee. This means Calmly's financial interest is structurally identical to the claimant's financial interest — both benefit from maximising settlement value. There is no tension between platform profitability and claimant outcome. This is not a designed alignment; it is the arithmetic consequence of a percentage fee on recovery proceeds. The incentive holds regardless of claim volume or platform scale.</p>
+      <p><strong>Defendant side.</strong> The financing app structure has an intrinsic improving property under scale. As the app processes more defendant financing transactions, it accumulates credit performance data on defendant repayment behaviour, enabling better risk pricing and lower rates over time. Lower financing costs reduce the effective total liability for defendants, improving settlement acceptance rates — which feeds back into pool settlement volume and platform fee income. The mechanism improves as the dataset grows, without additional investment. <strong>Pass.</strong></p>
     </div>
   </div>
 
@@ -185,45 +249,70 @@
     <div class="section-title">Section 4 — T: Theorem-driven design</div>
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;"><span class="tag tag-green" style="font-size:13px;padding:3px 12px;">Pass</span></div>
 
-    <h4>Amortisation — Kahneman &amp; Tversky (1979) Prospect Theory</h4>
+    <h4>Claimant — Rubinfeld &amp; Scotchmer (1993), contingent fee contracting</h4>
     <div class="inset-block">
-      <p>Prospect Theory is one of the most replicated and robust findings in behavioural economics — Nobel Prize (Kahneman, 2002). The specific prediction — that losses loom larger than gains and reference points determine perceived value — is well-established. The mechanism used here (reframing by shifting reference point from face value to expected value) is a direct application. Extensive precedent in financial services and insurance offer design. <strong>Pass.</strong></p>
+      <p>Rubinfeld &amp; Scotchmer establish that contingent fee contracts are the efficient form when the client is liquidity-constrained and the supplier can bear the risk of an adverse outcome. The key result: contingent payment eliminates adverse selection (only clients with legitimate claims engage) and liquidity barriers simultaneously, because the supplier's payment is conditional on the outcome the client values. Applied here: Calmly, as the pool operator bearing litigation costs and risk, accepts a percentage of gross settlement as its fee rather than charging upfront. The claimant's cash flow constraint is dissolved — no payment is possible before value is delivered, because the fee is extracted from value delivered. Dana &amp; Spier (1993) confirm the efficiency result under standard assumptions. Neither paper has been substantially undermined — both are foundational economics and remain textbook-level citations in contract theory. <strong>Pass.</strong></p>
     </div>
 
-    <h4>Mental accounting — Thaler (1980)</h4>
+    <h4>Defendant — Arrow (1963), differential risk-bearing capacity</h4>
     <div class="inset-block">
-      <p>Thaler's mental accounting framework establishes that the consumer is making the wrong comparison (face value vs offer) rather than the right one (expected value of alternatives vs offer). The EV assessment corrects the comparison object before the offer arrives. <strong>Pass.</strong></p>
+      <p>Arrow establishes that gains from trade in risk transfer arise when parties have differential risk-bearing capacity. The party for whom the risk is more expensive to hold sells it to the party for whom it is cheaper — both are better off. Applied here: a concentrated defendant SME bears the same expected loss at much higher effective cost than the pool, which holds a diversified portfolio of similar liabilities. The pool's marginal cost of holding one more claim is near zero; the defendant's cost of carrying uncertain open-ended exposure is high and growing. The pool demand + EV assessment creates the conditions for the trade: a credible price (the EV number) and a bounded liability (the settlement offer). Risk transfer at actuarially fair price clears the market. Arrow (1963) is a foundational paper in insurance and risk economics — it has not been replication-crisis-challenged and is not an empirical claim subject to p-hacking. <strong>Pass.</strong></p>
+    </div>
+
+    <h4>Financing app — Stiglitz &amp; Weiss (1981), information asymmetry and purpose-specific credit</h4>
+    <div class="inset-block">
+      <p>Stiglitz &amp; Weiss establish that information asymmetry is the primary driver of credit rationing — lenders ration credit rather than raise rates because they cannot distinguish good from bad borrowers, and higher rates attract worse borrowers. The prediction follows: when information asymmetry is reduced — specifically, when the purpose of the loan is known and verifiable — credit becomes available at lower rates and in larger amounts than general-purpose lending. Applied here: the signed settlement agreement specifies exactly what the funds are for, where they go, and that the borrower cannot redirect them. The financing app has full information about the use of funds and a binding legal obligation as collateral. This collapses the adverse selection problem and enables purpose-specific credit at rates materially below what the defendant could access through general credit. Stiglitz &amp; Weiss (1981) is a Nobel Prize-level foundational paper — not an empirical claim subject to the replication crisis. <strong>Pass.</strong></p>
+    </div>
+
+    <h4>Theory retirement note — Kahneman &amp; Tversky (1979) and Thaler (1980)</h4>
+    <div class="inset-block">
+      <p>The old R6 architecture (exchange model) applied Prospect Theory and mental accounting to reframe the consumer's comparison from face value to expected value. This was the correct theory for an exchange where the claimant accepted a discounted settlement. In the pool model, the claimant does not accept a discount — they receive net recovery from a settlement negotiated by the pool operator. There is no face value anchoring problem to solve: the claimant never gives up a claim at a discount. Prospect Theory and mental accounting do not apply and have been retired from this gate. The amortisation problem for the claimant is not a reference point problem — it is a contingent payoff commitment problem, addressed by Rubinfeld &amp; Scotchmer.</p>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">Section 5 — Verdict</div>
     <div class="verdict-panel">
-      <div class="verdict-label">Verdict — R6 gate · 19 May 2026</div>
+      <div class="verdict-label">Verdict — R6 gate · 20 May 2026</div>
       <div class="verdict-headline">PASS</div>
-      <p><strong>FMOS: 63.5%</strong> — unchanged from R5. R6 adds no new per-unit cost. The EV frame amortisation mechanism is built into the existing claim submission-to-offer sequence at zero marginal cost.</p>
-      <p>The C3 independent assessment org serves three requirements (C3, R4, R6) from a single mechanism. This is the most architecturally elegant cross-requirement connection in the design: one EV report per claim, three problems solved at no incremental cost.</p>
-      <p>The Prospect Theory grounding is robust and directly applicable — reference point manipulation through independent valuation is a well-documented approach in consumer financial services.</p>
-      <p><strong>Proceed to R7 — Activate Gateway Partners.</strong> R7 introduces the NTP placement fee and redesigns the blended acquisition cost, producing the first cost floor reduction since R4.</p>
+      <p><strong>FMOS: 63.2%</strong> — unchanged from R5. R6 adds no new per-unit cost. The contingent fee structure is an architectural property of the pool model, not an additional layer. The verified financing app curation generates income for Calmly, not cost.</p>
+      <p>The claimant's cash flow constraint is architecturally dissolved: the payment event and the value delivery event are the same transaction. No budget line item exists to be absent — the claimant never pays. Rubinfeld &amp; Scotchmer (1993) confirms this as the efficient contract form when the supplier can bear risk and the client cannot.</p>
+      <p>The defendant's cash flow constraint is addressed through two mechanisms operating in sequence: Arrow (1963) risk transfer (the pool demand makes settlement rational) and Stiglitz &amp; Weiss (1981) purpose-specific credit (the signed settlement agreement enables financing at rates unavailable through general credit). The claimant's recovery is never contingent on the defendant's repayment schedule — the financing app absorbs the timing mismatch.</p>
+      <p>The required platform fee rate (~14.8% of settlement to achieve 25% FMOS headroom) is commercially defensible against the defendant's alternative, which is typically 25–40% of claim value in solicitor and court costs with no certainty of outcome.</p>
+      <p><strong>Proceed to R7 — Activate Gateway Partners.</strong></p>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">Section 6 — Conditions before capital commitment</div>
     <ol class="conditions-list">
-      <li><span class="cond-number">Condition 1</span><strong>Validate offer acceptance rate in pilot.</strong> The R6 mechanism assumes that EV framing improves offer acceptance. Target: ≥65% of consumers who receive a Calmly offer accept it. Measure offer acceptance rate by framing variant (EV frame vs face value frame) in A/B test during pilot.</li>
-      <li><span class="cond-number">Condition 2</span><strong>Confirm EV report quality is sufficient for reference point anchoring.</strong> The EV assessment must be specific to the claim (not generic) to function as a credible reference point. The assessment org's methodology must include claim-specific EV calculation — not a range or category average. Validate with the assessment org during onboarding.</li>
+      <li>
+        <span class="cond-number">Condition 1</span>
+        <strong>Validate financing app partner appetite.</strong> Which lenders would operate as verified defendant financing apps on the marketplace? Candidate categories: litigation finance specialists (ARAG, Harbour Litigation Funding), SME credit providers (Liberis, YouLend operating in receivables-backed SME credit), and specialist BNPL operators with SME focus. Validate: at least two credible lender candidates identified and indicatively willing to explore the structure before capital commitment. If no lender appetite exists for this purpose-specific structure, the defendant financing mechanism cannot launch and the D2 constraint remains unresolved for cash-constrained defendants.
+      </li>
+      <li>
+        <span class="cond-number">Condition 2</span>
+        <strong>Validate defendant credit check process and acceptance rate.</strong> The financing app underwrites against the signed settlement agreement and defendant credit profile. What proportion of defendants who reach D3 will pass the financing app's credit check? What happens to defendants who fail — they still face the pool demand, but financing is unavailable to them. Failure to understand the acceptance rate creates a gap: the pool receives the settlement demand, the defendant cannot finance it, the claim goes to judgment. Validate: a credible acceptance rate assumption (or pilot data) before scaling. Design the pool's escalation pathway for defendants who fail credit checks.
+      </li>
+      <li>
+        <span class="cond-number">Condition 3</span>
+        <strong>Confirm platform fee rate is commercially defensible.</strong> A rate of ~14.8% of settlement is the output of the model at 25% FMOS headroom. Validate this rate against: (a) comparable dispute resolution services in E&amp;W — small claims court fee schedule, litigation funding rates, claims management company fees; (b) defendant willingness to pay — is 14.8% of settlement materially less costly than the solicitor-plus-court alternative? The rate should be stress-tested against a range of settlement values, not just the £2,160 average, to confirm FMOS holds across the claim value distribution.
+      </li>
+      <li>
+        <span class="cond-number">Condition 4</span>
+        <strong>Confirm no regulatory constraint on taking a percentage of settlement proceeds.</strong> Two specific areas require legal review before launch: (a) consumer credit regulation — does deducting a fee from settlement proceeds constitute regulated activity under the Consumer Credit Act 1974 or FCA perimeter? (b) Claims management regulation — Calmly operates as a claims management company under FCA authorisation (FSMA 2000, s.419A); the fee structure must comply with the FCA's rules on charges to claimants. Validate with SRA-registered or FCA-authorised counsel before the platform fee rate is set in commercial terms.
+      </li>
     </ol>
   </div>
 
   <div class="routing-block">
     <div class="routing-title">Next step — R7</div>
-    <p><strong>Proceed to R7</strong> — Activate Gateway Partners. R7 introduces the NTP placement fee and redesigns the blended acquisition cost. Expected outcome: blended acquisition cost falls from £38 (R4 CAC) to ~£22/claim as gateway partners take on 60% of inflow. Cost floor moves from £237 to £221 and FMOS improves to 66%.</p>
+    <p><strong>Proceed to R7</strong> — Activate Gateway Partners. R7 addresses how Calmly positions itself in the claimant's existing routines through Neutral Third Parties (NTPs). R7 introduces the NTP placement fee and redesigns the blended acquisition cost. Expected outcome: blended CAC falls as NTP-originated claims displace direct acquisition, improving FMOS. The gateway partner design is the first opportunity for a cost floor reduction since R4.</p>
   </div>
 
   <div class="doc-footer">
-    <div class="footer-left">FIT Verifier — R6 gate · 19 May 2026<br>Cumulative cost floor: £237/claim · FMOS: 63.5%</div>
-    <div class="footer-right">Builds on: calmly-fit-verifier-r5-2026-05-19.html (PASS, 63.5%)</div>
+    <div class="footer-left">FIT Verifier — R6 gate · 20 May 2026<br>Cumulative cost floor: £239/claim · FMOS: 63.2%<br>Theory: Rubinfeld &amp; Scotchmer (1993) + Arrow (1963) + Stiglitz &amp; Weiss (1981)</div>
+    <div class="footer-right">Builds on: calmly-fit-verifier-r5-2026-05-19.html (PASS, 63.2%)<br>Architecture: pool model / contingent fee (v2 — replaces exchange model)</div>
   </div>
 
 </div>
