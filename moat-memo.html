@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Competitive position at scale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #0f1923;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #dde1e7;
+      --border-strong: #b0b8c4;
+      --accent: #1f4fa8;
+      --accent-light: #e8eef8;
+      --panel-bg: #0f2744;
+      --panel-text: #ffffff;
+      --warning-bg: #fff8e6;
+      --warning-border: #d4820a;
+      --inset-border: #1f4fa8;
+      --tag-radius: 3px;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+      --font-body: 'Lora', Georgia, serif;
+      --width: 980px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 17px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 48px 32px 100px; background: var(--surface); }
+
+    /* Header */
+    .doc-header { border-bottom: 2px solid var(--text); padding-bottom: 24px; margin-bottom: 36px; }
+    .doc-header .label { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .doc-header h1 { font-size: 28px; font-weight: 600; line-height: 1.2; margin-bottom: 10px; }
+    .doc-meta { display: flex; gap: 24px; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; }
+
+    /* SCQA block */
+    .scqa { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 22px 26px; margin-bottom: 32px; }
+    .scqa-title { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .scqa-row { display: grid; grid-template-columns: 130px 1fr; gap: 6px 16px; padding: 9px 0; border-bottom: 1px solid #c8d8f0; align-items: baseline; }
+    .scqa-row:last-child { border-bottom: none; }
+    .scqa-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); padding-top: 2px; }
+    .scqa-text { font-family: var(--font-body); font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Governing thought panel */
+    .panel { background: var(--panel-bg); color: var(--panel-text); padding: 28px 32px; margin-bottom: 32px; }
+    .panel .panel-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+    .panel p { font-family: var(--font-body); font-size: 20px; line-height: 1.55; color: rgba(255,255,255,0.95); }
+
+    /* Inset block */
+    .inset { background: var(--accent-light); border-left: 4px solid var(--inset-border); padding: 20px 24px; margin: 22px 0; }
+    .inset .inset-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .inset p { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--text-secondary); }
+    .inset p + p { margin-top: 8px; }
+    .inset ul { margin: 8px 0 0 18px; }
+    .inset ul li { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 5px; }
+    .inset strong { color: var(--accent); font-family: var(--font-ui); font-weight: 600; }
+
+    /* Warning block */
+    .warning { background: var(--warning-bg); border-left: 4px solid var(--warning-border); padding: 20px 24px; margin: 22px 0; }
+    .warning .warning-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warning-border); margin-bottom: 10px; }
+    .warning p { font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: #7a4a00; }
+
+    /* Body prose */
+    p.body { font-family: var(--font-body); font-size: 17px; line-height: 1.7; margin-bottom: 16px; color: var(--text-secondary); }
+    p.body + p.body { margin-top: 0; }
+
+    /* Section headings */
+    h2.section { font-size: 20px; font-weight: 600; margin: 48px 0 16px; border-top: 2px solid var(--border); padding-top: 28px; }
+
+    /* Tables */
+    table.data { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+    table.data thead tr { background: #f7f7f6; }
+    table.data th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); }
+    table.data td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55; }
+    table.data tr:last-child td { border-bottom: none; }
+    table.data td strong { font-family: var(--font-ui); font-weight: 600; }
+
+    /* Moat summary table */
+    .moat-table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+    .moat-table thead tr { background: var(--panel-bg); }
+    .moat-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.6); padding: 11px 14px; text-align: left; }
+    .moat-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+    .moat-table tr:last-child td { border-bottom: none; }
+    .moat-table .src-name { font-weight: 600; font-size: 14px; }
+    .moat-table .src-rationale { font-family: var(--font-body); font-size: 13px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+
+    /* Tags */
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--tag-radius); border: 1px solid; white-space: nowrap; font-family: var(--font-ui); }
+    .tag-green { background: #e6f4ec; color: #166534; border-color: #a7d4b8; }
+    .tag-yellow { background: #fef9e6; color: #854d0e; border-color: #f0d98a; }
+    .tag-grey { background: #f1f3f5; color: #4a5568; border-color: #d0d5dd; }
+
+    /* CAP grid */
+    .cap-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--border); margin: 20px 0 28px; }
+    .cap-cell { padding: 20px; border-right: 1px solid var(--border); }
+    .cap-cell:last-child { border-right: none; }
+    .cap-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .cap-years { font-size: 28px; font-weight: 600; line-height: 1; margin-bottom: 8px; }
+    .cap-bear .cap-years { color: #991b1b; }
+    .cap-central .cap-years { color: var(--accent); }
+    .cap-bull .cap-years { color: #166534; }
+    .cap-note { font-family: var(--font-body); font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    @media (max-width: 640px) {
+      .cap-grid { grid-template-columns: 1fr; }
+      .cap-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .cap-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="label">Calmly · Competitive strategy · Confidential</div>
+    <h1>Competitive position at scale</h1>
+    <div class="doc-meta">
+      <span>21 May 2026</span>
+      <span>Confidential</span>
+      <span>Source: Mauboussin moat analysis, 20 May 2026</span>
+    </div>
+  </div>
+
+  <!-- SCQA block -->
+  <div class="scqa">
+    <div class="scqa-title">SCQA</div>
+    <div class="scqa-row">
+      <div class="scqa-label">Situation</div>
+      <div class="scqa-text">Calmly is a civil enforcement marketplace for unenforceable small claims in England &amp; Wales. At scale, its financial model produces 62.3% FMOS on a £245/claim cost floor — a margin that rests entirely on the durability of its competitive position.</div>
+    </div>
+    <div class="scqa-row">
+      <div class="scqa-label">Complication</div>
+      <div class="scqa-text">Marketplace businesses routinely claim network effects and moats that erode under competition. The financial model is only credible if the competitive position is structurally genuine — not a first-mover advantage that any well-resourced entrant can replicate with time and capital.</div>
+    </div>
+    <div class="scqa-row">
+      <div class="scqa-label">Question</div>
+      <div class="scqa-text">Does Calmly's architecture produce a competitive moat that survives serious competitive pressure at scale?</div>
+    </div>
+    <div class="scqa-row">
+      <div class="scqa-label">Answer</div>
+      <div class="scqa-text">Two wide moat sources compound over 8–12 years, but both depend on multi-category volume depth — making launch sequencing the critical strategic variable, not total claim volume.</div>
+    </div>
+  </div>
+
+  <!-- Governing thought panel -->
+  <div class="panel">
+    <div class="panel-label">Governing thought</div>
+    <p>Two wide moat sources compound over 8–12 years, but both depend on multi-category volume depth — making launch sequencing the critical strategic variable, not total claim volume.</p>
+  </div>
+
+  <!-- Intro para -->
+  <p class="body">The market Calmly enters does not exist — no commercial operator currently facilitates small claim settlement in England &amp; Wales at scale. The structural economics of the county court system make it unprofitable for any solicitor-based model; Calmly's architecture solves this with a new cost-benefit architecture built around pooled litigation risk and independent EV assessment. That architecture produces a 62.3% FMOS margin at scale. Whether that margin holds under competitive pressure is a distinct question. This memo addresses it through four arguments: first, that the industry structure creates a genuine first-mover window; second, that the ITP switching cost stack is wide and self-deepening; third, that the EV data flywheel is durable but locally structured — creating one structural vulnerability; and fourth, that the resulting ROIC trajectory supports a Competitive Advantage Period of 8–12 years, consistent with the £189M exit modelled in the pursuit memo.</p>
+
+
+  <!-- Section 1 -->
+  <h2 class="section">The market is structurally empty — incumbents cannot enter without abandoning their existing model</h2>
+
+  <p class="body">The civil small claims market in England &amp; Wales is not underserved — it is commercially unoccupied. No operator currently facilitates settlement at this price point. The reason is structural: since the 2013 Jackson reforms removed cost recovery in small claims, no solicitor can fund their involvement from the claim proceeds. The constraint is not willingness but arithmetic. The market has remained empty for over a decade precisely because the conventional operating model's economics do not work at this claim size.</p>
+
+  <p class="body">Adjacent players — ombudsman schemes, CAB, Resolver — are not substitutes. They lack the pooling mechanism that makes the credible litigation threat credible, and they lack the EV methodology that prices the risk pool. They adjudicate or signpost; they do not enforce. No existing player competes across housing, employment, and consumer dispute categories with a credible enforcement mechanism. Calmly is not entering a contested market; it is constituting one.</p>
+
+  <p class="body">That first-mover window is real but time-limited. It closes once Calmly has demonstrated the economics, attracting imitators who can replicate the architecture with capital. The window is not the moat — it is the period during which the moat must be built. Regulatory substitution risk exists (mandatory ADR expansion) but has not materialised for contested monetary claims and has historically moved slowly.</p>
+
+
+  <!-- Section 2 -->
+  <h2 class="section">The ITP switching cost stack widens automatically — no deliberate investment required</h2>
+
+  <p class="body">The repeating customer in Calmly's model is the ITP — the housing association, HR department, or marketplace that originates claims. End claimants are one-time users; they accumulate no switching costs. ITPs refer repeatedly. Each referral cycle adds to three categories of switching cost that the ITP incurs if it changes provider.</p>
+
+  <table class="data">
+    <thead>
+      <tr>
+        <th>Switching cost category</th>
+        <th>What accumulates</th>
+        <th>Cost of losing it</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Procedural</strong></td>
+        <td>Staff training materials, member communications, grievance policy references, and defendant notification templates — all written to Calmly's specifications at onboarding</td>
+        <td>Full rewrite of compliance and policy documentation; staff retraining across the referral team</td>
+      </tr>
+      <tr>
+        <td><strong>Financial</strong></td>
+        <td>The ITP-specific outcomes dataset: years of claim-type, settlement rate, and resolution time data for that ITP's specific member population</td>
+        <td>Permanent loss of a dataset cited in board reports and funder applications; visible gap in institutional reporting from the point of switch</td>
+      </tr>
+      <tr>
+        <td><strong>Relational</strong></td>
+        <td>Community reputation within the ITP's member population — tenants, employees, or marketplace users who have observed claims resolved</td>
+        <td>Rebuilds from zero on switch; cannot be transferred or purchased; demand-pull from members is independent of the ITP's institutional decision</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="body">What makes this stack strategically significant is its automaticity. Every normal referral interaction — no loyalty programme, no deliberate data contribution — increments all three categories simultaneously. The ITP does not notice the switching costs growing until a competitor arrives. At that point, the financial cost is immediately legible (the outcomes dataset is lost), the procedural cost is visible (rewrite everything), and the relational cost is the hardest to quantify — community trust rebuilds from zero and the competitor has no equivalent track record. The combined cost is non-transferable and non-purchasable: a competitor cannot inherit years of outcomes history or community reputation by offering a better fee.</p>
+
+  <p class="body">The stack also has a hidden first cost: switching degrades EV assessment accuracy for the ITP's members' claims. The competitor has no calibration data for this ITP's specific dispute profile. Lower accuracy produces lower settlement rates; ITP decision-makers notice this only after the switch, when member outcomes deteriorate. The full switching cost is therefore visible to the ITP's board before a competitor arrives — but only partially, and only if Calmly has made the outcomes dataset load-bearing in institutional reporting from the outset. That is the onboarding design imperative.</p>
+
+
+  <!-- Section 3 -->
+  <h2 class="section">The data flywheel is genuine — but local network effects create one structural vulnerability</h2>
+
+  <p class="body">Calmly's EV accuracy dataset is the engine of the platform's economics. Pool operators price claim portfolios based on EV accuracy: tighter confidence intervals on expected settlement value mean a lower risk premium required, which means more paid per claim, which means better claimant outcomes, which means more claim volume flows to the platform. The flywheel is self-reinforcing. The question is whether it meets the standard for a durable data network effect — or whether it is a first-mover advantage dressed in data language.</p>
+
+  <div class="inset">
+    <div class="inset-label">Mauboussin's three conditions — confirmed</div>
+    <ul>
+      <li><strong>Proprietary and non-replicable.</strong> Defendant response patterns — pre-settlement behaviour, pool demand reactions, early settlement probability — are not in public court records. A competitor cannot purchase or approximate this dataset without processing equivalent claims in equivalent conditions. The public-data component can be approximated by AI; the proprietary defendant behaviour component cannot.</li>
+      <li><strong>Time compression diseconomies.</strong> A competitor cannot replicate five years of calibration by investing more capital in one year. The dataset requires actual claims, in real time, with real defendants reaching real outcomes. Dierickx &amp; Cool (1989) establish this as the defining property of durable asset stocks. It is strongly met here.</li>
+      <li><strong>Data measurably improves outcomes.</strong> A 5% improvement in EV accuracy tightens confidence intervals, reduces the pool operator's risk premium, and directly increases the per-claim price paid. This is a mechanical, quantifiable relationship — not a claimed improvement. The C6 buyout mechanism widens the flywheel further: defendant D1 response patterns (accept, negotiate, defend) add a second data dimension beyond settlement/not, enriching underwriting accuracy for buyout operators simultaneously.</li>
+    </ul>
+  </div>
+
+  <div class="warning">
+    <div class="warning-label">⚠ Structural vulnerability — local network effects</div>
+    <p>Calmly's data advantage is most accurate within dispute categories, not across them. A competitor building exclusively in housing disputes — processing 50,000 housing association claims over five years — will develop tighter within-category EV calibration than Calmly's mixed-category dataset provides for housing. That accuracy advantage is sufficient to attack the housing ITP relationship on outcome quality: better outcomes for members, offered at a lower fee. The moat is genuinely wide if Calmly achieves category leadership in all three segments before a vertical specialist emerges. It is exploitably narrow if Calmly's housing category coverage is thin when the specialist arrives.</p>
+  </div>
+
+  <p class="body">The resolution is multi-category volume depth, achieved before vertical specialists reach critical mass in any single category. Cross-category scope provides a defence a single-category specialist cannot match: a housing specialist cannot offer the employment dispute resolution capability that a housing association HR department occasionally needs. But this defence only operates when Calmly's dataset is genuinely deep across all three categories — making launch sequencing the critical variable. Total claim volume is a lagging indicator; category depth per ITP type is the leading one.</p>
+
+
+  <!-- Section 4 -->
+  <h2 class="section">ROIC widens for 8–12 years — the competitive advantage period assumption in the financial model is supportable</h2>
+
+  <p class="body">Four mechanisms push Calmly's ROIC in the same direction during years 1–8. Fixed costs amortise as claim volume grows: HQ infrastructure, data management, QA, and ITP relationship management add approximately £90/claim at year one and fall toward £30/claim at year five (350,000 claims). EV accuracy improvement raises fee yield directly — better calibration means pool operators pay more per claim portfolio, increasing the platform's gross margin without changing the cost floor. Assessment org fees compress from £16/claim toward £10–12/claim as multiple university law departments compete for claim allocation on quality metrics; at year-five volume, a £4/claim reduction is worth £1.4M annually. And as the ITP network matures and referral protocols embed more deeply in ITP procedures, the ITP-referred share of acquisition rises toward 80%, pushing blended CAC below £20/claim. These four drivers are not independent — they are all downstream of volume depth, which is itself downstream of successful multi-category launch sequencing.</p>
+
+  <p class="body">The widening moderates at year 8–12. Fixed costs are fully amortised; EV accuracy approaches diminishing returns on calibration; AI approximation narrows the public-data component of the EV methodology advantage; and the first well-resourced imitators arrive with three to five years of their own data. ROIC moderates rather than collapses. When AI commoditises the methodology, the moat rests on what AI cannot replicate: the proprietary defendant behaviour dataset and the ITP network's accumulated relational switching costs — both of which remain wide. The £189M net exit in the financial model assumes a central CAP of 8–12 years; the trajectory described here is consistent with that assumption, provided category depth is achieved before the vertical specialist attack window opens in years three to five.</p>
+
+
+  <!-- Moat summary table -->
+  <h2 class="section">Moat summary</h2>
+
+  <table class="moat-table">
+    <thead>
+      <tr>
+        <th>Moat source</th>
+        <th>Type</th>
+        <th>Rating</th>
+        <th>Rationale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="src-name">Industry structure</div>
+        </td>
+        <td>External</td>
+        <td><span class="tag tag-green">🟢 Wide</span></td>
+        <td><div class="src-rationale">First-mover window genuine; incumbents structurally excluded by cost-benefit arithmetic. Window is time-limited — not the moat itself, but the period in which the moat must be established.</div></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="src-name">ITP switching cost stack</div>
+        </td>
+        <td>Demand-side</td>
+        <td><span class="tag tag-green">🟢 Wide</span></td>
+        <td><div class="src-rationale">Three categories accumulate automatically with tenure; financial and relational costs grow nonlinearly; non-transferable, non-purchasable. The hidden accuracy degradation cost makes switching rationally worse than the ITP perceives at decision time.</div></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="src-name">EV accuracy data flywheel</div>
+        </td>
+        <td>Demand-side</td>
+        <td><span class="tag tag-yellow">🟡 Wide (conditional)</span></td>
+        <td><div class="src-rationale">All three Mauboussin conditions met: proprietary, time-compression diseconomies confirmed, measurably improves outcomes. Conditional because network effects are local — vulnerable to vertical specialists before multi-category depth is achieved.</div></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="src-name">Scale economies</div>
+        </td>
+        <td>Supply-side</td>
+        <td><span class="tag tag-yellow">🟡 Narrow</span></td>
+        <td><div class="src-rationale">Real cost amortisation, but a competitor at equivalent volume reaches a similar cost floor within 2–3 years. Not independently durable — reinforcing, not defensive.</div></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="src-name">Assessment org network</div>
+        </td>
+        <td>Supply-side</td>
+        <td><span class="tag tag-yellow">🟡 Narrow</span></td>
+        <td><div class="src-rationale">University law department partnerships are sticky but replicable within 18–24 months. Complements the data flywheel; not independently durable. Provides a 2–3 year replication lag — delays competitors, does not stop them.</div></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="src-name">Buyout operator calibration</div>
+        </td>
+        <td>Demand-side</td>
+        <td><span class="tag tag-yellow">🟡 Narrow</span></td>
+        <td><div class="src-rationale">Pool and buyout operators' pricing models are calibrated to Calmly's EV accuracy; switching requires full recalibration. Transient — diminishes as operators build in-house capability. 12–18 month switching cost. Friction, not moat.</div></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="src-name">Regulatory advantage</div>
+        </td>
+        <td>External</td>
+        <td><span class="tag tag-grey">⚪ None</span></td>
+        <td><div class="src-rationale">No licence or exclusive regulatory position currently governs civil claims pooling in England &amp; Wales. First-mover regulatory engagement could create one over time; absent for now.</div></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- CAP estimate -->
+  <h2 class="section">Competitive Advantage Period estimate</h2>
+
+  <div class="cap-grid">
+    <div class="cap-cell cap-bear">
+      <div class="cap-label">Bear case</div>
+      <div class="cap-years">5–7 years</div>
+      <div class="cap-note">A vertical specialist (e.g., Resolver + litigation finance JV) enters the housing category in year three and achieves EV accuracy parity within five years. AI commoditises the public-data portion of EV methodology by year six. Calmly retains advantage only in uncovered categories and defendant behaviour dataset depth.</div>
+    </div>
+    <div class="cap-cell cap-central">
+      <div class="cap-label">Central case</div>
+      <div class="cap-years">8–12 years</div>
+      <div class="cap-note">Multi-category volume depth achieved before vertical specialists reach critical mass. AI narrows the methodology advantage but not the proprietary defendant behaviour data flywheel. ITP network deepens to 150+ partners with high relational switching costs. ROIC moderates after year eight but remains above cost of capital through year 12.</div>
+    </div>
+    <div class="cap-cell cap-bull">
+      <div class="cap-label">Bull case</div>
+      <div class="cap-years">12–18 years</div>
+      <div class="cap-note">No regulatory substitution in core categories. ITP network depth creates second-order lock-in as community reputation compounds. Assessment org network becomes a global template for other jurisdictions. The buyout mechanism generates a proprietary defendant behaviour data flywheel that makes entry economically irrational for any rational competitor.</div>
+    </div>
+  </div>
+
+
+  <!-- Final implication — no heading -->
+  <p class="body" style="margin-top: 36px;">The single variable that determines whether the central or bear case materialises is multi-category launch sequencing. Total claim volume is a lagging indicator; category depth per ITP type is the leading one. A vertical specialist who achieves housing category depth before Calmly does not need to match Calmly's aggregate scale — it needs to match Calmly's EV accuracy for housing disputes only, then offer that narrower advantage to housing association ITPs. An investor tracking Calmly should monitor ITP activation by category — housing associations, HR departments, online marketplaces — as the primary leading indicator of moat durability. Total claims processed is the wrong number to watch.</p>
+
+</div>
+</body>
+</html>

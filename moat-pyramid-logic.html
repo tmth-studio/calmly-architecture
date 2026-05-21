@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calmly — Moat Analysis Pyramid Logic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --surface: #ffffff;
+      --text: #0f1923;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #dde1e7;
+      --accent: #1f4fa8;
+      --accent-light: #e8eef8;
+      --panel-bg: #0f2744;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+      --font-body: 'Lora', Georgia, serif;
+      --width: 1060px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; }
+    .container { max-width: var(--width); margin: 0 auto; padding: 48px 32px 80px; background: var(--surface); }
+
+    /* Doc header */
+    .doc-header { border-bottom: 2px solid var(--text); padding-bottom: 20px; margin-bottom: 36px; }
+    .doc-header .label { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .doc-header h1 { font-size: 24px; font-weight: 600; }
+    .doc-header .meta { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+    /* SCQA block */
+    .scqa { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 24px 28px; margin-bottom: 36px; }
+    .scqa-title { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .scqa-row { display: grid; grid-template-columns: 120px 1fr; gap: 8px 16px; padding: 10px 0; border-bottom: 1px solid #c8d8f0; align-items: baseline; }
+    .scqa-row:last-child { border-bottom: none; }
+    .scqa-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); padding-top: 2px; }
+    .scqa-text { font-family: var(--font-body); font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+    .scqa-text strong { font-family: var(--font-ui); color: var(--text); }
+
+    /* Governing thought */
+    .governing { background: var(--panel-bg); color: #fff; padding: 28px 32px; margin-bottom: 40px; text-align: center; }
+    .governing .g-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+    .governing p { font-family: var(--font-body); font-size: 20px; line-height: 1.55; color: rgba(255,255,255,0.95); max-width: 820px; margin: 0 auto; }
+
+    /* Pyramid connector */
+    .pyramid-connector { display: flex; justify-content: center; margin-bottom: 0; }
+    .connector-line { width: 2px; height: 28px; background: var(--accent); opacity: 0.35; }
+
+    /* Arguments row */
+    .args-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; margin-bottom: 0; }
+
+    /* Argument box */
+    .arg-box { border: 2px solid var(--accent); padding: 20px 18px 18px; display: flex; flex-direction: column; gap: 0; background: var(--surface); }
+    .arg-number { font-size: 10px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .arg-assertion { font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--text); margin-bottom: 14px; flex: 1; }
+
+    /* Evidence bullets */
+    .evidence-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border); padding-top: 12px; margin-top: auto; }
+    .evidence-list li { font-family: var(--font-body); font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); padding: 5px 0 5px 12px; position: relative; }
+    .evidence-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-family: var(--font-ui); }
+    .evidence-list li + li { border-top: 1px solid #eef0f4; }
+
+    /* Bottom note */
+    .ordering-note { margin-top: 32px; text-align: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 20px; }
+
+    @media (max-width: 760px) {
+      .args-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .args-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="label">Calmly · Pyramid logic diagram · Minto Stage 1</div>
+    <h1>Competitive position at scale — argument structure</h1>
+    <div class="meta">21 May 2026 · Ordering principle applied below</div>
+  </div>
+
+  <!-- SCQA block -->
+  <div class="scqa">
+    <div class="scqa-title">SCQA</div>
+    <div class="scqa-row">
+      <div class="scqa-label">Situation</div>
+      <div class="scqa-text">Calmly is a civil enforcement marketplace for unenforceable small claims in England &amp; Wales. At scale, its financial model produces 62.3% FMOS on a £245/claim cost floor — a margin that rests entirely on the durability of its competitive position.</div>
+    </div>
+    <div class="scqa-row">
+      <div class="scqa-label">Complication</div>
+      <div class="scqa-text">Marketplace businesses routinely claim network effects and moats that erode under competition. The financial model is only credible if the competitive position is structurally genuine — not a first-mover advantage that any well-resourced entrant can replicate with time and capital.</div>
+    </div>
+    <div class="scqa-row">
+      <div class="scqa-label">Question</div>
+      <div class="scqa-text">Does Calmly's architecture produce a competitive moat that survives serious competitive pressure at scale?</div>
+    </div>
+    <div class="scqa-row">
+      <div class="scqa-label">Answer</div>
+      <div class="scqa-text"><strong>Two wide moat sources compound over 8–12 years, but both depend on multi-category volume depth — making launch sequencing the critical strategic variable, not total claim volume.</strong></div>
+    </div>
+  </div>
+
+  <!-- Governing thought -->
+  <div class="governing">
+    <div class="g-label">Governing thought</div>
+    <p>Two wide moat sources compound over 8–12 years, but both depend on multi-category volume depth — making launch sequencing the critical strategic variable, not total claim volume.</p>
+  </div>
+
+  <!-- Connector -->
+  <div class="pyramid-connector">
+    <div class="connector-line"></div>
+  </div>
+
+  <!-- Four arguments -->
+  <div class="args-row">
+
+    <!-- Arg 1 -->
+    <div class="arg-box">
+      <div class="arg-number">Argument 1</div>
+      <div class="arg-assertion">The industry structure creates a durable first-mover window — incumbents cannot enter without abandoning their existing models</div>
+      <ul class="evidence-list">
+        <li>No commercial operator currently facilitates small claim settlement in England &amp; Wales. The county court's cost-recovery rules make it structurally unprofitable for any solicitor-based model.</li>
+        <li>CAB, Resolver, and ombudsman schemes are not substitutes — they lack the pooling mechanism and EV methodology that constitute the new cost-benefit architecture (CBA).</li>
+        <li>The window is time-limited: it closes once Calmly has demonstrated the economics, attracting well-resourced imitators with capital to replicate the architecture.</li>
+      </ul>
+    </div>
+
+    <!-- Arg 2 -->
+    <div class="arg-box">
+      <div class="arg-number">Argument 2</div>
+      <div class="arg-assertion">The ITP switching cost stack is wide and self-deepening — no deliberate investment required to grow it</div>
+      <ul class="evidence-list">
+        <li>Burnham, Frels &amp; Mahajan (2003) taxonomy: procedural (staff retraining, policy redrafting), financial (loss of the ITP-specific outcomes dataset cited in funder reports), relational (community reputation among members).</li>
+        <li>The outcomes dataset is load-bearing in ITP board and funder communications — switching creates an immediate, visible gap in institutional reporting.</li>
+        <li>Costs are non-transferable, non-purchasable, and compound nonlinearly with tenure. A competitor cannot inherit or accelerate them.</li>
+      </ul>
+    </div>
+
+    <!-- Arg 3 -->
+    <div class="arg-box">
+      <div class="arg-number">Argument 3</div>
+      <div class="arg-assertion">The EV accuracy data flywheel meets all three conditions for durable network effects — but its local nature is the architecture's single structural vulnerability</div>
+      <ul class="evidence-list">
+        <li>Dierickx &amp; Cool (1989) time compression diseconomies confirmed: five years of calibration cannot be replicated in one year with more capital. The dataset requires actual claims in real time.</li>
+        <li>C6 buyout mechanism enriches the flywheel: defendant D1 response patterns add a second data dimension beyond settlement/not.</li>
+        <li>Local vulnerability: a vertical specialist focused on housing disputes for five years could build tighter within-category EV calibration than Calmly's mixed-category dataset — then attack the housing ITP relationship on outcome quality.</li>
+      </ul>
+    </div>
+
+    <!-- Arg 4 -->
+    <div class="arg-box">
+      <div class="arg-number">Argument 4</div>
+      <div class="arg-assertion">ROIC widens for 8–12 years then moderates — the financial model's CAP assumption is supportable but not indefinite</div>
+      <ul class="evidence-list">
+        <li>Four drivers move in the same direction in years 1–8: fixed cost amortisation; EV accuracy improvement (higher fee yield); assessment org fee compression (£16 → £10–12/claim at multi-org competition); ITP channel reducing blended CAC.</li>
+        <li>Widening moderates at year 8–12 as AI approximation narrows the EV methodology advantage and well-resourced imitators emerge with their own data.</li>
+        <li>The central CAP of 8–12 years is consistent with the £189M net exit in the financial model. When methodology becomes replicable, the moat rests on the ITP network and the data flywheel — both still wide at that point.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Ordering note -->
+  <div class="ordering-note">
+    Ordering principle: structural order — MECE parts of a complete competitive position assessment (industry structure → demand-side switching costs → demand-side network effects → ROIC/CAP implications)
+  </div>
+
+</div>
+</body>
+</html>
